@@ -1,6 +1,9 @@
 class User {
-  constructor(name) {
-    this.name = name
+  constructor(newUser) {
+    // gets passed in when fetch gets it from api call
+    this.id = newUser.id
+    this.name = newUser.name
+
   }
 }
 
