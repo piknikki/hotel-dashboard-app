@@ -9,50 +9,114 @@
     <!--    google fonts  -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap" rel="stylesheet">
-    <title>Pounce</title>
+    <title>pounce</title>
   </head>
 
   <body>
-    <section class="wrapper">
-      <header class="nav">
-        logo, name, links?  left and right sides
-      </header>
+
+    <header class="header">
+      <figure class="header__item logo">
+        <img class="header__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
+        <span class="header__item--text">pounce</span>
+      </figure>
+
+      <ul class="header__item header-links">
+        <li class="header-links__item">
+          <i class="fal fa-calendar-alt fa-lg"></i>
+          <span class="date"></span>
+        </li>
+        <li class="header-links__item">
+          <i class="fal fa-user fa-lg"></i>
+          <span class="user-name"></span>
+        </li>
+        <li class="header-links__item">
+          <a href="#">
+            log in
+            <i class="far fa-sign-in-alt fa-lg"></i>
+          </a>
+        </li>
+        <li class="header-links__item">
+          <a href="#">
+            log out
+            <i class="far fa-sign-out-alt fa-lg"></i>
+          </a>
+        </li>
+      </ul>
+    </header>
 
 <!--      Landing view   -->
-      <main class="landing-view" id="landingView">
-        <section>
-          some features spread out on page
-        </section>
-        <section>
-          Login modal????
-        </section>
-        <section>
-          hero image
-        </section>
-      </main>
+    <main class="landing-view hidden" id="landingView">
+      <section>
+        some features spread out on page
+      </section>
+      <section>
+        Login modal????
+      </section>
+      <section>
+        hero image
+      </section>
+    </main>
+
+<!--      Manager view   -->
+    <main class="manager-view hidden" id="managerView">
+      <section class="dashboard-menu">
+        dashboard menu on left side
+      </section>
+      <section>
+        dashboard content fills rest of page
+        <br>
+        search for customer and show:
+        <br>
+        past reservations
+        <br>
+        current and future reservations (have delete functionality here)
+        <br>
+        total spending on all reservations
+        <br>
+        add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
+      </section>
+
+    </main>
+
 
 <!--      Customer view   -->
-      <main class="customer-view" id="customerView">
-        <section>
-          dashboard menu on left side
-        </section>
-        <section>
-          dashboard content fills rest of page
-          <br>
-          past reservations
-          <br>
-          current and future reservations (have delete functionality here)
-          <br>
-          total spending on all reservations
-          <br>
-          add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
+    <main class="customer-view" id="customerView">
+      <section class="dashboard-menu">
+        <span class="dashboard-label">
+          <i class="fal fa-key fa-2x dashboard-label__item"></i>
+          <span class="dashboard-label__item">Customer Dashboard</span>
+        </span>
+
+        <section class="menu">
+          <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
+          <span class="menu__item--text">Past Reservations</span>
+          <i class="fal fa-bed fa-lg menu__item--icon" ></i>
+          <span class="menu__item--text">Future Reservations</span>
+          <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
+          <span class="menu__item--text">Amount Spent</span>
+          <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
+          <span class="menu__item--text">New Reservation</span>
         </section>
 
-      </main>
+      </section>
+
+      <section>
+        dashboard content fills rest of page
+        <br>
+        past reservations
+        <br>
+        current and future reservations (have delete functionality here)
+        <br>
+        total spending on all reservations
+        <br>
+        add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
+      </section>
+
+    </main>
 
 <!--      <footer>-->
 <!--       maybe use a footer??  -->
 <!--      </footer>-->
-    </section>
+
   </body>
 </html>

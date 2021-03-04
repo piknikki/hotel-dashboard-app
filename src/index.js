@@ -1,12 +1,34 @@
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/_base.scss';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-// import './images/turing-logo.png'
+import './css/styles.scss';
+import './images/pouncecat_orange.png';
+import './images/pouncecat_white.png';
 
 import User from "./User";
 
-let user = new User();
 
-console.log(user)
+// *** Global variables *** //
+let user = new User('customer50');
+let date;
+
+console.log(user);
+
+
+// *** Build page *** //
+// fetch calls
+
+
+
+// *** General Functions *** //
+
+
+
+// *** Event listeners *** //
+window.addEventListener('load', (event) => {
+  event.preventDefault();
+  date = new Date();
+  let today = date.toLocaleDateString();
+
+  document.querySelector('.date').innerHTML = `${today}`
+  document.querySelector('.user-name').innerHTML = `Hi, ${user.name}`
+})
+
