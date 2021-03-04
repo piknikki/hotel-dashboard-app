@@ -85,4 +85,6 @@ typings/
 # compiled files
 src/css/styles.css
 src/css/styles.css.map
+src/css/_base.css
+src/css/_base.css.map
 
