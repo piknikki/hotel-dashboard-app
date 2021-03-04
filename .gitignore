@@ -81,3 +81,8 @@ typings/
 
 # idea for webstorm
 .idea/
+
+# compiled files
+src/css/styles.css
+src/css/styles.css.map
+

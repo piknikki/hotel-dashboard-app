@@ -1,0 +1,21 @@
+// *** font variables *** //
+$primary-font: 'Montserrat', sans-serif;
+$secondary-font: 'Caveat', cursive;
+
+// *** color variables *** //
+
+
+// *** mixins *** //
+
+// examples of how to structure mixins
+//@mixin create-grid-settings($color, $grid-name, $margin) {
+//  background-color: $color;
+//  grid-area: $grid-name;
+//  margin: $margin;
+//}
+
+//@mixin form-grid-settings($color, $radius, $padding) {
+//  padding: $padding;
+//  border-radius: $radius;
+//  background: $color;
+//}
