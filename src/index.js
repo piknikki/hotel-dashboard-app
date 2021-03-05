@@ -5,68 +5,67 @@ import './images/pouncecat_white.png';
 
 import User from "./User";
 import Booking from "./Booking";
+import BookingsRepository from "./BookingsRepository";
 
 // *** Global variables *** //
-// user will input the string of their username - either customer or manager
-// use a query selector to get the input value of the name
+
+
+// *** Build page *** //
+
+/// GET user info
+const getUserData = fetch(`http://localhost:3001/api/v1/customers/${userId}`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json()
+  })
+
+/// GET booking info
+const getBookingData = fetch(`http://localhost:3001/api/v1/bookings`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json()
+  })
+
 const userNameSelector = document.querySelector('.user-name')
 
 const userName = 'customer2' // todo => this will come from the login input not sure where it will live yet
 const userId = userName.slice(8);
 
-// *** Build page *** //
-// fetch calls
+const createCurrentDataSet = () => {
+  Promise.all([getUserData, getBookingData])
+    .then((allData) => {
+      const date = '2019/01/01';
+      const currentUserId = userNameSelector.getAttribute('data-userId')
 
-/// GET user info
-fetch(`http://localhost:3001/api/v1/customers/${userId}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
-  .then(data => {
-    createNewUser(data)
-  })
-  .catch(error => console.log(error.message))
+      // create current user
+      // const date = new Date();
+      // const today = date.toLocaleDateString();
+      const user = new User(allData[0])
+      console.log(user)
 
-/// GET booking info
-fetch(`http://localhost:3001/api/v1/bookings`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
-  .then(data => {
-    createBookingsData(data)
-  })
-  .catch(error => console.log(error.message))
+      document.querySelector('.date').innerHTML = `${date}`
+      userNameSelector.setAttribute('data-userId', user.id)
+      userNameSelector.innerHTML = `Hi, ${user.name}`
 
-const createNewUser = (data) => {
-  // const date = new Date();
-  // const today = date.toLocaleDateString();
-  const date = '2019/01/01';
-  const user = new User(data)
-  console.log(user)
+      // create bookings repo
+      const userBookingsRepo = new BookingsRepository()
+      allData[1].bookings.filter(booking => {
+        return booking.userID === currentUserId
+      }).forEach(booking => {
+        booking = new Booking(booking)
+        userBookingsRepo.push(booking)
+      })
 
-  document.querySelector('.date').innerHTML = `${date}`
-  userNameSelector.setAttribute('data-userId', user.id)
-  userNameSelector.innerHTML = `Hi, ${user.name}`
+      console.log(userBookingsRepo)
+    })
+    .catch(error => console.log(error.message))
 }
 
-const createBookingsData = (data) => {
-  const currentUserId = userNameSelector.getAttribute('data-userId')
-
-  const currentUserBookings = data.filter(booking => {
-    return booking.userID === currentUserId
-  })
-
-  // pass this to the User??
-
-  // todo ==> probably need to use promise.all now
-  return currentUserBookings
-}
+createCurrentDataSet();
 
 // *** General Functions *** //
 
