@@ -62,6 +62,9 @@ const createBookingsData = (data) => {
     return booking.userID === currentUserId
   })
 
+  // pass this to the User??
+
+  // todo ==> probably need to use promise.all now
   return currentUserBookings
 }
 
