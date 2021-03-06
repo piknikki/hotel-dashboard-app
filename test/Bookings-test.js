@@ -15,11 +15,11 @@ describe('Booking', function() {
 
   it('should start with all the right information for one booking', () => {
     expect(booking1).to.deep.equal(  {
-      "id": "5fwrgu4i7k55hl746",
-      "userID": 40,
-      "date": "2020/02/16",
-      "roomNumber": 18,
-      "roomServiceCharges": []
+      "date": "2020/01/31",
+      "id": "5fwrgu4i7k55hl747",
+      "roomNumber": 13,
+      "roomServiceCharges": [],
+      "userID": 40
     })
   })
 });
