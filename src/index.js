@@ -11,7 +11,9 @@ const userName = 'customer40'
 // todo => this will come from the login input not sure where it will live yet
 const userId = userName.slice(8);
 
-const userNameSelector = document.getElementById('userName')
+const userNameSelector = document.getElementById('userName');
+const pastBookingsSelector = document.getElementById('pastBookings');
+const futureBookingsSelector = document.getElementById('futureBookings');
 
 // *** Build page *** //
 
@@ -65,7 +67,22 @@ const createCurrentDataSet = () => {
 
       // put past reservations on page
       const pastBookings = userBookingsRepo.getPastBookings(today)
+      console.log(pastBookings)
 
+      let chunk = ''
+      pastBookings.forEach(booking => {
+        chunk += `
+        <article class="content__bookings--item item-container">
+          <p class="item-container__item--id">ID: ${booking.id}</p>
+          <p class="item-container__item--date">Date: ${booking.date}</p>
+          <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+          <p class="item-container__item--duration">Duration: 1 night</p>
+          <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+        </article>
+      `
+      })
+
+      pastBookingsSelector.innerHTML = chunk
 
       // put current and future reservations on page
       const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);

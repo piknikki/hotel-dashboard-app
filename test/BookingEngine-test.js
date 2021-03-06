@@ -241,10 +241,4 @@ describe('BookingEngine', function() {
     ]);
   });
 
-  it('should find no bookings if no past bookings exist', () => {
-    // expect(bookingsRepo1.getPastBookings()).to.deep.equal();
-  });
-
-
-
 });

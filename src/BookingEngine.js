@@ -15,6 +15,7 @@ class BookingEngine {
     const dateCode = Number(currentDate.split('/').join(''))
     this.createDateCode()
 
+    // todo ==> build up an array of objects that have booking info merged with room info
     return this.bookings.filter(booking => booking.dateCode >= dateCode)
   }
 
@@ -22,7 +23,9 @@ class BookingEngine {
     const dateCode = Number(currentDate.split('/').join(''))
     this.createDateCode()
 
+    // todo ==> build up an array of objects that have booking info merged with room info
     return this.bookings.filter(booking => booking.dateCode <= dateCode)
+
   }
 
   getTotalSpent() {

@@ -18,12 +18,4 @@ describe('User', function() {
       "name": "Leatha Ullrich"
     })
   })
-
-  it('find user past bookings', () => {
-
-  })
-
-  it('find user current and future bookings', () => {
-
-  })
 });

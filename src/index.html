@@ -97,26 +97,93 @@
           <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
           <span class="menu__item--text">New Reservation</span>
         </section>
-
       </section>
 
-      <section>
-        dashboard content fills rest of page
-        <br>
-        past reservations
-        <br>
-        current and future reservations (have delete functionality here)
-        <br>
-        total spending on all reservations <span id="customerTotalSpending"></span>
-        <br>
-        add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
-      </section>
+      <section class="dashboard-content">
+        <h2 class="dashboard-title">Dashboard</h2>
+        <section class="content">
+          <section class="content__past">Past Bookings
+            <section class="content__bookings" id="pastBookings">
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 123456789</p>
+                <p class="item-container__item--name">Anne Lister</p>
+                <p class="item-container__item--phone">303-555-1212</p>
+                <p class="item-container__item--duration">4 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+              </article>
 
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 789123456</p>
+                <p class="item-container__item--name">Kate McKinnon</p>
+                <p class="item-container__item--phone">970-555-1212</p>
+                <p class="item-container__item--duration">2 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B6</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 456789123</p>
+                <p class="item-container__item--name">Ruby Rose</p>
+                <p class="item-container__item--phone">720-555-1212</p>
+                <p class="item-container__item--duration">3 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C3</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 456789123</p>
+                <p class="item-container__item--name">Ruby Rose</p>
+                <p class="item-container__item--phone">720-555-1212</p>
+                <p class="item-container__item--duration">3 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C3</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 123456789</p>
+                <p class="item-container__item--name">Anne Lister</p>
+                <p class="item-container__item--phone">303-555-1212</p>
+                <p class="item-container__item--duration">4 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 789123456</p>
+                <p class="item-container__item--name">Kate McKinnon</p>
+                <p class="item-container__item--phone">970-555-1212</p>
+                <p class="item-container__item--duration">2 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B6</button>
+              </article>
+            </section>
+          </section>
+
+          <section class="content__future" id="futureBookings">Future Bookings
+
+          </section>
+        </section>
+
+        <section class="content__spending">
+          <h4 class="content__spending--text">You have spent <span id="customerTotalSpending"></span> so far this year.</h4>
+        </section>
+
+        <section class="content__new-reservation">New reservation -- show calendar, then available rooms for selected dates, filter by roomType property
+          <figure>
+            <i class="far fa-calendar-star fa-2x"></i>
+          </figure>
+
+        </section>
+      </section>
     </main>
 
-<!--      <footer>-->
-<!--       maybe use a footer??  -->
-<!--      </footer>-->
+    <footer class="hidden">
+      <figure class="footer__logo logo">
+        <img class="logo__img" src="/images/pouncecat_orange.png" alt="orange cat pouncing logo">
+        <span class="logo__name--footer">pounce</span>
+      </figure>
+
+      <ul class="footer-list">
+        <li class="footer-list__links">about us</li>
+        <li class="footer-list__links">contact us</li>
+        <li class="footer-list__links">github</li>
+      </ul>
+    </footer>
 
   </body>
 </html>
