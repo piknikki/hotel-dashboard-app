@@ -113,7 +113,7 @@
 
       <section class="dashboard-content">
         <h2 class="dashboard-title">Dashboard</h2>
-        <section class="content content__future">
+        <section class="content content__future hidden">
           FUTURE BOOKINGS
           <section class="content__bookings" id="futureBookings"></section>
         </section>
@@ -129,18 +129,21 @@
             <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
         </section>
 
-        <section class="content content__new-reservation hidden">
+        <section class="content content__new-reservation ">
           MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
-          <form>
+          <form id="form">
             <fieldset>
               <legend>First, choose a date</legend>
+              <p>If you don't want to filter by type, you'll see all rooms available for all room types.</p>
+              <br>
               <section class="form-wrapper">
-                <label for="inputDate">Date</label><br/>
-                <input type="text" id="inputDate" name="date" placeholder="YYYY/MM/DD">
+                <label for="inputDate">Date</label>
+                <!--  todo - configure the date picker here -->
+                <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
 
-                <label>Type of Room</label>
-                <select name="types" id="types-selector" class="dropdown" >
-                  <option value="" class="dropdown__item"></option>
+                <label>Filter by Type of Room</label>
+                <select name="types" id="typesSelector" class="dropdown" >
+                  <option value="none" class="dropdown__item"></option>
                   <option value="single-room" class="dropdown__item">Single Room</option>
                   <option value="junior-suite" class="dropdown__item">Junior Suite</option>
                   <option value="suite" class="dropdown__item">Suite</option>
@@ -155,6 +158,10 @@
 
             </fieldset>
           </form>
+        </section>
+
+        <section class="content content__available-Rooms">
+          <section class="content__bookings" id="availableRooms"></section>
         </section>
       </section>
     </main>

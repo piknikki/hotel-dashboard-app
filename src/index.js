@@ -24,8 +24,11 @@ const futureBookingsSection = document.getElementsByClassName('content__future')
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
-
-
+const availableRoomsSection = document.getElementsByClassName('content__available-Rooms')[0];
+const availableRoomsSelector = document.getElementById('availableRooms');
+const formSelector = document.getElementById('form');
+const newBookingCancelButton = document.getElementById('newBookingCancel');
+const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 
 
 // *** Build page *** //
@@ -57,12 +60,18 @@ const getRoomData = fetch(`http://localhost:3001/api/v1/rooms`)
     return response.json()
   })
 
+let searchableData;
+let roomInfo;
+
 const createCurrentDataSet = () => {
   Promise.all([getUserData, getBookingData, getRoomData])
     .then((allData) => {
       const userData = allData[0];
       const bookingData = allData[1].bookings;
       const roomData = allData[2].rooms;
+
+      searchableData = bookingData;
+      roomInfo = roomData;
 
       // create current user
       const today = '2020/02/02';
@@ -122,8 +131,9 @@ const createCurrentDataSet = () => {
       const totalSpent = userBookingsRepo.getTotalSpent();
       document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
 
-      const types = pastBookings.map(booking => booking.roomType).concat(currentAndFutureBookings.map(booking => booking.roomType))
-      console.log([...new Set(types)])
+      // const types = pastBookings.map(booking => booking.roomType).concat(currentAndFutureBookings.map(booking => booking.roomType))
+
+
     })
     .catch(error => console.log(error.message))
 }
@@ -162,6 +172,13 @@ const showNewResSection = () => {
   hide(pastBookingsSection)
 }
 
+const resetForm = () => {
+  formSelector.reset()
+}
+
+const createAllBookingsData = () => {
+
+}
 
 // *** Event listeners *** //
 
@@ -169,4 +186,50 @@ pastButton.addEventListener('click', showPastSection)
 futureButton.addEventListener('click', showFutureSection)
 spendingButton.addEventListener('click', showSpendingSection)
 newReservationButton.addEventListener('click', showNewResSection)
+newBookingCancelButton.addEventListener('click', resetForm)
+newBookingSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
 
+  const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
+  const dropdownSelection = document.getElementById('typesSelector').value
+  console.log(dropdownSelection)
+
+  let roomsAvailable = roomInfo.filter(room => {
+    if (!roomsBooked.includes(room.number)) {
+      return room
+    }
+  })
+
+  if (dropdownSelection !== 'none') {
+    roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
+  }
+
+  displayAvailableRooms(roomsAvailable)
+  // formSelector.reset()
+})
+
+const displayAvailableRooms = (roomsAvailable) => {
+  console.log(roomsAvailable)
+  // availableRoomsSection.classList.toggle('hidden')
+
+  let availChunk = ''
+
+  roomsAvailable.forEach(room => {
+    const roomTypeSlug = room.roomType.split(' ').join('-');
+    availChunk += `
+          <article class="content__bookings--item room-container">
+            <p class="room-container__item--number">Room Number: ${room.number}</p>
+            <p class="room-container__item--bed-size">Bed Size: ${room.bedSize}</p>
+            <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
+            <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
+            <p class="room-container__item--cost-per-night">Cost per Night: ${room.costPerNight}</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${room.roomType}</button>
+          </article>
+        `
+  })
+
+  availableRoomsSelector.innerHTML = availChunk
+
+
+}
