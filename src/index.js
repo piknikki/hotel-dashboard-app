@@ -7,7 +7,7 @@ import User from "./User";
 import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
-const userName = 'customer40'
+const userName = 'customer22'
 // todo => this will come from the login input not sure where it will live yet
 const userId = userName.slice(8);
 
@@ -122,6 +122,8 @@ const createCurrentDataSet = () => {
       const totalSpent = userBookingsRepo.getTotalSpent();
       document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
 
+      const types = pastBookings.map(booking => booking.roomType).concat(currentAndFutureBookings.map(booking => booking.roomType))
+      console.log([...new Set(types)])
     })
     .catch(error => console.log(error.message))
 }
