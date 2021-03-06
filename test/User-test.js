@@ -1,13 +1,21 @@
 import { expect } from 'chai';
 import User from '../src/User';
+import customersTestData from './customer-testdata';
 
 describe('User', function() {
-  let user;
+  let user1;
   beforeEach(() => {
-    user = new User('customer50')
+    user1 = new User(customersTestData[0])
   })
 
-  it('should instantiate a new user', function() {
-    expect(user).to.exist;
+  it('should instantiate a new user', () => {
+    expect(user1).to.exist;
   });
+
+  it('should have a new user name and id', () => {
+    expect(user1).to.deep.equal(  {
+      "id": 1,
+      "name": "Leatha Ullrich"
+    })
+  })
 });

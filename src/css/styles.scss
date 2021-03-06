@@ -95,14 +95,15 @@ a {
 }
 
 .dashboard-menu {
-  color: dimgray; //todo ==> develop a range of the greys???
-  width: 20%;
+  color: dimgray; //todo ==> make this accessible color palette
+  width: 25%;
   background: white;
   padding: 30px;
   border-right: 1px solid gray;
 }
 
 .dashboard-label {
+  color: #05518c;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -113,23 +114,119 @@ a {
   }
 }
 
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1em;
+  border: none;
+  background: white;
+}
+
 .menu {
-  display: grid;
-  grid-template-columns: 30% 70%;
-  grid-template-rows: 25% 25% 25% 25%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
 
   &__item {
     &--icon {
-      //margin-right: 10px;
       margin: 10px 15px;
     }
 
     &--text {
-      font-size: 0.8em;
-      margin-top: 15px;
-      padding-left: 5px;
     }
   }
+}
+
+// *** Dashboard Content Container *** //
+.dashboard-title {
+  font-weight: bold;
+  color: dimgray;
+  margin-bottom: 10px;
+}
+
+.dashboard-content {
+  width: 80%;
+  padding: 30px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+}
+
+.content {
+  flex-flow: column nowrap;
+  color: gray;
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px lightgray;
+  margin: 10px;
+
+  &__bookings {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+
+    &--item {
+      margin: 5px 10px;
+      width: 100%;
+      height: 100%;
+      border: 1px solid lightgray;
+    }
+  }
+
+  &__spending {
+    margin: 5px 10px;
+  }
+}
+
+.item-container {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+  padding: 20px;
+  line-height: 1.5em;
+
+  &__item {
+    &--id {
+      color: #50BDFB;
+    }
+
+    &--date,
+    &--beds {
+      font-weight: bold;
+    }
+
+    &--duration {
+      margin-bottom: 10px;
+    }
+
+    &--room-type {
+      padding: 5px;
+      border-radius: 15px;
+      color: white;
+      border: none;
+
+    }
+  }
+}
+
+// todo ==> make sure all room types are taken care of
+.single-room {
+  background: #48d085;
+}
+
+.junior-suite {
+  background: #F799CB;
+}
+
+.residential-suite {
+  background: #818FD1;
+}
+
+.suite {
+  background: #e5a93b;
 }
 
 

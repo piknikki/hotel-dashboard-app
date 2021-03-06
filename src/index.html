@@ -23,11 +23,11 @@
       <ul class="header__item header-links">
         <li class="header-links__item">
           <i class="fal fa-calendar-alt fa-lg"></i>
-          <span class="date"></span>
+          <span class="date" id="headerDate"></span>
         </li>
         <li class="header-links__item">
           <i class="fal fa-user fa-lg"></i>
-          <span class="user-name"></span>
+          <span class="user-name" id="userName"></span>
         </li>
         <li class="header-links__item">
           <a href="#">
@@ -87,36 +87,69 @@
           <span class="dashboard-label__item">Customer Dashboard</span>
         </span>
 
-        <section class="menu">
-          <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
-          <span class="menu__item--text">Past Reservations</span>
+        <button type="button" id="futureButton">
           <i class="fal fa-bed fa-lg menu__item--icon" ></i>
           <span class="menu__item--text">Future Reservations</span>
-          <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
-          <span class="menu__item--text">Amount Spent</span>
-          <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
-          <span class="menu__item--text">New Reservation</span>
+        </button>
+
+        <section class="menu">
+          <button type="button" id="pastButton">
+            <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
+            <span class="menu__item--text">Past Reservations</span>
+          </button>
+
+          <button type="button" id="spendingButton">
+            <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
+            <span class="menu__item--text">Amount Spent</span>
+          </button>
+
+          <button type="button" id="newReservationButton">
+            <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
+            <span class="menu__item--text">New Reservation</span>
+          </button>
+
+        </section>
+      </section>
+
+      <section class="dashboard-content">
+        <h2 class="dashboard-title">Dashboard</h2>
+        <section class="content content__future">
+          FUTURE BOOKINGS
+          <section class="content__bookings" id="futureBookings"></section>
         </section>
 
-      </section>
+        <section class="content content__past hidden">
+          PAST BOOKINGS
+          <section class="content__bookings" id="pastBookings"></section>
+        </section>
 
-      <section>
-        dashboard content fills rest of page
-        <br>
-        past reservations
-        <br>
-        current and future reservations (have delete functionality here)
-        <br>
-        total spending on all reservations
-        <br>
-        add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
-      </section>
 
+        <section class="content content__spending hidden">
+          SPENDING
+            <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
+        </section>
+
+        <section class="content content__new-reservation hidden">
+          MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
+            <figure>
+              <i class="far fa-calendar-star fa-2x"></i>
+            </figure>
+        </section>
+      </section>
     </main>
 
-<!--      <footer>-->
-<!--       maybe use a footer??  -->
-<!--      </footer>-->
+<!--    <footer class="hidden">-->
+<!--      <figure class="footer__logo logo">-->
+<!--        <img class="logo__img" src="/images/pouncecat_orange.png" alt="orange cat pouncing logo">-->
+<!--        <span class="logo__name&#45;&#45;footer">pounce</span>-->
+<!--      </figure>-->
+
+<!--      <ul class="footer-list">-->
+<!--        <li class="footer-list__links">about us</li>-->
+<!--        <li class="footer-list__links">contact us</li>-->
+<!--        <li class="footer-list__links">github</li>-->
+<!--      </ul>-->
+<!--    </footer>-->
 
   </body>
 </html>
