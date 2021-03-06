@@ -50,7 +50,7 @@ const createCurrentDataSet = () => {
       const roomData = allData[2].rooms;
 
       // create current user
-      const today = '2019/01/01';
+      const today = '2020/02/02';
       // const date = new Date();
       // const today = date.toLocaleDateString();
       const currentUser = new User(userData)
@@ -64,10 +64,11 @@ const createCurrentDataSet = () => {
       const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
       // put past reservations on page
+      const pastBookings = userBookingsRepo.getPastBookings(today)
 
 
       // put current and future reservations on page
-
+      const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
 
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
