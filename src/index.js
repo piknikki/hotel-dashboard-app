@@ -14,6 +14,14 @@ const userId = userName.slice(8);
 const userNameSelector = document.getElementById('userName');
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
+const futureBookingsSection = document.getElementsByClassName('content__future')[0];
+const pastBookingsSection = document.getElementsByClassName('content__past')[0];
+const spendingSection = document.getElementsByClassName('content__spending')[0];
+const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
+
+const hide = (element) => element.classList.add('hidden');
+const display = (element) => element.classList.remove('hidden');
+
 
 // *** Build page *** //
 
@@ -67,14 +75,12 @@ const createCurrentDataSet = () => {
 
       // put past reservations on page
       const pastBookings = userBookingsRepo.getPastBookings(today)
-      console.log("SHOULD BE A past OBJECT", pastBookings)
 
-
-      let chunk = ''
+      let pastChunk = ''
       pastBookings.forEach(booking => {
         const roomTypeSlug = booking.roomType.split(' ').join('-');
 
-          chunk += `
+          pastChunk += `
           <article class="content__bookings--item item-container">
             <p class="item-container__item--id">ID: ${booking.id}</p>
             <p class="item-container__item--date">Date: ${booking.date}</p>
@@ -85,11 +91,27 @@ const createCurrentDataSet = () => {
         `
       })
 
-      pastBookingsSelector.innerHTML = chunk
+      pastBookingsSelector.innerHTML = pastChunk
 
       // put current and future reservations on page
       const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
 
+      let futureChunk = ''
+      currentAndFutureBookings.forEach(booking => {
+        const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+        futureChunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
+      })
+
+      futureBookingsSelector.innerHTML = futureChunk
 
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
