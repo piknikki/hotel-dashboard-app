@@ -236,10 +236,21 @@ button {
     }
 
     &--room-type {
+      margin-bottom: 10px;
       padding: 5px 10px;
       border-radius: 15px;
       color: white;
       border: none;
+    }
+
+    &--submit {
+      float: right;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      color: black;
+      border: none;
+      background: coral;
     }
 
   }

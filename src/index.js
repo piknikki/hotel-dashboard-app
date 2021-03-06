@@ -224,12 +224,13 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
     const roomTypeSlug = room.roomType.split(' ').join('-');
     availChunk += `
           <article class="content__bookings--item room-container" id="roomContainer">
+          <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
             <p class="room-container__item--number">Room Number: ${room.number}</p>
             <p class="room-container__item--bed-size">Bed Size: ${room.bedSize}</p>
             <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
             <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
-            <p class="room-container__item--cost-per-night">Cost per Night: ${room.costPerNight}</p>
-            <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
+            <p class="room-container__item--cost-per-night">Cost per Night: $ ${room.costPerNight}</p>
+            
             <button class="room-container__item--submit" 
               id="selectRoom" 
               data-id="${room.number}" 
