@@ -14,13 +14,18 @@ const userId = userName.slice(8);
 const userNameSelector = document.getElementById('userName');
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
+const pastButton = document.getElementById('pastButton');
+const futureButton = document.getElementById('futureButton');
+const spendingButton = document.getElementById('spendingButton');
+const newReservationButton = document.getElementById('newReservationButton');
+
+
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
 
-const hide = (element) => element.classList.add('hidden');
-const display = (element) => element.classList.remove('hidden');
+
 
 
 // *** Build page *** //
@@ -124,9 +129,42 @@ const createCurrentDataSet = () => {
 createCurrentDataSet();
 
 // *** General Functions *** //
+const hide = (element) => element.classList.add('hidden');
+const display = (element) => element.classList.remove('hidden');
 
+const showPastSection = () => {
+  hide(futureBookingsSection)
+  hide(spendingSection)
+  hide(newReservationSection)
+  display(pastBookingsSection)
+}
+
+const showFutureSection = () => {
+  display(futureBookingsSection)
+  hide(spendingSection)
+  hide(newReservationSection)
+  hide(pastBookingsSection)
+}
+
+const showSpendingSection = () => {
+  hide(futureBookingsSection)
+  display(spendingSection)
+  hide(newReservationSection)
+  hide(pastBookingsSection)
+}
+
+const showNewResSection = () => {
+  hide(futureBookingsSection)
+  hide(spendingSection)
+  display(newReservationSection)
+  hide(pastBookingsSection)
+}
 
 
 // *** Event listeners *** //
 
+pastButton.addEventListener('click', showPastSection)
+futureButton.addEventListener('click', showFutureSection)
+spendingButton.addEventListener('click', showSpendingSection)
+newReservationButton.addEventListener('click', showNewResSection)
 
