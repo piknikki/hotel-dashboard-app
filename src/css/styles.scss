@@ -184,6 +184,7 @@ button {
 }
 
 .item-container {
+  // todo ==> try taking out grid, so it looks like room container
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 20% 20% 20% 20% 20%;
@@ -211,6 +212,36 @@ button {
       border: none;
 
     }
+  }
+}
+
+.room-container {
+  padding: 20px;
+  line-height: 1.5em;
+
+  &__item {
+
+    &--number {
+      font-weight: bold;
+    }
+
+    &--bed-size,
+    &--num-beds {
+      color: #50BDFB;
+
+    }
+
+    &--cost-per-night {
+      margin-bottom: 5px;
+    }
+
+    &--room-type {
+      padding: 5px 10px;
+      border-radius: 15px;
+      color: white;
+      border: none;
+    }
+
   }
 }
 

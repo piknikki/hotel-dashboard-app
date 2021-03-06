@@ -210,6 +210,11 @@ newBookingSubmitButton.addEventListener('click', (event) => {
 })
 
 const displayAvailableRooms = (roomsAvailable) => {
+
+  if (roomsAvailable === []) {
+    document.querySelector('.error-message-no-results').innerHTML =
+      'We are so sorry, but there are no rooms available for your search criteria. Please try different dates or room types.'
+  }
   console.log(roomsAvailable)
   // availableRoomsSection.classList.toggle('hidden')
 
@@ -224,7 +229,7 @@ const displayAvailableRooms = (roomsAvailable) => {
             <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
             <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
             <p class="room-container__item--cost-per-night">Cost per Night: ${room.costPerNight}</p>
-            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${room.roomType}</button>
+            <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
           </article>
         `
   })
