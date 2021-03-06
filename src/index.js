@@ -29,6 +29,7 @@ const availableRoomsSelector = document.getElementById('availableRooms');
 const formSelector = document.getElementById('form');
 const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
+const feedbackSelector = document.getElementsByClassName('feedback')[0];
 
 
 // *** Build page *** //
@@ -149,6 +150,7 @@ const showPastSection = () => {
   hide(spendingSection)
   hide(newReservationSection)
   display(pastBookingsSection)
+  hide(availableRoomsSection)
 }
 
 const showFutureSection = () => {
@@ -156,6 +158,7 @@ const showFutureSection = () => {
   hide(spendingSection)
   hide(newReservationSection)
   hide(pastBookingsSection)
+  hide(availableRoomsSection)
 }
 
 const showSpendingSection = () => {
@@ -163,6 +166,7 @@ const showSpendingSection = () => {
   display(spendingSection)
   hide(newReservationSection)
   hide(pastBookingsSection)
+  hide(availableRoomsSection)
 }
 
 const showNewResSection = () => {
@@ -176,9 +180,6 @@ const resetForm = () => {
   formSelector.reset()
 }
 
-const createAllBookingsData = () => {
-
-}
 
 // *** Event listeners *** //
 
@@ -205,17 +206,16 @@ newBookingSubmitButton.addEventListener('click', (event) => {
     roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
   }
 
-  displayAvailableRooms(roomsAvailable)
+  displayAvailableRooms(roomsAvailable, searchDate)
   // formSelector.reset()
 })
 
-const displayAvailableRooms = (roomsAvailable) => {
+const displayAvailableRooms = (roomsAvailable, searchDate) => {
 
   if (roomsAvailable === []) {
-    document.querySelector('.error-message-no-results').innerHTML =
+    feedbackSelector.innerHTML =
       'We are so sorry, but there are no rooms available for your search criteria. Please try different dates or room types.'
   }
-  console.log(roomsAvailable)
   // availableRoomsSection.classList.toggle('hidden')
 
   let availChunk = ''
@@ -223,18 +223,37 @@ const displayAvailableRooms = (roomsAvailable) => {
   roomsAvailable.forEach(room => {
     const roomTypeSlug = room.roomType.split(' ').join('-');
     availChunk += `
-          <article class="content__bookings--item room-container">
+          <article class="content__bookings--item room-container" id="roomContainer">
             <p class="room-container__item--number">Room Number: ${room.number}</p>
             <p class="room-container__item--bed-size">Bed Size: ${room.bedSize}</p>
             <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
             <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
             <p class="room-container__item--cost-per-night">Cost per Night: ${room.costPerNight}</p>
             <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
+            <button class="room-container__item--submit" 
+              id="selectRoom" 
+              data-id="${room.number}" 
+              data-date="${searchDate}">
+            Select this room
+            </button>
           </article>
         `
   })
-
   availableRoomsSelector.innerHTML = availChunk
-
-
 }
+
+// const roomSelection = document.getElementById('roomContainer');
+availableRoomsSection.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  const roomSelectedNewRes = event.target.getAttribute('data-id')
+  const dateSelectedNewRes = event.target.getAttribute('data-date')
+  const newBooking = {
+    "id": new Date().valueOf(),
+    "userID": userId,
+    "date": dateSelectedNewRes,
+    "roomNumber": roomSelectedNewRes
+  }
+
+  console.log(newBooking)
+})
