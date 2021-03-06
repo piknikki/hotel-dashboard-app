@@ -4,11 +4,14 @@ import './images/pouncecat_orange.png';
 import './images/pouncecat_white.png';
 
 import User from "./User";
-import Booking from "./Booking";
-import BookingsRepository from "./BookingsRepository";
+import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
+const userName = 'customer40'
+// todo => this will come from the login input not sure where it will live yet
+const userId = userName.slice(8);
 
+const userNameSelector = document.getElementById('userName')
 
 // *** Build page *** //
 
@@ -30,37 +33,46 @@ const getBookingData = fetch(`http://localhost:3001/api/v1/bookings`)
     return response.json()
   })
 
-const userNameSelector = document.querySelector('.user-name')
-
-const userName = 'customer2' // todo => this will come from the login input not sure where it will live yet
-const userId = userName.slice(8);
+/// GET room info
+const getRoomData = fetch(`http://localhost:3001/api/v1/rooms`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json()
+  })
 
 const createCurrentDataSet = () => {
-  Promise.all([getUserData, getBookingData])
+  Promise.all([getUserData, getBookingData, getRoomData])
     .then((allData) => {
-      const date = '2019/01/01';
-      const currentUserId = userNameSelector.getAttribute('data-userId')
+      const userData = allData[0];
+      const bookingData = allData[1].bookings;
+      const roomData = allData[2].rooms;
 
       // create current user
+      const today = '2019/01/01';
       // const date = new Date();
       // const today = date.toLocaleDateString();
-      const user = new User(allData[0])
-      console.log(user)
+      const currentUser = new User(userData)
 
-      document.querySelector('.date').innerHTML = `${date}`
-      userNameSelector.setAttribute('data-userId', user.id)
-      userNameSelector.innerHTML = `Hi, ${user.name}`
+      document.getElementById('headerDate').innerHTML = `${today}`
+      userNameSelector.setAttribute('data-userId', currentUser.id)
+      userNameSelector.innerHTML = `Hi, ${currentUser.name}`
 
-      // create bookings repo
-      const userBookingsRepo = new BookingsRepository()
-      allData[1].bookings.filter(booking => {
-        return booking.userID === currentUserId
-      }).forEach(booking => {
-        booking = new Booking(booking)
-        userBookingsRepo.push(booking)
-      })
+      // create bookings repo -- filter if customer, don't filter if manager
+      const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
+      const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
-      console.log(userBookingsRepo)
+      // put past reservations on page
+
+
+      // put current and future reservations on page
+
+
+      // put total spent on page
+      const totalSpent = userBookingsRepo.getTotalSpent();
+      document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
+
     })
     .catch(error => console.log(error.message))
 }

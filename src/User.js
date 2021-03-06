@@ -9,6 +9,11 @@ class User {
   findPastBookings() {
     // this.allBookings.filter()
   }
+
+  // findFutureBookings
+
+  // find total cost spent
+
 }
 
 export default User;

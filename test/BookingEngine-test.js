@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-import BookingsRepository from '../src/BookingsRepository';
+import BookingEngine from '../src/BookingEngine';
 import bookingsTestData from "./booking-testdata";
 import Booking from "../src/Booking";
 
-describe('BookingsRepository', function() {
+describe('BookingEngine', function() {
   let bookingsRepo1;
 
   beforeEach(() => {
     const testData = bookingsTestData.forEach(bookingTestItem => new Booking(bookingTestItem))
-    bookingsRepo1 = new BookingsRepository(testData)
+    bookingsRepo1 = new BookingEngine(testData)
   })
 
   it('should instantiate a new repository of bookings', () => {
