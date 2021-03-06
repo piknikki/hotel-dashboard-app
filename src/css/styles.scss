@@ -185,18 +185,34 @@ a {
     &--id {
       color: #50BDFB;
     }
-    &--name,
+    &--date,
     &--beds {
       font-weight: bold;
     }
     &--room-type {
-      width: 30px;
+      padding: 5px;
       border-radius: 15px;
       color: white;
       border: none;
       margin-top: 5px;
     }
   }
+}
+
+.single-room {
+  background: #68DF9D;
+}
+
+.junior-suite {
+  background: #F799CB;
+}
+
+.residential-suite {
+  background: #818FD1;
+}
+
+.suite {
+  background: #e5a93b;
 }
 
 

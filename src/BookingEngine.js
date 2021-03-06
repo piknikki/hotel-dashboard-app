@@ -14,18 +14,32 @@ class BookingEngine {
   getCurrentAndFutureBookings(currentDate) {
     const dateCode = Number(currentDate.split('/').join(''))
     this.createDateCode()
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode >= dateCode)
 
-    // todo ==> build up an array of objects that have booking info merged with room info
-    return this.bookings.filter(booking => booking.dateCode >= dateCode)
+    return filteredBookings.reduce((acc, booking) => {
+      const roomAndBookingInfo = {
+        ...booking,
+        ...this.rooms.find(room => room.number === booking.roomNumber)
+      }
+
+      return [...acc, roomAndBookingInfo]
+    }, [])
   }
 
   getPastBookings(currentDate) {
     const dateCode = Number(currentDate.split('/').join(''))
     this.createDateCode()
 
-    // todo ==> build up an array of objects that have booking info merged with room info
-    return this.bookings.filter(booking => booking.dateCode <= dateCode)
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode <= dateCode)
 
+    return filteredBookings.reduce((acc, booking) => {
+      const roomAndBookingInfo = {
+        ...booking,
+        ...this.rooms.find(room => room.number === booking.roomNumber)
+      }
+
+      return [...acc, roomAndBookingInfo]
+    }, [])
   }
 
   getTotalSpent() {

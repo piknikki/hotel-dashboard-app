@@ -67,25 +67,29 @@ const createCurrentDataSet = () => {
 
       // put past reservations on page
       const pastBookings = userBookingsRepo.getPastBookings(today)
-      console.log(pastBookings)
+      console.log("SHOULD BE A past OBJECT", pastBookings)
+
 
       let chunk = ''
       pastBookings.forEach(booking => {
-        chunk += `
-        <article class="content__bookings--item item-container">
-          <p class="item-container__item--id">ID: ${booking.id}</p>
-          <p class="item-container__item--date">Date: ${booking.date}</p>
-          <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-          <p class="item-container__item--duration">Duration: 1 night</p>
-          <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
-        </article>
-      `
+        const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+          chunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
       })
 
       pastBookingsSelector.innerHTML = chunk
 
       // put current and future reservations on page
       const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
+
 
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
