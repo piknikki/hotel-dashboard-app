@@ -31,6 +31,7 @@ const newReservationButton = document.getElementById('newReservationButton');
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
+const inputDateSelector = document.getElementById('inputDate');
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
 const availableRoomsSection = document.getElementsByClassName('content__available-Rooms')[0];
 const availableRoomsSelector = document.getElementById('availableRooms');
@@ -116,6 +117,7 @@ const createCurrentDataSet = () => {
       // const today = '2020/02/02';
       const date = new Date().toISOString();
       const dateStr = date.split('T');
+      inputDateSelector.setAttribute('min', dateStr[0])
       let today = dateStr[0].split('-').join('/')
       const currentUser = new User(userData)
 
@@ -178,6 +180,7 @@ const createCurrentDataSet = () => {
 }
 
 // *** General Functions *** //
+
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
 
@@ -311,8 +314,6 @@ newBookingSubmitButton.addEventListener('click', (event) => {
     roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
   }
 
-  updateBookingData()
-  createCurrentDataSet()
   displayAvailableRooms(roomsAvailable, searchDate)
   // formSelector.reset()
 })
@@ -332,6 +333,8 @@ availableRoomsSection.addEventListener('click', (event) => {
   }
 
   sendBookingData(newBooking)
+  updateBookingData()
+  createCurrentDataSet()
 })
 
 const loginModalSelector = document.getElementById('loginModal');
