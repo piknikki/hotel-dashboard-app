@@ -12,20 +12,24 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
-body {
-  line-height: 1;
-}
+
 ol, ul {
   list-style: none;
 }
 
 body {
+  line-height: 1;
   font-family: 'Mulish', sans-serif;
   background: #f4f4f4;
+
 }
 
 // *** General *** //
+.wrapper {
 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 // *** Modals *** //
 .modal {
@@ -97,6 +101,36 @@ a {
   border-top: 1px solid gray;
   padding: 50px;
   background: #F4F4F4;
+  margin: 0 auto;
+}
+
+.landing-welcome {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 10px;
+}
+
+.features {
+  margin: 20px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+
+  &__item {
+    margin: 0 10px;
+    color: #05518c;
+    display: flex;
+    align-items: center;
+
+    &--icon {
+      margin: 0 5px;
+    }
+  }
+}
+
+.cat-bed {
+  width: 100%;
 }
 
 
@@ -340,9 +374,26 @@ select {
 
 }
 
-@media screen and (max-width: 624px) {
+@media screen and (max-width: 650px) {
+  .landing-view {
+    padding: 0;
+  }
 
+  .features {
+    flex-flow: column wrap;
+    align-items: center;
 
+    &__item {
+      margin: 5px 10px;
+      color: #05518c;
+      display: flex;
+      align-items: center;
+
+      &--icon {
+        margin: 0 10px;
+      }
+    }
+  }
 
 }
 

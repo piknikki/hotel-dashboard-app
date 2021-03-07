@@ -2,6 +2,7 @@ import './css/_base.scss';
 import './css/styles.scss';
 import './images/pouncecat_orange.png';
 import './images/pouncecat_white.png';
+import './images/eyes.png'
 
 import User from "./User";
 import BookingEngine from "./BookingEngine";
@@ -333,7 +334,7 @@ logoutModalSelector.addEventListener('click', (event) => {
 logoutSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  // display(homeView)
+  // display(landingView)
 })
 
 

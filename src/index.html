@@ -13,209 +13,228 @@
   </head>
 
   <body>
+    <section class="wrapper">
+      <header class="header">
+        <figure class="header__item logo">
+          <img class="header__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
+          <span class="header__item--text">pounce</span>
+        </figure>
 
-    <header class="header">
-      <figure class="header__item logo">
-        <img class="header__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
-        <span class="header__item--text">pounce</span>
-      </figure>
-
-      <ul class="header__item header-links">
-        <li class="header-links__item">
-          <i class="fal fa-calendar-alt fa-lg"></i>
-          <span class="date" id="headerDate"></span>
-        </li>
-        <li class="header-links__item">
-          <i class="fal fa-user fa-lg"></i>
-          <span class="user-name" id="userName"></span>
-        </li>
-        <li class="header-links__item">
-          <button class="header-links__item--login" id="loginModal">
-            log in
-            <span class="modal-icon"><i class="far fa-sign-in-alt fa-lg"></i></span>
-          </button>
-        </li>
-        <li class="header-links__item">
-          <button class="header-links__item--logout" id="logoutModal">
-            log out
-            <span class="modal-icon"><i class="far fa-sign-out-alt fa-lg"></i></span>
-          </button>
-        </li>
-      </ul>
-
-      <section class="modal-container login hidden" id="login">
-        <div class="modal">
-          <form>
-            <label for="login-username">
-              username
-            </label>
-            <input type="text" id="login-username">
-
-            <label for="login-password">
-              password
-            </label>
-            <input type="text" id="login-password">
-
-            <button class="submit-login" id="submitLogin">
-              Submit
-              <span class="modal-icon"><i class="far fa-sign-in-alt"></i></span>
+        <ul class="header__item header-links">
+          <li class="header-links__item">
+            <i class="fal fa-calendar-alt fa-lg"></i>
+            <span class="date" id="headerDate"></span>
+          </li>
+          <li class="header-links__item">
+            <i class="fal fa-user fa-lg"></i>
+            <span class="user-name" id="userName"></span>
+          </li>
+          <li class="header-links__item">
+            <button class="header-links__item--login" id="loginModal">
+              log in
+              <span class="modal-icon"><i class="far fa-sign-in-alt fa-lg"></i></span>
             </button>
-          </form>
-        </div>
-      </section>
+          </li>
+          <li class="header-links__item">
+            <button class="header-links__item--logout" id="logoutModal">
+              log out
+              <span class="modal-icon"><i class="far fa-sign-out-alt fa-lg"></i></span>
+            </button>
+          </li>
+        </ul>
 
-      <section class="modal-container logout hidden" id="logout">
-        <div class="modal">
-          <button class="submit-logout" id="submitLogout">
-           Are you sure you want to log out?
-            <span class="modal-icon"><i class="far fa-sign-out-alt"></i></span>
+        <section class="modal-container login hidden" id="login">
+          <div class="modal">
+            <form>
+              <label for="login-username">
+                username
+              </label>
+              <input type="text" id="login-username">
+
+              <label for="login-password">
+                password
+              </label>
+              <input type="text" id="login-password">
+
+              <button class="submit-login" id="submitLogin">
+                Submit
+                <span class="modal-icon"><i class="far fa-sign-in-alt"></i></span>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <section class="modal-container logout hidden" id="logout">
+          <div class="modal">
+            <button class="submit-logout" id="submitLogout">
+             Are you sure you want to log out?
+              <span class="modal-icon"><i class="far fa-sign-out-alt"></i></span>
+            </button>
+          </div>
+        </section>
+      </header>
+
+  <!--      Landing view   -->
+
+        <main class="landing-view " id="landingView">
+          <p class="landing-welcome">Travel with Peace of Mind -- knowing that you and your cat are both comfortable.</p>
+          <section >
+            <ul class="features">
+              <li class="features__item">
+                <i class="fas fa-usd-circle fa-2x features__item--icon"></i>
+                <span class="features__item--text">Best Rate Guarantee</span>
+              </li>
+              <li class="features__item">
+                <i class="fas fa-clock fa-2x features__item--icon"></i>
+                <span class="features__item--text">Flexible Cancellation</span>
+              </li>
+              <li class="features__item">
+                <i class="fas fa-spa fa-2x features__item--icon"></i>
+                <span class="features__item--text">Commitment to Clean</span>
+              </li>
+              <li class="features__item">
+                <i class="fas fa-phone-laptop fa-2x features__item--icon"></i>
+                <span class="features__item--text">Contactless Services</span>
+              </li>
+            </ul>
+          </section>
+        </main>
+
+        <figure class="landing-view ">
+          <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
+        </figure>
+
+
+
+  <!--      Manager view   -->
+      <main class="manager-view hidden" id="managerView">
+        <section class="dashboard-menu">
+          dashboard menu on left side
+        </section>
+        <section>
+          dashboard content fills rest of page
+          <br>
+          search for customer and show:
+          <br>
+          past reservations
+          <br>
+          current and future reservations (have delete functionality here)
+          <br>
+          total spending on all reservations
+          <br>
+          add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
+        </section>
+
+      </main>
+
+
+  <!--      Customer view   -->
+      <main class="customer-view hidden" id="customerView">
+        <section class="dashboard-menu">
+          <span class="dashboard-label">
+            <i class="fal fa-key fa-2x dashboard-label__item"></i>
+            <span class="dashboard-label__item"><h3>Customer Dashboard</h3></span>
+          </span>
+
+          <button type="button" id="futureButton">
+            <i class="fal fa-bed fa-lg menu__item--icon" ></i>
+            <span class="menu__item--text">Future Reservations</span>
           </button>
-        </div>
-      </section>
-    </header>
 
-<!--      Landing view   -->
-    <main class="landing-view " id="landingView">
-      <section>
-        some features spread out on page
-      </section>
-      <section>
-        Login modal????
-      </section>
-      <section>
-        hero image
-      </section>
-    </main>
+          <section class="menu">
+            <button type="button" id="pastButton">
+              <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">Past Reservations</span>
+            </button>
 
-<!--      Manager view   -->
-    <main class="manager-view hidden" id="managerView">
-      <section class="dashboard-menu">
-        dashboard menu on left side
-      </section>
-      <section>
-        dashboard content fills rest of page
-        <br>
-        search for customer and show:
-        <br>
-        past reservations
-        <br>
-        current and future reservations (have delete functionality here)
-        <br>
-        total spending on all reservations
-        <br>
-        add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
-      </section>
+            <button type="button" id="spendingButton">
+              <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">Amount Spent</span>
+            </button>
 
-    </main>
-
-
-<!--      Customer view   -->
-    <main class="customer-view hidden" id="customerView">
-      <section class="dashboard-menu">
-        <span class="dashboard-label">
-          <i class="fal fa-key fa-2x dashboard-label__item"></i>
-          <span class="dashboard-label__item"><h3>Customer Dashboard</h3></span>
-        </span>
-
-        <button type="button" id="futureButton">
-          <i class="fal fa-bed fa-lg menu__item--icon" ></i>
-          <span class="menu__item--text">Future Reservations</span>
-        </button>
-
-        <section class="menu">
-          <button type="button" id="pastButton">
-            <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
-            <span class="menu__item--text">Past Reservations</span>
-          </button>
-
-          <button type="button" id="spendingButton">
-            <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
-            <span class="menu__item--text">Amount Spent</span>
-          </button>
-
-          <button type="button" id="newReservationButton">
-            <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
-            <span class="menu__item--text">New Reservation</span>
-          </button>
-
-        </section>
-      </section>
-
-      <section class="dashboard-content">
-        <h2 class="dashboard-title">Dashboard</h2>
-        <section class="content content__future ">
-          FUTURE BOOKINGS
-          <section class="content__bookings" id="futureBookings"></section>
-        </section>
-
-        <section class="content content__past hidden">
-          PAST BOOKINGS
-          <section class="content__bookings" id="pastBookings"></section>
-        </section>
-
-
-        <section class="content content__spending hidden">
-          SPENDING
-            <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
-        </section>
-
-        <section class="content content__new-reservation hidden">
-          MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
-          <form id="form">
-            <fieldset>
-              <legend>First, choose a date</legend>
-              <br>
-              <section class="form-wrapper">
-                <label for="inputDate">Date</label>
-                <!--  todo - configure the date picker here -->
-                <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
-
-                <label>Filter by Type of Room</label>
-                <select name="types" id="typesSelector" class="dropdown" >
-                  <option value="none" class="dropdown__item"></option>
-                  <option value="single-room" class="dropdown__item">Single Room</option>
-                  <option value="junior-suite" class="dropdown__item">Junior Suite</option>
-                  <option value="suite" class="dropdown__item">Suite</option>
-                  <option value="residential-suite" class="dropdown__item">Residential Suite</option>
-                </select>
-              </section>
-
-              <section class="button-box">
-                <button id="newBookingCancel" class="button-box__item" type="reset">Cancel</button>
-
-                <button id="newBookingSubmit" class="button-box__item" type="button">Submit</button>
-              </section>
-
-            </fieldset>
-          </form>
-        </section>
-
-        <section class="content content__available-Rooms">
-            <section class="feedback" id="feedback">
-              If you don't want to filter by type, you'll see all rooms available for all room types.
-            </section>
-            <section class="apologies" id="apologies">
-
-            </section>
-          <section class="content__bookings" id="availableRooms">
+            <button type="button" id="newReservationButton">
+              <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">New Reservation</span>
+            </button>
 
           </section>
         </section>
-      </section>
-    </main>
 
-<!--    <footer class="hidden">-->
-<!--      <figure class="footer__logo logo">-->
-<!--        <img class="logo__img" src="/images/pouncecat_orange.png" alt="orange cat pouncing logo">-->
-<!--        <span class="logo__name&#45;&#45;footer">pounce</span>-->
-<!--      </figure>-->
+        <section class="dashboard-content">
+          <h2 class="dashboard-title">Dashboard</h2>
+          <section class="content content__future ">
+            FUTURE BOOKINGS
+            <section class="content__bookings" id="futureBookings"></section>
+          </section>
 
-<!--      <ul class="footer-list">-->
-<!--        <li class="footer-list__links">about us</li>-->
-<!--        <li class="footer-list__links">contact us</li>-->
-<!--        <li class="footer-list__links">github</li>-->
-<!--      </ul>-->
-<!--    </footer>-->
+          <section class="content content__past hidden">
+            PAST BOOKINGS
+            <section class="content__bookings" id="pastBookings"></section>
+          </section>
 
+
+          <section class="content content__spending hidden">
+            SPENDING
+              <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
+          </section>
+
+          <section class="content content__new-reservation hidden">
+            MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
+            <form id="form">
+              <fieldset>
+                <legend>First, choose a date</legend>
+                <br>
+                <section class="form-wrapper">
+                  <label for="inputDate">Date</label>
+                  <!--  todo - configure the date picker here -->
+                  <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
+
+                  <label>Filter by Type of Room</label>
+                  <select name="types" id="typesSelector" class="dropdown" >
+                    <option value="none" class="dropdown__item"></option>
+                    <option value="single-room" class="dropdown__item">Single Room</option>
+                    <option value="junior-suite" class="dropdown__item">Junior Suite</option>
+                    <option value="suite" class="dropdown__item">Suite</option>
+                    <option value="residential-suite" class="dropdown__item">Residential Suite</option>
+                  </select>
+                </section>
+
+                <section class="button-box">
+                  <button id="newBookingCancel" class="button-box__item" type="reset">Cancel</button>
+
+                  <button id="newBookingSubmit" class="button-box__item" type="button">Submit</button>
+                </section>
+
+              </fieldset>
+            </form>
+          </section>
+
+          <section class="content content__available-Rooms">
+              <section class="feedback" id="feedback">
+                If you don't want to filter by type, you'll see all rooms available for all room types.
+              </section>
+              <section class="apologies" id="apologies">
+
+              </section>
+            <section class="content__bookings" id="availableRooms">
+
+            </section>
+          </section>
+        </section>
+      </main>
+
+  <!--    <footer class="hidden">-->
+  <!--      <figure class="footer__logo logo">-->
+  <!--        <img class="logo__img" src="/images/pouncecat_orange.png" alt="orange cat pouncing logo">-->
+  <!--        <span class="logo__name&#45;&#45;footer">pounce</span>-->
+  <!--      </figure>-->
+
+  <!--      <ul class="footer-list">-->
+  <!--        <li class="footer-list__links">about us</li>-->
+  <!--        <li class="footer-list__links">contact us</li>-->
+  <!--        <li class="footer-list__links">github</li>-->
+  <!--      </ul>-->
+  <!--    </footer>-->
+    </section>
   </body>
 </html>
