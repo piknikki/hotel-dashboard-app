@@ -46,15 +46,15 @@
         <section class="modal-container login hidden" id="login">
           <div class="modal">
             <form>
-              <label for="login-username">
+              <label for="loginUsername">
                 username
               </label>
-              <input type="text" id="login-username">
+              <input type="text" id="loginUsername" name="username" placeholder="ex. customer30" required>
 
-              <label for="login-password">
+              <label for="loginPassword">
                 password
               </label>
-              <input type="text" id="login-password">
+              <input type="password" id="loginPassword" name="password" required>
 
               <button class="submit-login" id="submitLogin">
                 Submit
@@ -98,11 +98,12 @@
               </li>
             </ul>
           </section>
-        </main>
 
-        <figure class="landing-view ">
+        </main>
+        <figure class="landing-view " id="landingViewImg">
           <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
         </figure>
+
 
 
 

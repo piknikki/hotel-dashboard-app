@@ -8,9 +8,16 @@ import User from "./User";
 import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
-const userName = 'customer49'
-// todo => this will come from the login input not sure where it will live yet
-const userId = userName.slice(8);
+let globalUserName;
+let globalUserId;
+
+let searchableData;
+let roomInfo;
+
+const landingViewSelector = document.getElementById('landingView');
+const landingViewImgSelector = document.getElementById('landingViewImg')
+const customerViewSelector = document.getElementById('customerView')
+const managerViewSelector = document.getElementById('managerView')
 
 const userNameSelector = document.getElementById('userName');
 const pastBookingsSelector = document.getElementById('pastBookings');
@@ -37,34 +44,40 @@ const apologiesSelector = document.getElementById('apologies');
 // *** Build page *** //
 
 /// GET user info
-const getUserData = fetch(`http://localhost:3001/api/v1/customers/${userId}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
+let getUserData;
+
 
 /// GET booking info
-const getBookingData = fetch(`http://localhost:3001/api/v1/bookings`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
+let getBookingData =
+  fetch(`http://localhost:3001/api/v1/bookings`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json()
+    })
+
 
 /// GET room info
-const getRoomData = fetch(`http://localhost:3001/api/v1/rooms`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
+const getRoomData =
+  fetch(`http://localhost:3001/api/v1/rooms`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json()
+    })
 
-let searchableData;
-let roomInfo;
+const updateBookingData = () => {
+  getBookingData =
+    fetch(`http://localhost:3001/api/v1/bookings`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json()
+      })
+}
 
 /// POST new booking
 const sendBookingData = (inputBookingData) => {
@@ -100,9 +113,10 @@ const createCurrentDataSet = () => {
       roomInfo = roomData;
 
       // create current user
-      const today = '2020/02/02';
-      // const date = new Date();
-      // const today = date.toLocaleDateString();
+      // const today = '2020/02/02';
+      const date = new Date().toISOString();
+      const dateStr = date.split('T');
+      let today = dateStr[0].split('-').join('/')
       const currentUser = new User(userData)
 
       document.getElementById('headerDate').innerHTML = `${today}`
@@ -115,6 +129,7 @@ const createCurrentDataSet = () => {
 
       // put past reservations on page
       const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
+      console.log(pastBookings)
 
       let pastChunk = ''
       pastBookings.forEach(booking => {
@@ -135,6 +150,7 @@ const createCurrentDataSet = () => {
 
       // put current and future reservations on page
       const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
+      console.log(currentAndFutureBookings)
 
       let futureChunk = ''
       currentAndFutureBookings.forEach(booking => {
@@ -160,8 +176,6 @@ const createCurrentDataSet = () => {
     })
     .catch(error => console.log(error.message))
 }
-
-createCurrentDataSet();
 
 // *** General Functions *** //
 const hide = (element) => element.classList.add('hidden');
@@ -196,6 +210,25 @@ const showNewResSection = () => {
   hide(spendingSection)
   display(newReservationSection)
   hide(pastBookingsSection)
+}
+
+const showLandingView = () => {
+  display(landingViewSelector)
+  hide(customerViewSelector)
+  hide(managerViewSelector)
+}
+
+const showCustomerView = () => {
+  hide(landingViewSelector)
+  hide(landingViewImgSelector)
+  display(customerViewSelector)
+  hide(managerViewSelector)
+}
+
+const showManagerView = () => {
+  hide(landingViewSelector)
+  hide(customerViewSelector)
+  display(managerViewSelector)
 }
 
 const resetForm = () => {
@@ -278,6 +311,8 @@ newBookingSubmitButton.addEventListener('click', (event) => {
     roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
   }
 
+  updateBookingData()
+  createCurrentDataSet()
   displayAvailableRooms(roomsAvailable, searchDate)
   // formSelector.reset()
 })
@@ -291,7 +326,7 @@ availableRoomsSection.addEventListener('click', (event) => {
 
   const newBooking = {
     "id": String(new Date().valueOf()),
-    "userID": Number(userId),
+    "userID": Number(globalUserId),
     "date": dateSelectedNewRes,
     "roomNumber": Number(roomSelectedNewRes)
   }
@@ -302,6 +337,8 @@ availableRoomsSection.addEventListener('click', (event) => {
 const loginModalSelector = document.getElementById('loginModal');
 const loginContainer = document.getElementById('login');
 const loginSubmitButton = document.getElementById('submitLogin');
+const inputUsername = document.getElementById('loginUsername')
+const inputPassword = document.getElementById('loginPassword')
 
 const logoutModalSelector = document.getElementById('logoutModal');
 const logoutContainer = document.getElementById('logout');
@@ -313,17 +350,53 @@ loginModalSelector.addEventListener('click', (event) => {
   display(loginContainer)
 })
 
+
+
 loginSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  // collect form data of name and password
-
   // do some error handling
-  // send form data to global??
-  hide(loginContainer)
 
-  // display either manager view or customer view
+  if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
+    globalUserName = inputUsername.value
+    globalUserId = globalUserName.slice(8);
+
+    console.log(globalUserId, globalUserName)
+
+    getUserData =
+      fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json()
+        })
+
+    createCurrentDataSet();
+
+    hide(loginContainer)
+    showCustomerView()
+  } else if (inputUsername[0] === 'm' && inputPassword === 'overlook2021') {
+    showManagerView()
+  } else {
+    // show a message somewhere and reset the login form
+    // either username or password were wrong, try again
+  }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
