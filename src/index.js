@@ -2,16 +2,26 @@ import './css/_base.scss';
 import './css/styles.scss';
 import './images/pouncecat_orange.png';
 import './images/pouncecat_white.png';
+import './images/eyes.png'
 
 import User from "./User";
 import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
-const userName = 'customer49'
-// todo => this will come from the login input not sure where it will live yet
-const userId = userName.slice(8);
+let globalUserName;
+let globalUserId;
 
+let searchableData;
+let roomInfo;
+
+const navDateSelector = document.getElementById('navDate')
 const userNameSelector = document.getElementById('userName');
+
+const landingViewSelector = document.getElementById('landingView');
+const landingViewImgSelector = document.getElementById('landingViewImg')
+const customerViewSelector = document.getElementById('customerView')
+const managerViewSelector = document.getElementById('managerView')
+
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
 const pastButton = document.getElementById('pastButton');
@@ -19,10 +29,10 @@ const futureButton = document.getElementById('futureButton');
 const spendingButton = document.getElementById('spendingButton');
 const newReservationButton = document.getElementById('newReservationButton');
 
-
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
+const inputDateSelector = document.getElementById('inputDate');
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
 const availableRoomsSection = document.getElementsByClassName('content__available-Rooms')[0];
 const availableRoomsSelector = document.getElementById('availableRooms');
@@ -30,39 +40,52 @@ const formSelector = document.getElementById('form');
 const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
+const apologiesSelector = document.getElementById('apologies');
 
+const availabilityContentButton = document.getElementById('availabilityContentButton')
+const revenueButton = document.getElementById('revenueButton')
+const newReservationButtonManager = document.getElementById('newReservationButtonManager')
+
+availabilityContentButton.addEventListener('click', () => {
+
+})
 
 // *** Build page *** //
 
-/// GET user info
-const getUserData = fetch(`http://localhost:3001/api/v1/customers/${userId}`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
+/// GET user info -- declare variable for this to be filled after fetch
+let getUserData;
 
-/// GET booking info
-const getBookingData = fetch(`http://localhost:3001/api/v1/bookings`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
+/// GET booking info -- do this immediately
+let getBookingData =
+  fetch(`http://localhost:3001/api/v1/bookings`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json()
+    })
 
-/// GET room info
-const getRoomData = fetch(`http://localhost:3001/api/v1/rooms`)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    return response.json()
-  })
 
-let searchableData;
-let roomInfo;
+/// GET room info -- do this immediately
+const getRoomData =
+  fetch(`http://localhost:3001/api/v1/rooms`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json()
+    })
+
+const updateBookingData = () => {
+  getBookingData =
+    fetch(`http://localhost:3001/api/v1/bookings`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json()
+      })
+}
 
 /// POST new booking
 const sendBookingData = (inputBookingData) => {
@@ -98,12 +121,14 @@ const createCurrentDataSet = () => {
       roomInfo = roomData;
 
       // create current user
-      const today = '2020/02/02';
-      // const date = new Date();
-      // const today = date.toLocaleDateString();
+      // const today = '2020/02/02';
+      const date = new Date().toISOString();
+      const dateStr = date.split('T');
+      inputDateSelector.setAttribute('min', dateStr[0])
+      let today = dateStr[0].split('-').join('/')
       const currentUser = new User(userData)
 
-      document.getElementById('headerDate').innerHTML = `${today}`
+      document.getElementById('navDate').innerHTML = `${today}`
       userNameSelector.setAttribute('data-userId', currentUser.id)
       userNameSelector.innerHTML = `Hi, ${currentUser.name}`
 
@@ -112,7 +137,7 @@ const createCurrentDataSet = () => {
       const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
       // put past reservations on page
-      const pastBookings = userBookingsRepo.getPastBookings(today)
+      const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
 
       let pastChunk = ''
       pastBookings.forEach(booking => {
@@ -132,7 +157,8 @@ const createCurrentDataSet = () => {
       pastBookingsSelector.innerHTML = pastChunk
 
       // put current and future reservations on page
-      const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
+      const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
+      console.log(currentAndFutureBookings)
 
       let futureChunk = ''
       currentAndFutureBookings.forEach(booking => {
@@ -153,31 +179,44 @@ const createCurrentDataSet = () => {
 
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
-      document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
+      document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
 
     })
     .catch(error => console.log(error.message))
 }
 
-createCurrentDataSet();
-
 // *** General Functions *** //
+
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
 
-const showPastSection = () => {
-  hide(futureBookingsSection)
-  hide(spendingSection)
-  hide(newReservationSection)
-  display(pastBookingsSection)
-  hide(availableRoomsSection)
-}
+
+
 
 const showFutureSection = () => {
   display(futureBookingsSection)
   hide(spendingSection)
   hide(newReservationSection)
   hide(pastBookingsSection)
+  hide(availableRoomsSection)
+}
+
+const availabilitySection = document.getElementsByClassName('content__mgr-availability')[0];
+const revenueSection = document.getElementsByClassName('revenue')[0];
+const mgrNewResSection = document.getElementsByClassName('new-reservation')[0]
+
+const showAvailabilitySection = (event) => {
+  event.preventDefault()
+  display(availabilitySection)
+  hide(revenueSection)
+  hide(mgrNewResSection)
+}
+
+const showPastSection = () => {
+  hide(futureBookingsSection)
+  hide(spendingSection)
+  hide(newReservationSection)
+  display(pastBookingsSection)
   hide(availableRoomsSection)
 }
 
@@ -189,11 +228,56 @@ const showSpendingSection = () => {
   hide(availableRoomsSection)
 }
 
+const showMGRRevenueSection = (event) => {
+  event.preventDefault()
+  hide(availabilitySection)
+  display(revenueSection)
+  hide(mgrNewResSection)
+}
+
 const showNewResSection = () => {
   hide(futureBookingsSection)
   hide(spendingSection)
   display(newReservationSection)
   hide(pastBookingsSection)
+}
+
+const showMGRNewResSection = (event) => {
+  event.preventDefault()
+  hide(availabilitySection)
+  hide(revenueSection)
+  display(mgrNewResSection)
+}
+
+const showLandingView = () => {
+  if (globalUserName === null) {
+    navDateSelector.innerText = ''
+    userNameSelector.innerText = ''
+  }
+
+  display(landingViewSelector)
+  display(landingViewImgSelector)
+  hide(customerViewSelector)
+  hide(managerViewSelector)
+}
+
+const showCustomerView = () => {
+  hide(landingViewSelector)
+  hide(landingViewImgSelector)
+  display(customerViewSelector)
+  hide(managerViewSelector)
+  hide(loginModalSelector)
+  display(logoutModalSelector)
+}
+
+const showManagerView = () => {
+  hide(landingViewSelector)
+  hide(landingViewImgSelector)
+  hide(customerViewSelector)
+  display(managerViewSelector)
+  hide(loginModalSelector)
+  display(logoutModalSelector)
+
 }
 
 const resetForm = () => {
@@ -209,47 +293,16 @@ const displaySuccess = () => {
 
 }
 
-const displayNewBookingInfo = () => {
-  // todo ==> do this, to display after the booking has been successful
-}
-
-
-// *** Event listeners *** //
-
-pastButton.addEventListener('click', showPastSection)
-futureButton.addEventListener('click', showFutureSection)
-spendingButton.addEventListener('click', showSpendingSection)
-newReservationButton.addEventListener('click', showNewResSection)
-newBookingCancelButton.addEventListener('click', resetForm)
-newBookingSubmitButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
-
-  const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
-  const dropdownSelection = document.getElementById('typesSelector').value
-
-  let roomsAvailable = roomInfo.filter(room => {
-    if (!roomsBooked.includes(room.number)) {
-      return room
-    }
-  })
-
-  if (dropdownSelection !== 'none') {
-    roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
-  }
-
-  displayAvailableRooms(roomsAvailable, searchDate)
-  // formSelector.reset()
-})
-
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
+  availableRoomsSection.classList.remove('hidden')
+
   if (roomsAvailable.length === 0) {
-    feedbackSelector.innerHTML = `
-      <p class="apologies">We are so sorry, but there are no rooms available for 
-      your search criteria. Please try different dates or room types.</p>
+    feedbackSelector.innerText = ''
+    apologiesSelector.innerHTML = `
+      We are so sorry, but there are no rooms available for 
+      your search criteria. Please try different dates or room types.
       `
   }
-  // availableRoomsSection.classList.toggle('hidden')
 
   let availChunk = ''
 
@@ -276,6 +329,47 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
   availableRoomsSelector.innerHTML = availChunk
 }
 
+const displayNewBookingInfo = () => {
+  // todo ==> do this, to display after the booking has been successful
+}
+
+
+// *** Event listeners *** //
+
+pastButton.addEventListener('click', showPastSection)
+futureButton.addEventListener('click', showFutureSection)
+spendingButton.addEventListener('click', showSpendingSection)
+newReservationButton.addEventListener('click', showNewResSection)
+newBookingCancelButton.addEventListener('click', resetForm)
+
+availabilityContentButton.addEventListener('click', showAvailabilitySection)
+revenueButton.addEventListener('click', showMGRRevenueSection)
+newReservationButtonManager.addEventListener('click', showMGRNewResSection)
+
+newBookingSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  document.querySelector('#apologies').innerHTML = ''
+  const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
+
+  const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
+  const dropdownSelection = document.getElementById('typesSelector').value
+
+  let roomsAvailable = roomInfo.filter(room => {
+    if (!roomsBooked.includes(room.number)) {
+      return room
+    }
+  })
+
+  if (dropdownSelection !== 'none') {
+    roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
+  }
+
+  displayAvailableRooms(roomsAvailable, searchDate)
+  // formSelector.reset()
+})
+
+
 availableRoomsSection.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -284,11 +378,109 @@ availableRoomsSection.addEventListener('click', (event) => {
 
   const newBooking = {
     "id": String(new Date().valueOf()),
-    "userID": Number(userId),
+    "userID": Number(globalUserId),
     "date": dateSelectedNewRes,
     "roomNumber": Number(roomSelectedNewRes)
   }
 
-  console.log(newBooking)
   sendBookingData(newBooking)
+  updateBookingData()
+  createCurrentDataSet()
 })
+
+const loginModalSelector = document.getElementById('loginModal');
+const loginContainer = document.getElementById('login');
+const loginSubmitButton = document.getElementById('submitLogin');
+const inputUsername = document.getElementById('loginUsername')
+const inputPassword = document.getElementById('loginPassword')
+
+const logoutModalSelector = document.getElementById('logoutModal');
+const logoutContainer = document.getElementById('logout');
+const logoutSubmitButton = document.getElementById('submitLogout');
+
+loginModalSelector.addEventListener('click', (event) => {
+  event.preventDefault()
+  // display modal
+  display(loginContainer)
+
+})
+
+
+
+loginSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  // todo ==>do some error handling
+
+  if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
+    globalUserName = inputUsername.value
+    globalUserId = globalUserName.slice(8);
+
+    getUserData =
+      fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json()
+        })
+
+    createCurrentDataSet();
+
+    hide(loginContainer)
+    showCustomerView()
+  } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
+
+    const date = new Date().toISOString();
+    const dateStr = date.split('T');
+    let today = dateStr[0].split('-').join('/')
+
+    document.getElementById('navDate').innerHTML = `${today}`
+
+    userNameSelector.innerHTML = `Hi, Manager`
+
+    hide(loginContainer)
+    showManagerView()
+  } else {
+    console.log("SOMETHING IS VERY WRONG")
+    // show a message somewhere and reset the login form
+    // either username or password were wrong, try again
+  }
+})
+
+
+logoutModalSelector.addEventListener('click', (event) => {
+  event.preventDefault()
+  display(logoutContainer)
+})
+
+logoutSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  navDateSelector.innerHTML = ''
+  userNameSelector.innerHTML = ''
+
+  hide(logoutModalSelector)
+  hide(logoutSubmitButton)
+  display(loginModalSelector)
+  globalUserName = null;
+  showLandingView();
+})
+
+const gaugeElement = document.querySelector('.gauge');
+function setGaugeValue(gauge, value) {
+  if (value < 0 || value > 1) {
+    return;
+  }
+
+  gauge.querySelector('.gauge__fill').style.transform = `
+    rotate(${value / 2}turn)
+  `;
+
+  gauge.querySelector('.gauge__cover').textContent = `
+    ${Math.round(value * 100)}%
+  `;
+}
+
+// todo --> after pulling info with api call, insert into this function call
+setGaugeValue(gaugeElement, 0.89);
