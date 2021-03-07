@@ -113,7 +113,7 @@ const createCurrentDataSet = () => {
       const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
       // put past reservations on page
-      const pastBookings = userBookingsRepo.getPastBookings(today)
+      const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
 
       let pastChunk = ''
       pastBookings.forEach(booking => {
@@ -133,7 +133,7 @@ const createCurrentDataSet = () => {
       pastBookingsSelector.innerHTML = pastChunk
 
       // put current and future reservations on page
-      const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
+      const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
 
       let futureChunk = ''
       currentAndFutureBookings.forEach(booking => {
@@ -154,7 +154,7 @@ const createCurrentDataSet = () => {
 
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
-      document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
+      document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
 
     })
     .catch(error => console.log(error.message))
@@ -211,6 +211,8 @@ const displaySuccess = () => {
 }
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
+  availableRoomsSection.classList.remove('hidden')
+
   if (roomsAvailable.length === 0) {
     feedbackSelector.innerText = ''
     apologiesSelector.innerHTML = `
@@ -218,7 +220,6 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
       your search criteria. Please try different dates or room types.
       `
   }
-  // availableRoomsSection.classList.toggle('hidden')
 
   let availChunk = ''
 
@@ -259,6 +260,7 @@ newReservationButton.addEventListener('click', showNewResSection)
 newBookingCancelButton.addEventListener('click', resetForm)
 newBookingSubmitButton.addEventListener('click', (event) => {
   event.preventDefault();
+
   document.querySelector('#apologies').innerHTML = ''
   const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
 
@@ -293,6 +295,5 @@ availableRoomsSection.addEventListener('click', (event) => {
     "roomNumber": Number(roomSelectedNewRes)
   }
 
-  console.log(newBooking)
   sendBookingData(newBooking)
 })
