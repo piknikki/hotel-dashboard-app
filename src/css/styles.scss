@@ -300,6 +300,52 @@ button {
   }
 }
 
+// *** Gauge *** //
+.gauge {
+  width: 100%;
+  max-width: 250px;
+  margin-top: 20px;
+
+  &__body {
+    position: relative;
+    height: 0;
+    width: 100%;
+    padding-bottom: 50%;
+    background: white;
+    border-top-left-radius: 100% 200%;
+    border-top-right-radius: 100% 200%;
+    overflow: hidden;
+  }
+
+  &__fill {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: linear-gradient(90deg, rgb(103, 124, 217) 0%, rgb(161, 241, 119) 100%);    transform-origin: center top;
+    transform: rotate(0.25turn);
+    transition: transform 0.2s ease-out;
+  }
+
+  &__cover {
+    position: absolute;
+    width: 90%;
+    height: 180%;
+    border-radius: 50%;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 25%;
+    box-sizing: border-box;
+  }
+}
+
 .feedback {
   margin: 0 auto;
   text-align: center;

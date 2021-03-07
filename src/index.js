@@ -22,14 +22,12 @@ const landingViewImgSelector = document.getElementById('landingViewImg')
 const customerViewSelector = document.getElementById('customerView')
 const managerViewSelector = document.getElementById('managerView')
 
-
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
 const pastButton = document.getElementById('pastButton');
 const futureButton = document.getElementById('futureButton');
 const spendingButton = document.getElementById('spendingButton');
 const newReservationButton = document.getElementById('newReservationButton');
-
 
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
@@ -44,16 +42,20 @@ const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
 const apologiesSelector = document.getElementById('apologies');
 
+const availabilityContentButton = document.getElementById('availabilityContentButton')
+const revenueButton = document.getElementById('revenueButton')
+const newReservationButtonManager = document.getElementById('newReservationButtonManager')
 
+availabilityContentButton.addEventListener('click', () => {
 
+})
 
 // *** Build page *** //
 
-/// GET user info
+/// GET user info -- declare variable for this to be filled after fetch
 let getUserData;
 
-
-/// GET booking info
+/// GET booking info -- do this immediately
 let getBookingData =
   fetch(`http://localhost:3001/api/v1/bookings`)
     .then(response => {
@@ -64,7 +66,7 @@ let getBookingData =
     })
 
 
-/// GET room info
+/// GET room info -- do this immediately
 const getRoomData =
   fetch(`http://localhost:3001/api/v1/rooms`)
     .then(response => {
@@ -136,7 +138,6 @@ const createCurrentDataSet = () => {
 
       // put past reservations on page
       const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
-      console.log(pastBookings)
 
       let pastChunk = ''
       pastBookings.forEach(booking => {
@@ -189,23 +190,8 @@ const createCurrentDataSet = () => {
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
 
-const futureBookingsButton = document.getElementById('futureBookingsButton')
-const pastBookingsButton = document.getElementById('pastBookingsButton')
-const revenueButton = document.getElementById('revenueButton')
-const newReservationButtonManager = document.getElementById('newReservationButtonManager')
 
 
-const showPastSection = () => {
-  hide(futureBookingsSection)
-  hide(spendingSection)
-  hide(newReservationSection)
-  display(pastBookingsSection)
-  hide(availableRoomsSection)
-}
-
-const showMGRPastSection = () => {
-
-}
 
 const showFutureSection = () => {
   display(futureBookingsSection)
@@ -215,7 +201,24 @@ const showFutureSection = () => {
   hide(availableRoomsSection)
 }
 
-const showMGRFutureSection = () => {
+const availabilitySection = document.getElementsByClassName('content__mgr-availability')[0];
+const revenueSection = document.getElementsByClassName('revenue')[0];
+const mgrNewResSection = document.getElementsByClassName('new-reservation')[0]
+
+const showAvailabilitySection = (event) => {
+  event.preventDefault()
+  display(availabilitySection)
+  hide(revenueSection)
+  hide(mgrNewResSection)
+}
+
+const showPastSection = () => {
+  hide(futureBookingsSection)
+  hide(spendingSection)
+  hide(newReservationSection)
+  display(pastBookingsSection)
+  hide(availableRoomsSection)
+}
 
 const showSpendingSection = () => {
   hide(futureBookingsSection)
@@ -225,8 +228,11 @@ const showSpendingSection = () => {
   hide(availableRoomsSection)
 }
 
-const showMGRRevenueSection = () => {
-
+const showMGRRevenueSection = (event) => {
+  event.preventDefault()
+  hide(availabilitySection)
+  display(revenueSection)
+  hide(mgrNewResSection)
 }
 
 const showNewResSection = () => {
@@ -236,8 +242,11 @@ const showNewResSection = () => {
   hide(pastBookingsSection)
 }
 
-const showMGRNewResSection = () => {
-
+const showMGRNewResSection = (event) => {
+  event.preventDefault()
+  hide(availabilitySection)
+  hide(revenueSection)
+  display(mgrNewResSection)
 }
 
 const showLandingView = () => {
@@ -268,6 +277,7 @@ const showManagerView = () => {
   display(managerViewSelector)
   hide(loginModalSelector)
   display(logoutModalSelector)
+
 }
 
 const resetForm = () => {
@@ -331,6 +341,11 @@ futureButton.addEventListener('click', showFutureSection)
 spendingButton.addEventListener('click', showSpendingSection)
 newReservationButton.addEventListener('click', showNewResSection)
 newBookingCancelButton.addEventListener('click', resetForm)
+
+availabilityContentButton.addEventListener('click', showAvailabilitySection)
+revenueButton.addEventListener('click', showMGRRevenueSection)
+newReservationButtonManager.addEventListener('click', showMGRNewResSection)
+
 newBookingSubmitButton.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -452,22 +467,20 @@ logoutSubmitButton.addEventListener('click', (event) => {
   showLandingView();
 })
 
+const gaugeElement = document.querySelector('.gauge');
+function setGaugeValue(gauge, value) {
+  if (value < 0 || value > 1) {
+    return;
+  }
 
+  gauge.querySelector('.gauge__fill').style.transform = `
+    rotate(${value / 2}turn)
+  `;
 
+  gauge.querySelector('.gauge__cover').textContent = `
+    ${Math.round(value * 100)}%
+  `;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// todo --> after pulling info with api call, insert into this function call
+setGaugeValue(gaugeElement, 0.89);
