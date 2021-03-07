@@ -180,6 +180,44 @@ const createCurrentDataSet = () => {
       // put total spent on page
       const totalSpent = userBookingsRepo.getTotalSpent();
       document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+      console.log("HELLO WHAT THE FUCK")
+
+      document.getElementById('contentAvailability').innerHTML = `<h1> hello world </h1>`
+
+      // get all available rooms and put into manager's availability section
+      // const allBookingsRepo  = new BookingEngine(bookingData, roomData)
+      // const todaysBookings = allBookingsRepo.getTodaysBookings(today)
+      // console.log(todaysBookings)
+
+      // let todayChunk = 'hello world'
+      // todo ==> this isn't pulling the right information. track down what it's pulling
+      // todaysBookings.forEach(room => {
+      //   const roomTypeSlug = room.roomType.split(' ').join('-');
+      //
+      //   futureChunk += `
+      //     <article class="content__bookings--item room-container" id="roomContainer">
+      //     <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
+      //       <p class="room-container__item--number">Room Number: ${room.number}</p>
+      //       <p class="room-container__item--bed-size">Bed Size: ${room.bedSize}</p>
+      //       <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
+      //       <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
+      //       <p class="room-container__item--cost-per-night">Cost per Night: $ ${room.costPerNight}</p>
+      //
+      //       <button class="room-container__item--submit"
+      //         id="selectRoom"
+      //         data-id="${room.number}"
+      //         data-date="${today}">
+      //       Select this room
+      //       </button>
+      //     </article>
+      //   `
+      // })
+
+      // document.getElementById('contentAvailability').innerHTML = `<h1> hello world </h1>`
+
+      // get all revenue for this year and put into manager's revenue section
+
+      // get percentage of booked rooms and put into gauge
 
     })
     .catch(error => console.log(error.message))
@@ -439,6 +477,10 @@ loginSubmitButton.addEventListener('click', (event) => {
     document.getElementById('navDate').innerHTML = `${today}`
 
     userNameSelector.innerHTML = `Hi, Manager`
+
+    // todo ==> is the fetch actually firing right now???
+
+    createCurrentDataSet();
 
     hide(loginContainer)
     showManagerView()
