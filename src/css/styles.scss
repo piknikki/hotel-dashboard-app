@@ -111,6 +111,7 @@ a {
 
   &__item {
     margin-right: 10px;
+    margin-bottom: 10px;
   }
 }
 
@@ -135,6 +136,7 @@ button {
     }
 
     &--text {
+      padding: 5px;
     }
   }
 }
@@ -182,6 +184,7 @@ button {
 }
 
 .item-container {
+  // todo ==> try taking out grid, so it looks like room container
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 20% 20% 20% 20% 20%;
@@ -212,6 +215,59 @@ button {
   }
 }
 
+.room-container {
+  padding: 20px;
+  line-height: 1.5em;
+
+  &__item {
+
+    &--number {
+      font-weight: bold;
+    }
+
+    &--bed-size,
+    &--num-beds {
+      color: #50BDFB;
+
+    }
+
+    &--cost-per-night {
+      margin-bottom: 5px;
+    }
+
+    &--room-type {
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      color: white;
+      border: none;
+    }
+
+    &--submit {
+      float: right;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border-radius: 15px;
+      color: black;
+      border: none;
+      background: coral;
+    }
+
+  }
+}
+
+.feedback {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.apologies {
+  width: 60%;
+  margin: 0 auto;
+  font-size: 1.2em;
+  color: red;
+}
+
 // todo ==> make sure all room types are taken care of
 .single-room {
   background: #48d085;
@@ -227,6 +283,38 @@ button {
 
 .suite {
   background: #e5a93b;
+}
+
+// *** Form *** //
+fieldset {
+  padding: 10px;
+}
+
+legend {
+  padding: 10px;
+}
+
+input,
+select {
+  margin: 10px;
+  font-size: 0.9em;
+  padding: 5px;
+}
+
+.form-wrapper {
+  font-size: 1.3em;
+  width: 25%;
+  margin: 0 auto;
+  display: block;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+
+  &__item {
+    margin: 10px;
+  }
 }
 
 

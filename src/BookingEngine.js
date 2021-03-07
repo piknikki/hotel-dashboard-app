@@ -30,7 +30,8 @@ class BookingEngine {
     const dateCode = Number(currentDate.split('/').join(''))
     this.createDateCode()
 
-    const filteredBookings = this.bookings.filter(booking => booking.dateCode <= dateCode)
+    // todo ==> sort both of these searches
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode < dateCode)
 
     return filteredBookings.reduce((acc, booking) => {
       const roomAndBookingInfo = {

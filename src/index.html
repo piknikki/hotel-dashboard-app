@@ -84,7 +84,7 @@
       <section class="dashboard-menu">
         <span class="dashboard-label">
           <i class="fal fa-key fa-2x dashboard-label__item"></i>
-          <span class="dashboard-label__item">Customer Dashboard</span>
+          <span class="dashboard-label__item"><h3>Customer Dashboard</h3></span>
         </span>
 
         <button type="button" id="futureButton">
@@ -113,7 +113,7 @@
 
       <section class="dashboard-content">
         <h2 class="dashboard-title">Dashboard</h2>
-        <section class="content content__future">
+        <section class="content content__future hidden">
           FUTURE BOOKINGS
           <section class="content__bookings" id="futureBookings"></section>
         </section>
@@ -129,11 +129,44 @@
             <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
         </section>
 
-        <section class="content content__new-reservation hidden">
+        <section class="content content__new-reservation ">
           MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
-            <figure>
-              <i class="far fa-calendar-star fa-2x"></i>
-            </figure>
+          <form id="form">
+            <fieldset>
+              <legend>First, choose a date</legend>
+              <br>
+              <section class="form-wrapper">
+                <label for="inputDate">Date</label>
+                <!--  todo - configure the date picker here -->
+                <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
+
+                <label>Filter by Type of Room</label>
+                <select name="types" id="typesSelector" class="dropdown" >
+                  <option value="none" class="dropdown__item"></option>
+                  <option value="single-room" class="dropdown__item">Single Room</option>
+                  <option value="junior-suite" class="dropdown__item">Junior Suite</option>
+                  <option value="suite" class="dropdown__item">Suite</option>
+                  <option value="residential-suite" class="dropdown__item">Residential Suite</option>
+                </select>
+              </section>
+
+              <section class="button-box">
+                <button id="newBookingCancel" class="button-box__item" type="reset">Cancel</button>
+
+                <button id="newBookingSubmit" class="button-box__item" type="button">Submit</button>
+              </section>
+
+            </fieldset>
+          </form>
+        </section>
+
+        <section class="content content__available-Rooms">
+            <section class="feedback" id="feedback">
+              If you don't want to filter by type, you'll see all rooms available for all room types.
+            </section>
+          <section class="content__bookings" id="availableRooms">
+
+          </section>
         </section>
       </section>
     </main>
