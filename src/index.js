@@ -297,3 +297,61 @@ availableRoomsSection.addEventListener('click', (event) => {
 
   sendBookingData(newBooking)
 })
+
+const loginModalSelector = document.getElementById('loginModal');
+const loginContainer = document.getElementById('login');
+const loginSubmitButton = document.getElementById('submitLogin');
+
+const logoutModalSelector = document.getElementById('logoutModal');
+const logoutContainer = document.getElementById('logout');
+const logoutSubmitButton = document.getElementById('submitLogout');
+
+loginModalSelector.addEventListener('click', (event) => {
+  event.preventDefault()
+  // display modal
+  display(loginContainer)
+})
+
+loginSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  // collect form data of name and password
+
+  // do some error handling
+  // send form data to global??
+  hide(loginContainer)
+
+  // display either manager view or customer view
+})
+
+logoutModalSelector.addEventListener('click', (event) => {
+  event.preventDefault()
+  // display modal
+  display(logoutContainer)
+})
+
+logoutSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault()
+
+  // display(homeView)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

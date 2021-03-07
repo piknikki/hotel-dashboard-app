@@ -30,22 +30,52 @@
           <span class="user-name" id="userName"></span>
         </li>
         <li class="header-links__item">
-          <a href="#">
+          <button class="header-links__item--login" id="loginModal">
             log in
-            <i class="far fa-sign-in-alt fa-lg"></i>
-          </a>
+            <span class="modal-icon"><i class="far fa-sign-in-alt fa-lg"></i></span>
+          </button>
         </li>
         <li class="header-links__item">
-          <a href="#">
+          <button class="header-links__item--logout" id="logoutModal">
             log out
-            <i class="far fa-sign-out-alt fa-lg"></i>
-          </a>
+            <span class="modal-icon"><i class="far fa-sign-out-alt fa-lg"></i></span>
+          </button>
         </li>
       </ul>
+
+      <section class="modal-container login hidden" id="login">
+        <div class="modal">
+          <form>
+            <label for="login-username">
+              username
+            </label>
+            <input type="text" id="login-username">
+
+            <label for="login-password">
+              password
+            </label>
+            <input type="text" id="login-password">
+
+            <button class="submit-login" id="submitLogin">
+              Submit
+              <span class="modal-icon"><i class="far fa-sign-in-alt"></i></span>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="modal-container logout hidden" id="logout">
+        <div class="modal">
+          <button class="submit-logout" id="submitLogout">
+           Are you sure you want to log out?
+            <span class="modal-icon"><i class="far fa-sign-out-alt"></i></span>
+          </button>
+        </div>
+      </section>
     </header>
 
 <!--      Landing view   -->
-    <main class="landing-view hidden" id="landingView">
+    <main class="landing-view " id="landingView">
       <section>
         some features spread out on page
       </section>
@@ -80,7 +110,7 @@
 
 
 <!--      Customer view   -->
-    <main class="customer-view" id="customerView">
+    <main class="customer-view hidden" id="customerView">
       <section class="dashboard-menu">
         <span class="dashboard-label">
           <i class="fal fa-key fa-2x dashboard-label__item"></i>

@@ -27,6 +27,14 @@ body {
 // *** General *** //
 
 
+// *** Modals *** //
+.modal {
+  font-size: 0.5em;
+}
+
+.modal-icon {
+  margin: 5px;
+}
 
 // *** Header *** //
 header {
@@ -52,10 +60,17 @@ header {
 .header-links {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 
   &__item {
     font-size: 0.6em;
     margin: 0 20px;
+
+    &--login,
+    &--logout {
+      padding: 0 5px;
+    }
   }
 }
 
