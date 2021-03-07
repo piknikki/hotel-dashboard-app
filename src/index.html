@@ -14,29 +14,29 @@
 
   <body>
     <section class="wrapper">
-      <header class="header">
-        <figure class="header__item logo">
-          <img class="header__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
-          <span class="header__item--text">pounce</span>
+      <nav class="nav">
+        <figure class="nav__item logo">
+          <img class="nav__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
+          <span class="navr__item--text">pounce</span>
         </figure>
 
-        <ul class="header__item header-links">
-          <li class="header-links__item">
+        <ul class="nav__item nav-links">
+          <li class="nav-links__item">
             <i class="fal fa-calendar-alt fa-lg"></i>
-            <span class="date" id="headerDate"></span>
+            <span class="date" id="navDate"></span>
           </li>
-          <li class="header-links__item">
+          <li class="nav-links__item">
             <i class="fal fa-user fa-lg"></i>
             <span class="user-name" id="userName"></span>
           </li>
-          <li class="header-links__item">
-            <button class="header-links__item--login" id="loginModal">
+          <li class="nav-links__item">
+            <button class="nav-links__item--login" id="loginModal">
               log in
               <span class="modal-icon"><i class="far fa-sign-in-alt fa-lg"></i></span>
             </button>
           </li>
-          <li class="header-links__item">
-            <button class="header-links__item--logout" id="logoutModal">
+          <li class="nav-links__item">
+            <button class="nav-links__item--logout hidden" id="logoutModal">
               log out
               <span class="modal-icon"><i class="far fa-sign-out-alt fa-lg"></i></span>
             </button>
@@ -72,60 +72,193 @@
             </button>
           </div>
         </section>
-      </header>
+      </nav>
 
   <!--      Landing view   -->
 
-        <main class="landing-view " id="landingView">
-          <p class="landing-welcome">Travel with Peace of Mind -- knowing that you and your cat are both comfortable.</p>
-          <section >
-            <ul class="features">
-              <li class="features__item">
-                <i class="fas fa-usd-circle fa-2x features__item--icon"></i>
-                <span class="features__item--text">Best Rate Guarantee</span>
-              </li>
-              <li class="features__item">
-                <i class="fas fa-clock fa-2x features__item--icon"></i>
-                <span class="features__item--text">Flexible Cancellation</span>
-              </li>
-              <li class="features__item">
-                <i class="fas fa-spa fa-2x features__item--icon"></i>
-                <span class="features__item--text">Commitment to Clean</span>
-              </li>
-              <li class="features__item">
-                <i class="fas fa-phone-laptop fa-2x features__item--icon"></i>
-                <span class="features__item--text">Contactless Services</span>
-              </li>
-            </ul>
-          </section>
+      <main class="landing-view hidden" id="landingView">
+        <p class="landing-welcome">Travel with Peace of Mind -- knowing that you and your cat are both comfortable.</p>
+        <section >
+          <ul class="features">
+            <li class="features__item">
+              <i class="fas fa-usd-circle fa-2x features__item--icon"></i>
+              <span class="features__item--text">Best Rate Guarantee</span>
+            </li>
+            <li class="features__item">
+              <i class="fas fa-clock fa-2x features__item--icon"></i>
+              <span class="features__item--text">Flexible Cancellation</span>
+            </li>
+            <li class="features__item">
+              <i class="fas fa-spa fa-2x features__item--icon"></i>
+              <span class="features__item--text">Commitment to Clean</span>
+            </li>
+            <li class="features__item">
+              <i class="fas fa-phone-laptop fa-2x features__item--icon"></i>
+              <span class="features__item--text">Contactless Services</span>
+            </li>
+          </ul>
+        </section>
+      </main>
 
-        </main>
-        <figure class="landing-view " id="landingViewImg">
-          <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
-        </figure>
-
-
+      <figure class="landing-view hidden" id="landingViewImg">
+        <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
+      </figure>
 
 
   <!--      Manager view   -->
-      <main class="manager-view hidden" id="managerView">
-        <section class="dashboard-menu">
-          dashboard menu on left side
-        </section>
-        <section>
-          dashboard content fills rest of page
-          <br>
-          search for customer and show:
-          <br>
-          past reservations
-          <br>
-          current and future reservations (have delete functionality here)
-          <br>
-          total spending on all reservations
-          <br>
-          add new reservations (search by date first, then filter those results by other criteria, not sure how to do that yet)
-        </section>
+      <main class="manager-view " id="managerView">
+        <article class="dashboard-menu">
+          <span class="dashboard-label">
+            <i class="fal fa-hotel fa-2x dashboard-label__item"></i>
+            <span class="dashboard-label__item"><h3>Manager Dashboard</h3></span>
+          </span>
 
+          <section class="menu">
+            <button type="button" id="futureBookingsButton">
+              <i class="fal fa-bed fa-lg menu__item--icon" ></i>
+              <span class="menu__item--text">Future Bookings</span>
+            </button>
+
+            <button type="button" id="pastBookingsButton">
+              <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">Past Bookings</span>
+            </button>
+
+            <button type="button" id="revenueButton">
+              <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">Amount Spent</span>
+            </button>
+
+            <button type="button" id="newReservationButtonManager">
+              <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
+              <span class="menu__item--text">New Booking</span>
+            </button>
+          </section>
+
+          <span class="dashboard-label">
+            <i class="fal fa-bed fa-2x dashboard-label__item"></i>
+            <span class="dashboard-label__item">Rooms Booked</span>
+          </span>
+          <section class="gauge">
+            <div class="gauge__body">
+              <div class="gauge__fill"></div>
+              <div class="gauge__cover"></div>
+            </div>
+          </section>
+        </article>
+
+        <section class="dashboard-content">
+          <h2 class="dashboard-title">Dashboard</h2>
+          <section class="content">Bookings -- show all future bookings
+            <section class="content__bookings">
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 123456789</p>
+                <p class="item-container__item--name">Anne Lister</p>
+                <p class="item-container__item--phone">303-555-1212</p>
+                <p class="item-container__item--duration">4 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 789123456</p>
+                <p class="item-container__item--name">Kate McKinnon</p>
+                <p class="item-container__item--phone">970-555-1212</p>
+                <p class="item-container__item--duration">2 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B6</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 456789123</p>
+                <p class="item-container__item--name">Ruby Rose</p>
+                <p class="item-container__item--phone">720-555-1212</p>
+                <p class="item-container__item--duration">3 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C3</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 456789123</p>
+                <p class="item-container__item--name">Ruby Rose</p>
+                <p class="item-container__item--phone">720-555-1212</p>
+                <p class="item-container__item--duration">3 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C3</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 123456789</p>
+                <p class="item-container__item--name">Anne Lister</p>
+                <p class="item-container__item--phone">303-555-1212</p>
+                <p class="item-container__item--duration">4 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: 789123456</p>
+                <p class="item-container__item--name">Kate McKinnon</p>
+                <p class="item-container__item--phone">970-555-1212</p>
+                <p class="item-container__item--duration">2 nights</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B6</button>
+              </article>
+            </section>
+          </section>
+          <section class="content">Availability -- show all open rooms
+            <section class="content__bookings">
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: A1</p>
+                <p class="item-container__item--beds">Queen</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A1</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: B6</p>
+                <p class="item-container__item--beds">King</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B6</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: C3</p>
+                <p class="item-container__item--beds">Double</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C3</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: C2</p>
+                <p class="item-container__item--beds">Single</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #818FD1">C2</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: A2</p>
+                <p class="item-container__item--beds">Two Singles</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #68DF9D">A2</button>
+              </article>
+
+              <article class="content__bookings--item item-container">
+                <p class="item-container__item--id">ID: B4</p>
+                <p class="item-container__item--beds">Queen, two singles</p>
+                <p class="item-container__item--number">4 rooms available</p>
+                <button class="item-container__item--room-type" type="button" style="background: #F799CB">B4</button>
+              </article>
+            </section>
+          </section>
+          <section class="content">
+            <section class="content__spending">Revenue -- show how much revenue this year
+              <h4>Revenue is ${$100} so far this year. (should this be broken down by room?)</h4>
+            </section>
+          </section>
+          <section class="content">
+            <section class="content__new-reservation">New reservation -- show calendar, then available rooms for selected dates, filter by roomType property
+              <!--           replace this with calendar -->
+              <figure>
+                <i class="far fa-calendar-star fa-2x"></i>
+              </figure>
+            </section>
+          </section>
+        </section>
       </main>
 
 
@@ -137,12 +270,12 @@
             <span class="dashboard-label__item"><h3>Customer Dashboard</h3></span>
           </span>
 
-          <button type="button" id="futureButton">
-            <i class="fal fa-bed fa-lg menu__item--icon" ></i>
-            <span class="menu__item--text">Future Bookings</span>
-          </button>
-
           <section class="menu">
+            <button type="button" id="futureButton">
+              <i class="fal fa-bed fa-lg menu__item--icon" ></i>
+              <span class="menu__item--text">Future Bookings</span>
+            </button>
+
             <button type="button" id="pastButton">
               <i class="fal fa-calendar-check fa-lg menu__item--icon"></i>
               <span class="menu__item--text">Past Bookings</span>
@@ -157,7 +290,6 @@
               <i class="fal fa-plus-circle fa-lg menu__item--icon"></i>
               <span class="menu__item--text">New Booking</span>
             </button>
-
           </section>
         </section>
 

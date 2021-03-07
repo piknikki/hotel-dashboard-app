@@ -14,12 +14,15 @@ let globalUserId;
 let searchableData;
 let roomInfo;
 
+const navDateSelector = document.getElementById('navDate')
+const userNameSelector = document.getElementById('userName');
+
 const landingViewSelector = document.getElementById('landingView');
 const landingViewImgSelector = document.getElementById('landingViewImg')
 const customerViewSelector = document.getElementById('customerView')
 const managerViewSelector = document.getElementById('managerView')
 
-const userNameSelector = document.getElementById('userName');
+
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
 const pastButton = document.getElementById('pastButton');
@@ -40,6 +43,8 @@ const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
 const apologiesSelector = document.getElementById('apologies');
+
+
 
 
 // *** Build page *** //
@@ -121,7 +126,7 @@ const createCurrentDataSet = () => {
       let today = dateStr[0].split('-').join('/')
       const currentUser = new User(userData)
 
-      document.getElementById('headerDate').innerHTML = `${today}`
+      document.getElementById('navDate').innerHTML = `${today}`
       userNameSelector.setAttribute('data-userId', currentUser.id)
       userNameSelector.innerHTML = `Hi, ${currentUser.name}`
 
@@ -184,12 +189,22 @@ const createCurrentDataSet = () => {
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
 
+const futureBookingsButton = document.getElementById('futureBookingsButton')
+const pastBookingsButton = document.getElementById('pastBookingsButton')
+const revenueButton = document.getElementById('revenueButton')
+const newReservationButtonManager = document.getElementById('newReservationButtonManager')
+
+
 const showPastSection = () => {
   hide(futureBookingsSection)
   hide(spendingSection)
   hide(newReservationSection)
   display(pastBookingsSection)
   hide(availableRoomsSection)
+}
+
+const showMGRPastSection = () => {
+
 }
 
 const showFutureSection = () => {
@@ -200,12 +215,18 @@ const showFutureSection = () => {
   hide(availableRoomsSection)
 }
 
+const showMGRFutureSection = () => {
+
 const showSpendingSection = () => {
   hide(futureBookingsSection)
   display(spendingSection)
   hide(newReservationSection)
   hide(pastBookingsSection)
   hide(availableRoomsSection)
+}
+
+const showMGRRevenueSection = () => {
+
 }
 
 const showNewResSection = () => {
@@ -215,8 +236,18 @@ const showNewResSection = () => {
   hide(pastBookingsSection)
 }
 
+const showMGRNewResSection = () => {
+
+}
+
 const showLandingView = () => {
+  if (globalUserName === null) {
+    navDateSelector.innerText = ''
+    userNameSelector.innerText = ''
+  }
+
   display(landingViewSelector)
+  display(landingViewImgSelector)
   hide(customerViewSelector)
   hide(managerViewSelector)
 }
@@ -226,12 +257,17 @@ const showCustomerView = () => {
   hide(landingViewImgSelector)
   display(customerViewSelector)
   hide(managerViewSelector)
+  hide(loginModalSelector)
+  display(logoutModalSelector)
 }
 
 const showManagerView = () => {
   hide(landingViewSelector)
+  hide(landingViewImgSelector)
   hide(customerViewSelector)
   display(managerViewSelector)
+  hide(loginModalSelector)
+  display(logoutModalSelector)
 }
 
 const resetForm = () => {
@@ -351,6 +387,7 @@ loginModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   // display modal
   display(loginContainer)
+
 })
 
 
@@ -358,13 +395,11 @@ loginModalSelector.addEventListener('click', (event) => {
 loginSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  // do some error handling
+  // todo ==>do some error handling
 
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
     globalUserName = inputUsername.value
     globalUserId = globalUserName.slice(8);
-
-    console.log(globalUserId, globalUserName)
 
     getUserData =
       fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
@@ -379,38 +414,42 @@ loginSubmitButton.addEventListener('click', (event) => {
 
     hide(loginContainer)
     showCustomerView()
-  } else if (inputUsername[0] === 'm' && inputPassword === 'overlook2021') {
+  } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
+
+    const date = new Date().toISOString();
+    const dateStr = date.split('T');
+    let today = dateStr[0].split('-').join('/')
+
+    document.getElementById('navDate').innerHTML = `${today}`
+
+    userNameSelector.innerHTML = `Hi, Manager`
+
+    hide(loginContainer)
     showManagerView()
   } else {
+    console.log("SOMETHING IS VERY WRONG")
     // show a message somewhere and reset the login form
     // either username or password were wrong, try again
   }
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
-  // display modal
   display(logoutContainer)
 })
 
 logoutSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  // display(landingView)
+  navDateSelector.innerHTML = ''
+  userNameSelector.innerHTML = ''
+
+  hide(logoutModalSelector)
+  hide(logoutSubmitButton)
+  display(loginModalSelector)
+  globalUserName = null;
+  showLandingView();
 })
 
 
