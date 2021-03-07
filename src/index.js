@@ -30,6 +30,7 @@ const formSelector = document.getElementById('form');
 const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
+const apologiesSelector = document.getElementById('apologies');
 
 
 // *** Build page *** //
@@ -209,44 +210,12 @@ const displaySuccess = () => {
 
 }
 
-const displayNewBookingInfo = () => {
-  // todo ==> do this, to display after the booking has been successful
-}
-
-
-// *** Event listeners *** //
-
-pastButton.addEventListener('click', showPastSection)
-futureButton.addEventListener('click', showFutureSection)
-spendingButton.addEventListener('click', showSpendingSection)
-newReservationButton.addEventListener('click', showNewResSection)
-newBookingCancelButton.addEventListener('click', resetForm)
-newBookingSubmitButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
-
-  const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
-  const dropdownSelection = document.getElementById('typesSelector').value
-
-  let roomsAvailable = roomInfo.filter(room => {
-    if (!roomsBooked.includes(room.number)) {
-      return room
-    }
-  })
-
-  if (dropdownSelection !== 'none') {
-    roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
-  }
-
-  displayAvailableRooms(roomsAvailable, searchDate)
-  // formSelector.reset()
-})
-
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
   if (roomsAvailable.length === 0) {
-    feedbackSelector.innerHTML = `
-      <p class="apologies">We are so sorry, but there are no rooms available for 
-      your search criteria. Please try different dates or room types.</p>
+    feedbackSelector.innerText = ''
+    apologiesSelector.innerHTML = `
+      We are so sorry, but there are no rooms available for 
+      your search criteria. Please try different dates or room types.
       `
   }
   // availableRoomsSection.classList.toggle('hidden')
@@ -275,6 +244,41 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
   })
   availableRoomsSelector.innerHTML = availChunk
 }
+
+const displayNewBookingInfo = () => {
+  // todo ==> do this, to display after the booking has been successful
+}
+
+
+// *** Event listeners *** //
+
+pastButton.addEventListener('click', showPastSection)
+futureButton.addEventListener('click', showFutureSection)
+spendingButton.addEventListener('click', showSpendingSection)
+newReservationButton.addEventListener('click', showNewResSection)
+newBookingCancelButton.addEventListener('click', resetForm)
+newBookingSubmitButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  document.querySelector('#apologies').innerHTML = ''
+  const searchDate = (document.getElementById('inputDate').value).split('-').join('/');
+
+  const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
+  const dropdownSelection = document.getElementById('typesSelector').value
+
+  let roomsAvailable = roomInfo.filter(room => {
+    if (!roomsBooked.includes(room.number)) {
+      return room
+    }
+  })
+
+  if (dropdownSelection !== 'none') {
+    roomsAvailable = roomsAvailable.filter(room => room.roomType === dropdownSelection.split('-').join(' '))
+  }
+
+  displayAvailableRooms(roomsAvailable, searchDate)
+  // formSelector.reset()
+})
+
 
 availableRoomsSection.addEventListener('click', (event) => {
   event.preventDefault();
