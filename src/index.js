@@ -34,7 +34,7 @@ const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
 const inputDateSelector = document.getElementById('inputDate');
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
-const availableRoomsSection = document.getElementsByClassName('content__available-Rooms')[0];
+const availableRoomsSection = document.getElementsByClassName('content__available-rooms')[0];
 const availableRoomsSelector = document.getElementById('availableRooms');
 const formSelector = document.getElementById('form');
 const newBookingCancelButton = document.getElementById('newBookingCancel');
@@ -240,6 +240,7 @@ const showNewResSection = () => {
   hide(spendingSection)
   display(newReservationSection)
   hide(pastBookingsSection)
+  display(availableRoomsSection)
 }
 
 const showMGRNewResSection = (event) => {

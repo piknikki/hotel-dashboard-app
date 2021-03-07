@@ -74,8 +74,14 @@ nav {
     &--login,
     &--logout {
       padding: 0 5px;
+      background: #F4F4F4;
     }
   }
+}
+
+.submit-login,
+.submit-logout {
+  background: #F4F4F4;
 }
 
 ul {
@@ -165,7 +171,8 @@ button {
   align-items: center;
   font-size: 1.1em;
   border: none;
-  background: #F4F4F4;
+  //background: #F4F4F4;
+  background: white;
 }
 
 .menu {
@@ -404,6 +411,7 @@ select {
 
   &__item {
     margin: 10px;
+
   }
 }
 

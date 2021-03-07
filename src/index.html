@@ -188,9 +188,9 @@
                 </section>
 
                 <section class="button-box">
-                  <button id="newBookingCancelMgr" class="button-box__item" type="reset">Cancel</button>
+                  <button id="newBookingCancelMgr" class="button-box__item--cancel" type="reset">Cancel</button>
 
-                  <button id="newBookingSubmitMgr" class="button-box__item" type="button">Submit</button>
+                  <button id="newBookingSubmitMgr" class="button-box__item--submit" type="button">Submit</button>
                 </section>
 
               </fieldset>
@@ -258,7 +258,6 @@
                 <br>
                 <section class="form-wrapper">
                   <label for="inputDate">Date</label>
-                  <!--  todo - configure the date picker here -->
                   <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
 
                   <label>Filter by Type of Room</label>
@@ -272,16 +271,16 @@
                 </section>
 
                 <section class="button-box">
-                  <button id="newBookingCancel" class="button-box__item" type="reset">Cancel</button>
+                  <button id="newBookingCancel" class="button-box__item--cancel" type="reset">Cancel</button>
 
-                  <button id="newBookingSubmit" class="button-box__item" type="button">Submit</button>
+                  <button id="newBookingSubmit" class="button-box__item--submit" type="button">Submit</button>
                 </section>
 
               </fieldset>
             </form>
           </section>
 
-          <section class="content content__available-Rooms">
+          <section class="content content__available-rooms hidden">
               <section class="feedback" id="feedback">
                 If you don't want to filter by type, you'll see all rooms available for all room types.
               </section>
