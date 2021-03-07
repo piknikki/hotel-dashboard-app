@@ -7,7 +7,7 @@ import User from "./User";
 import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
-const userName = 'customer22'
+const userName = 'customer49'
 // todo => this will come from the login input not sure where it will live yet
 const userId = userName.slice(8);
 
@@ -29,7 +29,7 @@ const availableRoomsSelector = document.getElementById('availableRooms');
 const formSelector = document.getElementById('form');
 const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
-const feedbackSelector = document.getElementsByClassName('feedback')[0];
+const feedbackSelector = document.getElementById('feedback');
 
 
 // *** Build page *** //
@@ -63,6 +63,29 @@ const getRoomData = fetch(`http://localhost:3001/api/v1/rooms`)
 
 let searchableData;
 let roomInfo;
+
+/// POST new booking
+const sendBookingData = (inputBookingData) => {
+  fetch('http://localhost:3001/api/v1/bookings', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(inputBookingData)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText)
+      }
+      displaySuccess()
+      return response.json()
+    })
+    .catch(error => {
+      if (error.message === "Unprocessable Entity") {
+        feedbackSelector.innerHTML = `You must fill in all the blanks`
+      }
+      console.log(error.number)
+      console.log(error.message)
+    })
+}
 
 const createCurrentDataSet = () => {
   Promise.all([getUserData, getBookingData, getRoomData])
@@ -132,9 +155,6 @@ const createCurrentDataSet = () => {
       const totalSpent = userBookingsRepo.getTotalSpent();
       document.getElementById('customerTotalSpending').innerHTML = `${totalSpent}`
 
-      // const types = pastBookings.map(booking => booking.roomType).concat(currentAndFutureBookings.map(booking => booking.roomType))
-
-
     })
     .catch(error => console.log(error.message))
 }
@@ -180,6 +200,19 @@ const resetForm = () => {
   formSelector.reset()
 }
 
+const displaySuccess = () => {
+  resetForm()
+  availableRoomsSelector.innerHTML = ''
+  // todo => also show the details of the booking
+  feedbackSelector.innerHTML = `<h3>Your booking has been made successfully. </h3>
+    `
+
+}
+
+const displayNewBookingInfo = () => {
+  // todo ==> do this, to display after the booking has been successful
+}
+
 
 // *** Event listeners *** //
 
@@ -194,7 +227,6 @@ newBookingSubmitButton.addEventListener('click', (event) => {
 
   const roomsBooked = searchableData.filter(booking => booking.date === searchDate).map(booking => booking.roomNumber)
   const dropdownSelection = document.getElementById('typesSelector').value
-  console.log(dropdownSelection)
 
   let roomsAvailable = roomInfo.filter(room => {
     if (!roomsBooked.includes(room.number)) {
@@ -211,10 +243,11 @@ newBookingSubmitButton.addEventListener('click', (event) => {
 })
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
-
-  if (roomsAvailable === []) {
-    feedbackSelector.innerHTML =
-      'We are so sorry, but there are no rooms available for your search criteria. Please try different dates or room types.'
+  if (roomsAvailable.length === 0) {
+    feedbackSelector.innerHTML = `
+      <p class="apologies">We are so sorry, but there are no rooms available for 
+      your search criteria. Please try different dates or room types.</p>
+      `
   }
   // availableRoomsSection.classList.toggle('hidden')
 
@@ -243,18 +276,19 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
   availableRoomsSelector.innerHTML = availChunk
 }
 
-// const roomSelection = document.getElementById('roomContainer');
 availableRoomsSection.addEventListener('click', (event) => {
-  event.preventDefault()
+  event.preventDefault();
 
-  const roomSelectedNewRes = event.target.getAttribute('data-id')
-  const dateSelectedNewRes = event.target.getAttribute('data-date')
+  const roomSelectedNewRes = event.target.getAttribute('data-id');
+  const dateSelectedNewRes = event.target.getAttribute('data-date');
+
   const newBooking = {
-    "id": new Date().valueOf(),
-    "userID": userId,
+    "id": String(new Date().valueOf()),
+    "userID": Number(userId),
     "date": dateSelectedNewRes,
-    "roomNumber": roomSelectedNewRes
+    "roomNumber": Number(roomSelectedNewRes)
   }
 
   console.log(newBooking)
+  sendBookingData(newBooking)
 })
