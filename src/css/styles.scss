@@ -1,21 +1,5 @@
 @import '_base';
-
-// *** Reset *** //
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-ol, ul {
-  list-style: none;
-}
+@import '_reset';
 
 body {
   line-height: 1;
@@ -26,7 +10,6 @@ body {
 
 // *** General *** //
 .wrapper {
-
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -40,6 +23,11 @@ body {
   margin: 5px;
 }
 
+.date,
+.user {
+  color: $dark-gray;
+}
+
 // *** Header *** //
 nav {
   display: flex;
@@ -47,7 +35,7 @@ nav {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  color: gray;
+  color: $dark-gray;
   font-size: 2em;
   letter-spacing: 2px;
   margin: 10px 20px;
@@ -120,7 +108,7 @@ ul {
 
   &__item {
     margin: 0 10px;
-    color: #05518c;
+    color: $navy-blue;
     display: flex;
     align-items: center;
 
@@ -154,7 +142,7 @@ ul {
 }
 
 .dashboard-label {
-  color: #05518c;
+  color: $navy-blue;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -214,7 +202,7 @@ button {
 
 .content {
   flex-flow: column nowrap;
-  color: gray;
+  color: $dark-gray;
   background: white;
   border-radius: 10px;
   padding: 20px;
@@ -249,12 +237,13 @@ button {
 
   &__item {
     &--id {
-      color: #50BDFB;
+      color: $navy-blue;
     }
 
     &--date,
     &--beds {
       font-weight: bold;
+      color: $dark-gray;
     }
 
     &--duration {
@@ -264,7 +253,7 @@ button {
     &--room-type {
       padding: 5px;
       border-radius: 15px;
-      color: white;
+      color: $dark-gray;
       border: none;
 
     }
@@ -279,11 +268,12 @@ button {
 
     &--number {
       font-weight: bold;
+      color: $dark-gray;
     }
 
     &--bed-size,
     &--num-beds {
-      color: #50BDFB;
+      color: $navy-blue;
 
     }
 
@@ -295,7 +285,7 @@ button {
       margin-bottom: 10px;
       padding: 5px 10px;
       border-radius: 15px;
-      color: white;
+      color: $dark-gray;
       border: none;
     }
 
@@ -380,7 +370,7 @@ button {
 }
 
 .residential-suite {
-  background: #818FD1;
+  background: #9ba7e3;
 }
 
 .suite {
@@ -459,7 +449,7 @@ select {
 
     &__item {
       margin: 5px 10px;
-      color: #05518c;
+      color: $navy-blue;
       display: flex;
       align-items: center;
 
