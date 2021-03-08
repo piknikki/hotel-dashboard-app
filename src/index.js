@@ -47,8 +47,9 @@ const revenueButton = document.getElementById('revenueButton')
 const newReservationButtonManager = document.getElementById('newReservationButtonManager')
 
 const availabilitySection = document.getElementsByClassName('content__mgr-availability')[0];
-const revenueSection = document.getElementsByClassName('revenue')[0];
+const revenueSection = document.getElementsByClassName('content__revenue')[0];
 const mgrNewResSection = document.getElementsByClassName('new-reservation')[0]
+const contentFutureSection = document.getElementById('contentFuture')
 
 const loginModalSelector = document.getElementById('loginModal');
 const loginContainer = document.getElementById('login');
@@ -167,7 +168,6 @@ const createCurrentDataSet = () => {
 
         // put current and future reservations on page
         const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
-        console.log(currentAndFutureBookings)
 
         let futureChunk = ''
         currentAndFutureBookings.forEach(booking => {
@@ -195,7 +195,6 @@ const createCurrentDataSet = () => {
 
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
         const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
-        console.log("rooms not booked", todaysRoomsNotBooked)
 
         displayAvailableRooms(todaysRoomsNotBooked, today)
 
@@ -221,9 +220,11 @@ const showFutureSection = () => {
 
 const showAvailabilitySection = (event) => {
   event.preventDefault()
-  display(availabilitySection)
-  hide(revenueSection)
-  hide(mgrNewResSection)
+  hide(futureBookingsSection)
+  hide(newReservationSection)
+  hide(spendingSection)
+  hide(pastBookingsSection)
+  display(availableRoomsSection)
 }
 
 const showPastSection = () => {
@@ -242,14 +243,16 @@ const showSpendingSection = () => {
   hide(availableRoomsSection)
 }
 
-const showMGRRevenueSection = (event) => {
+const showMGRRevenueSection = (event) => { // todo ==> put the value into managerRevenue span
   event.preventDefault()
-  hide(availabilitySection)
   display(revenueSection)
-  hide(mgrNewResSection)
+  hide(newReservationSection)
+  hide(availableRoomsSection)
+  hide(futureBookingsSection)
 }
 
 const showNewResSection = () => {
+  hide(revenueSection)
   hide(futureBookingsSection)
   hide(spendingSection)
   display(newReservationSection)
@@ -257,12 +260,14 @@ const showNewResSection = () => {
   display(availableRoomsSection)
 }
 
-const showMGRNewResSection = (event) => {
-  event.preventDefault()
-  hide(availabilitySection)
-  hide(revenueSection)
-  display(mgrNewResSection)
-}
+// const showMGRNewResSection = (event) => {
+//   event.preventDefault()
+//   console.log(event.target)
+//
+//   hide(revenueSection)
+//   display(availableRoomsSection)
+//   display(newReservationSection)
+// }
 
 const showLandingView = () => {
   if (globalUserName === null) {
@@ -288,6 +293,7 @@ const showCustomerView = () => {
 const showManagerView = () => {
   hide(landingViewSelector)
   hide(landingViewImgSelector)
+  hide(contentFutureSection)
   hide(customerViewSelector)
   display(managerViewSelector)
   hide(loginModalSelector)
@@ -357,9 +363,9 @@ spendingButton.addEventListener('click', showSpendingSection)
 newReservationButton.addEventListener('click', showNewResSection)
 newBookingCancelButton.addEventListener('click', resetForm)
 
-availabilityContentButton.addEventListener('click', showFutureSection)
+availabilityContentButton.addEventListener('click', showAvailabilitySection)
 revenueButton.addEventListener('click', showMGRRevenueSection)
-newReservationButtonManager.addEventListener('click', showMGRNewResSection)
+newReservationButtonManager.addEventListener('click', showNewResSection)
 
 newBookingSubmitButton.addEventListener('click', (event) => {
   event.preventDefault();
@@ -461,6 +467,7 @@ loginSubmitButton.addEventListener('click', (event) => {
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   display(logoutContainer)
+  display(logoutModalSelector)
 })
 
 logoutSubmitButton.addEventListener('click', (event) => {
@@ -470,6 +477,7 @@ logoutSubmitButton.addEventListener('click', (event) => {
   userNameSelector.innerHTML = ''
 
   hide(logoutModalSelector)
+  hide(logoutContainer)
   hide(logoutSubmitButton)
   display(loginModalSelector)
   globalUserName = null;

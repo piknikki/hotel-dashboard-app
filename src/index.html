@@ -174,7 +174,7 @@
 
         <section class="dashboard-content">
           <h2 class="dashboard-title">Dashboard</h2>
-          <section class="content content__future ">
+          <section class="content content__future " id="contentFuture">
             FUTURE BOOKINGS
             <section class="content__bookings" id="futureBookings"></section>
           </section>
@@ -190,11 +190,16 @@
             <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
           </section>
 
+          <section class="content content__revenue hidden">
+            REVENUE
+            <h4 class="content__revenue--text">Total Revenue for this Year: $<span id="managerRevenue"></span> so far this year.</h4>
+          </section>
+
           <section class="content content__new-reservation hidden">
             MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
             <form id="form">
               <fieldset>
-                <legend>First, choose a date</legend>
+                <legend>Choose a date and room type</legend>
                 <br>
                 <section class="form-wrapper">
                   <label for="inputDate">Date</label>
@@ -210,6 +215,15 @@
                   </select>
                 </section>
 
+                <section class="message-box">
+                  <section class="feedback" id="feedback">
+                    If you don't want to filter by type, you'll see all rooms available for all room types.
+                  </section>
+                  <section class="apologies" id="apologies">
+
+                  </section>
+                </section>
+
                 <section class="button-box">
                   <button id="newBookingCancel" class="button-box__item--cancel" type="reset">Cancel</button>
 
@@ -218,15 +232,10 @@
 
               </fieldset>
             </form>
+
           </section>
 
           <section class="content content__available-rooms hidden">
-            <section class="feedback" id="feedback">
-              If you don't want to filter by type, you'll see all rooms available for all room types.
-            </section>
-            <section class="apologies" id="apologies">
-
-            </section>
             <section class="content__bookings" id="availableRooms">
 
             </section>
