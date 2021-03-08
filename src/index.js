@@ -485,15 +485,14 @@ logoutModalSelector.addEventListener('click', (event) => {
 logoutSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  navDateSelector.innerHTML = ''
-  userNameSelector.innerHTML = ''
-
   hide(logoutModalSelector)
   hide(logoutContainer)
   hide(logoutSubmitButton)
   display(loginModalSelector)
   globalUserName = null;
   showLandingView();
+  navDateSelector.innerHTML = ''
+  userNameSelector.innerHTML = ''
 })
 
 
