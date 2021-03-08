@@ -61,6 +61,8 @@ const logoutModalSelector = document.getElementById('logoutModal');
 const logoutContainer = document.getElementById('logout');
 const logoutSubmitButton = document.getElementById('submitLogout');
 
+const gaugeElement = document.querySelector('.gauge');
+
 // *** Build page *** //
 
 /// GET user info -- declare variable for this to be filled after fetch
@@ -131,10 +133,12 @@ const createCurrentDataSet = () => {
       searchableData = bookingData;
       roomInfo = roomData;
 
+      // const today = '2020/02/02'
       const date = new Date().toISOString();
       const dateStr = date.split('T');
       inputDateSelector.setAttribute('min', dateStr[0])
       let today = dateStr[0].split('-').join('/')
+
 
       if (userData !== undefined) {
         // customer is logged in
@@ -195,9 +199,15 @@ const createCurrentDataSet = () => {
 
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
         const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
+        console.log(todaysRoomsNotBooked)
 
         const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
         document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
+
+        // todo --> after pulling info with api call, insert into this function call
+        const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
+        setGaugeValue(gaugeElement, percentageOccupiedToday);
+        console.log("percentage", percentageOccupiedToday)
 
         displayAvailableRooms(todaysRoomsNotBooked, today)
       }
@@ -486,20 +496,15 @@ logoutSubmitButton.addEventListener('click', (event) => {
   showLandingView();
 })
 
-const gaugeElement = document.querySelector('.gauge');
+
 function setGaugeValue(gauge, value) {
   if (value < 0 || value > 1) {
     return;
   }
 
-  gauge.querySelector('.gauge__fill').style.transform = `
-    rotate(${value / 2}turn)
-  `;
+  gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
 
-  gauge.querySelector('.gauge__cover').textContent = `
-    ${Math.round(value * 100)}%
-  `;
+  gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
 }
 
-// todo --> after pulling info with api call, insert into this function call
-setGaugeValue(gaugeElement, 0.89);
+
