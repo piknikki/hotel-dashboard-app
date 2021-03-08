@@ -69,6 +69,19 @@ class BookingEngine {
       return  acc
     }, [])
   }
+
+  getTotalRevenueForYear(currentDate) {
+    let splitDate = currentDate.split('/')
+    const yearDateCode = Number(`${splitDate[0]}0000`)
+    const yearDateCodeEnding = yearDateCode + 10000
+
+    const yearBookings = this.getPastBookings(currentDate).filter(booking => booking.dateCode < yearDateCodeEnding)
+
+    return yearBookings.reduce((acc, booking) => {
+      return acc += booking.costPerNight
+    }, 0)
+
+  }
 }
 
 export default BookingEngine;

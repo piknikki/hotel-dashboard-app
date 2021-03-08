@@ -196,8 +196,10 @@ const createCurrentDataSet = () => {
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
         const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
 
-        displayAvailableRooms(todaysRoomsNotBooked, today)
+        const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
+        document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
 
+        displayAvailableRooms(todaysRoomsNotBooked, today)
       }
     })
     .catch(error => console.log(error.message))

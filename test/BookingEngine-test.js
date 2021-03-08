@@ -364,4 +364,8 @@ describe('BookingEngine', function() {
     ]);
   })
 
+  it('should find total revenue for the year', () => {
+    expect(bookingsRepo1.getTotalRevenueForYear('2020/02/01')).to.equal(2637.03)
+  })
+
 });
