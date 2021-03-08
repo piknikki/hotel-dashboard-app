@@ -196,7 +196,7 @@
           </section>
 
           <section class="content content__new-reservation hidden">
-            MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
+            MAKE A NEW RESERVATION
             <form id="form">
               <fieldset>
                 <legend>Choose a date and room type</legend>
@@ -206,7 +206,7 @@
                   <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
 
                   <label>Filter by Type of Room</label>
-                  <select name="types" id="typesSelector" class="dropdown" >
+                  <select name="types" id="typesSelector" class="dropdown" aria-label="Dropdown selector" >
                     <option value="none" class="dropdown__item"></option>
                     <option value="single-room" class="dropdown__item">Single Room</option>
                     <option value="junior-suite" class="dropdown__item">Junior Suite</option>
