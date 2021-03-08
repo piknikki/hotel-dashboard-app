@@ -5,6 +5,7 @@ class BookingEngine {
   }
 
   createDateCode() {
+    // creates datecodes for all existing bookings
     return this.bookings.map(booking => {
       const dateCode = Number(booking.date.split('/').join(''))
       booking.dateCode = dateCode
@@ -12,7 +13,7 @@ class BookingEngine {
   }
 
   getCurrentAndFutureBookings(currentDate) {
-    const dateCode = Number(currentDate.split('/').join(''))
+    const dateCode = Number(currentDate.split('/').join('')) // creates datecode for just this date
     this.createDateCode()
     const filteredBookings = this.bookings.filter(booking => booking.dateCode >= dateCode)
 
@@ -51,6 +52,35 @@ class BookingEngine {
       return acc += roomCost
     }, 0)
     return userTotalCost
+  }
+
+  getRoomsNotBooked(currentDate) {
+    const dateCode = Number(currentDate.split('/').join('')) // creates datecode for just this date
+    this.createDateCode()
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode === dateCode).map(booking => booking.roomNumber) // bookings for today
+
+    return filteredBookings.reduce((acc, booking) => {
+      acc = this.rooms.filter(room => {
+        if (!filteredBookings.includes(room.number)) {
+          return room
+        }
+      })
+
+      return  acc
+    }, [])
+  }
+
+  getTotalRevenueForYear(currentDate) {
+    let splitDate = currentDate.split('/')
+    const yearDateCode = Number(`${splitDate[0]}0000`)
+    const yearDateCodeEnding = yearDateCode + 10000
+
+    const yearBookings = this.getPastBookings(currentDate).filter(booking => booking.dateCode < yearDateCodeEnding)
+
+    return yearBookings.reduce((acc, booking) => {
+      return acc += booking.costPerNight
+    }, 0)
+
   }
 }
 
