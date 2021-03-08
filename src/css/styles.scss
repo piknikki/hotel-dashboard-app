@@ -136,11 +136,11 @@ ul {
 
 
 // *** Dashboard *** //
-.manager-view,
-.customer-view,
+//.manager-view,
+//.customer-view,
 .main {
   display: flex;
-  flex: 6;
+  //flex: 6;
   border-top: 1px solid gray;
   height: 100%;
 }
@@ -433,8 +433,24 @@ select {
 }
 
 @media screen and (max-width: 650px) {
+  nav {
+    flex-flow: column nowrap;
+  }
+
   .landing-view {
     padding: 0;
+  }
+
+  main {
+    flex-flow: column wrap;
+  }
+
+  .dashboard-content {
+    width: 100%;
+  }
+
+  .dashboard-menu {
+    width: 100%;
   }
 
   .features {
@@ -451,6 +467,29 @@ select {
         margin: 0 10px;
       }
     }
+  }
+
+  .date,
+  .user {
+    display: none;
+  }
+
+  .content {
+    padding: 5px;
+
+    &__bookings {
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+
+  .item-container {
+    padding: 5px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+    padding 5px
   }
 
 }

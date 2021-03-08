@@ -21,6 +21,7 @@ const landingViewSelector = document.getElementById('landingView');
 const landingViewImgSelector = document.getElementById('landingViewImg')
 const customerViewSelector = document.getElementById('customerView')
 const managerViewSelector = document.getElementById('managerView')
+const dashboardContentSelector = document.getElementById('dashboardContent')
 
 const pastBookingsSelector = document.getElementById('pastBookings');
 const futureBookingsSelector = document.getElementById('futureBookings');
@@ -46,9 +47,7 @@ const availabilityContentButton = document.getElementById('availabilityContentBu
 const revenueButton = document.getElementById('revenueButton')
 const newReservationButtonManager = document.getElementById('newReservationButtonManager')
 
-const availabilitySection = document.getElementsByClassName('content__mgr-availability')[0];
 const revenueSection = document.getElementsByClassName('content__revenue')[0];
-const mgrNewResSection = document.getElementsByClassName('new-reservation')[0]
 const contentFutureSection = document.getElementById('contentFuture')
 
 const loginModalSelector = document.getElementById('loginModal');
@@ -133,7 +132,7 @@ const createCurrentDataSet = () => {
       searchableData = bookingData;
       roomInfo = roomData;
 
-      // const today = '2020/02/02'
+      // const today = '2020/03/10'
       const date = new Date().toISOString();
       const dateStr = date.split('T');
       inputDateSelector.setAttribute('min', dateStr[0])
@@ -152,7 +151,8 @@ const createCurrentDataSet = () => {
         const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
         // put past reservations on page
-        const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
+        const pastBookings = userBookingsRepo.getPastBookings(today)
+        pastBookings.sort((a,b) => b.dateCode - a.dateCode)
 
         let pastChunk = ''
         pastBookings.forEach(booking => {
@@ -171,7 +171,8 @@ const createCurrentDataSet = () => {
         pastBookingsSelector.innerHTML = pastChunk
 
         // put current and future reservations on page
-        const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
+        const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
+        currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
 
         let futureChunk = ''
         currentAndFutureBookings.forEach(booking => {
@@ -300,6 +301,8 @@ const showCustomerView = () => {
   hide(managerViewSelector)
   hide(loginModalSelector)
   display(logoutModalSelector)
+  display(dashboardContentSelector)
+  display(contentFutureSection)
 }
 
 const showManagerView = () => {
@@ -310,7 +313,7 @@ const showManagerView = () => {
   display(managerViewSelector)
   hide(loginModalSelector)
   display(logoutModalSelector)
-
+  display(dashboardContentSelector)
 }
 
 const resetForm = () => {
@@ -433,6 +436,9 @@ loginModalSelector.addEventListener('click', (event) => {
 loginSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
+  document.querySelector('.date').classList.remove('hidden')
+  document.querySelector('.user').classList.remove('hidden')
+
   // todo ==>do some error handling
 
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
@@ -493,6 +499,8 @@ logoutSubmitButton.addEventListener('click', (event) => {
   showLandingView();
   navDateSelector.innerHTML = ''
   userNameSelector.innerHTML = ''
+  document.querySelector('.date').classList.add('hidden')
+  document.querySelector('.user').classList.add('hidden')
 })
 
 
