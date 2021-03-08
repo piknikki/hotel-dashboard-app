@@ -57,10 +57,12 @@ class BookingEngine {
   getRoomsNotBooked(currentDate) {
     const dateCode = Number(currentDate.split('/').join('')) // creates datecode for just this date
     this.createDateCode()
-    const filteredBookings = this.bookings.filter(booking => booking.dateCode === dateCode)
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode === dateCode) // bookings for today
 
+    console.log(filteredBookings)
     return filteredBookings.reduce((acc, booking) => {
-      return [...acc, ...this.rooms.filter(room => room.number !== booking.roomNumber)]
+      const allrooms = [...acc, ...this.rooms.filter(room => room.number !== booking.roomNumber)]
+      return  [...new Set(allrooms)]// rooms without bookings
     }, [])
   }
 }
