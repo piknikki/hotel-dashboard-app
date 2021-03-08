@@ -54,23 +54,13 @@ class BookingEngine {
     return userTotalCost
   }
 
-
-  getTodaysBookings(todaysDate) {
-    const dateCode = Number(todaysDate.split('/').join(''))
+  getRoomsNotBooked(currentDate) {
+    const dateCode = Number(currentDate.split('/').join('')) // creates datecode for just this date
     this.createDateCode()
+    const filteredBookings = this.bookings.filter(booking => booking.dateCode === dateCode)
 
-    // todo ==> need to find the available rooms. rooms without a booking.
-    //  currently I am returning all bookings for todday, but that's not what I need
-    const todaysBookings = this.bookings.filter(booking => booking.dateCode === dateCode)
-    console.log(todaysBookings)
-
-    return todaysBookings.reduce((acc, booking) => {
-      const roomsNotBookedToday = {
-        ...booking,
-        ...this.rooms.find(room => room.number !== booking.roomNumber)
-      }
-
-      return [...acc, roomsNotBookedToday]
+    return filteredBookings.reduce((acc, booking) => {
+      return [...acc, ...this.rooms.filter(room => room.number !== booking.roomNumber)]
     }, [])
   }
 }

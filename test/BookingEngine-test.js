@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import BookingEngine from '../src/BookingEngine';
+
 import bookingsTestData from "./booking-testdata";
 import roomsTestData from "./room-testdata";
 
@@ -109,7 +110,7 @@ describe('BookingEngine', function() {
   });
 
   it('should find no future bookings if no future bookings exist', () => {
-    expect(bookingsRepo1.getCurrentAndFutureBookings('2021/02/02')).to.deep.equal([]);
+    expect(bookingsRepo1.getCurrentAndFutureBookings('2021/06/02')).to.deep.equal([]);
   });
 
   it('should find past bookings', () => {
@@ -229,5 +230,138 @@ describe('BookingEngine', function() {
 
     ]);
   });
+
+  it('should find available rooms for only today', () => {
+    expect(bookingsRepo1.getRoomsNotBooked('2020/02/08')).to.deep.equal([
+      {
+        "bedSize": "queen",
+        "bidet": true,
+        "costPerNight": 358.4,
+        "numBeds": 1,
+        "number": 1,
+        "roomType": "residential suite"
+      },
+      {
+        "bedSize": "full",
+        "bidet": false,
+        "costPerNight": 477.38,
+        "numBeds": 2,
+        "number": 2,
+        "roomType": "suite"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": false,
+        "costPerNight": 429.44,
+        "numBeds": 1,
+        "number": 4,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": true,
+        "costPerNight": 340.17,
+        "numBeds": 2,
+        "number": 5,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": true,
+        "costPerNight": 397.02,
+        "numBeds": 1,
+        "number": 6,
+        "roomType": "junior suite"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": false,
+        "costPerNight": 231.46,
+        "numBeds": 2,
+        "number": 7,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "king",
+        "bidet": false,
+        "costPerNight": 261.26,
+        "numBeds": 1,
+        "number": 8,
+        "roomType": "junior suite"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": true,
+        "costPerNight": 200.39,
+        "numBeds": 1,
+        "number": 9,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "twin",
+        "bidet": false,
+        "costPerNight": 497.64,
+        "numBeds": 1,
+        "number": 10,
+        "roomType": "suite"
+      },
+      {
+        "bedSize": "twin",
+        "bidet": true,
+        "costPerNight": 207.24,
+        "numBeds": 2,
+        "number": 11,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "twin",
+        "bidet": false,
+        "costPerNight": 172.09,
+        "numBeds": 2,
+        "number": 12,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "queen",
+        "bidet": false,
+        "costPerNight": 423.92,
+        "numBeds": 2,
+        "number": 13,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "twin",
+        "bidet": false,
+        "costPerNight": 457.88,
+        "numBeds": 1,
+        "number": 14,
+        "roomType": "residential suite"
+      },
+      {
+        "bedSize": "full",
+        "bidet": false,
+        "costPerNight": 294.56,
+        "numBeds": 1,
+        "number": 15,
+        "roomType": "residential suite"
+      },
+      {
+        "bedSize": "full",
+        "bidet": false,
+        "costPerNight": 325.6,
+        "numBeds": 2,
+        "number": 16,
+        "roomType": "single room"
+      },
+      {
+        "bedSize": "twin",
+        "bidet": false,
+        "costPerNight": 328.15,
+        "numBeds": 2,
+        "number": 17,
+        "roomType": "junior suite"
+      }
+    ]);
+  })
 
 });

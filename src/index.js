@@ -192,43 +192,14 @@ const createCurrentDataSet = () => {
 
       } else if (userData === undefined) {
         // manager is logged in
-        // get all available rooms and put into manager's availability section
+
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
-        const todaysBookings = allBookingsRepo.getTodaysBookings(today)
-        console.log(todaysBookings)
+        const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
+        console.log("rooms not booked", todaysRoomsNotBooked)
 
-        let todayChunk = ''
-        // todo ==> this isn't pulling the right information. track down what it's pulling
-        todaysBookings.forEach(room => {
-          const roomTypeSlug = room.roomType.split(' ').join('-');
+        displayAvailableRooms(todaysRoomsNotBooked, today)
 
-          todayChunk += `
-            <article class="content__bookings--item room-container" id="roomContainer">
-            <div class="room-container__item--room-type ${roomTypeSlug}" >${room.roomType}</div>
-              <p class="room-container__item--number">Room Number: ${room.number}</p>
-              <p class="room-container__item--bed-size">Bed Size: ${room.bedSize}</p>
-              <p class="room-container__item--num-beds">Number of Beds: ${room.numBeds}</p>
-              <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
-              <p class="room-container__item--cost-per-night">Cost per Night: $ ${room.costPerNight}</p>
-
-              <button class="room-container__item--submit"
-                id="selectRoom"
-                data-id="${room.number}"
-                data-date="${today}">
-              Select this room
-              </button>
-            </article>
-          `
-        })
-
-        document.getElementById('contentAvailability').innerHTML = todayChunk
-
-        // get all revenue for this year and put into manager's revenue section
-
-        // get percentage of booked rooms and put into gauge
       }
-
-
     })
     .catch(error => console.log(error.message))
 }
@@ -386,7 +357,7 @@ spendingButton.addEventListener('click', showSpendingSection)
 newReservationButton.addEventListener('click', showNewResSection)
 newBookingCancelButton.addEventListener('click', resetForm)
 
-availabilityContentButton.addEventListener('click', showAvailabilitySection)
+availabilityContentButton.addEventListener('click', showFutureSection)
 revenueButton.addEventListener('click', showMGRRevenueSection)
 newReservationButtonManager.addEventListener('click', showMGRNewResSection)
 

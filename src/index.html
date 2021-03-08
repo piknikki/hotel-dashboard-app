@@ -104,10 +104,9 @@
         <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
       </figure>
 
-
-  <!--      Manager view   -->
-      <main class="manager-view " id="managerView">
-        <article class="dashboard-menu">
+      <main class="main ">
+        <!--        manager menu-->
+        <article class="dashboard-menu" id="managerView">
           <span class="dashboard-label">
             <i class="fal fa-hotel fa-2x dashboard-label__item"></i>
             <span class="dashboard-label__item"><h3>Manager Dashboard</h3></span>
@@ -118,11 +117,6 @@
               <i class="fal fa-bed fa-lg menu__item--icon" ></i>
               <span class="menu__item--text">Availability</span>
             </button>
-
-<!--            <button type="button" id="pastBookingsButton">-->
-<!--              <i class="fal fa-calendar-check fa-lg menu__item&#45;&#45;icon"></i>-->
-<!--              <span class="menu__item&#45;&#45;text">Past Bookings</span>-->
-<!--            </button>-->
 
             <button type="button" id="revenueButton">
               <i class="fal fa-badge-dollar fa-lg menu__item--icon"></i>
@@ -147,58 +141,8 @@
           </section>
         </article>
 
-        <section class="dashboard-content">
-          <h2 class="dashboard-title">Dashboard</h2>
-          <section class="content content__mgr-availability">
-            AVAILABILITY -- show all open rooms for today
-            <section class="content__bookings" id="contentAvailability">
-
-            </section>
-          </section>
-          <section class="content revenue hidden">
-            <section class="content__revenue">Revenue -- show how much revenue this year
-              <h4>Revenue is ${$100} so far this year. (should this be broken down by room?)</h4>
-            </section>
-          </section>
-
-          <section class="content new-reservation hidden">
-            MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
-            <form id="formMgr">
-              <fieldset>
-                <legend>First, choose a date</legend>
-                <br>
-                <section class="form-wrapper">
-                  <label for="inputDate">Date</label>
-                  <!--  todo - configure the date picker here -->
-                  <input type="date" id="inputDateMgr" name="date" placeholder="YYYY/MM/DD">
-
-                  <label>Filter by Type of Room</label>
-                  <select name="types" id="typesSelectorMgr" class="dropdown" >
-                    <option value="none" class="dropdown__item"></option>
-                    <option value="single-room" class="dropdown__item">Single Room</option>
-                    <option value="junior-suite" class="dropdown__item">Junior Suite</option>
-                    <option value="suite" class="dropdown__item">Suite</option>
-                    <option value="residential-suite" class="dropdown__item">Residential Suite</option>
-                  </select>
-                </section>
-
-                <section class="button-box">
-                  <button id="newBookingCancelMgr" class="button-box__item--cancel" type="reset">Cancel</button>
-
-                  <button id="newBookingSubmitMgr" class="button-box__item--submit" type="button">Submit</button>
-                </section>
-
-              </fieldset>
-            </form>
-          </section>
-
-        </section>
-      </main>
-
-
-  <!--      Customer view   -->
-      <main class="customer-view hidden" id="customerView">
-        <section class="dashboard-menu">
+          <!--        customer menu-->
+        <section class="dashboard-menu hidden" id="customerView">
           <span class="dashboard-label">
             <i class="fal fa-key fa-2x dashboard-label__item"></i>
             <span class="dashboard-label__item"><h3>Customer Dashboard</h3></span>
@@ -227,6 +171,7 @@
           </section>
         </section>
 
+
         <section class="dashboard-content">
           <h2 class="dashboard-title">Dashboard</h2>
           <section class="content content__future ">
@@ -242,7 +187,7 @@
 
           <section class="content content__spending hidden">
             SPENDING
-              <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
+            <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
           </section>
 
           <section class="content content__new-reservation hidden">
@@ -276,17 +221,21 @@
           </section>
 
           <section class="content content__available-rooms hidden">
-              <section class="feedback" id="feedback">
-                If you don't want to filter by type, you'll see all rooms available for all room types.
-              </section>
-              <section class="apologies" id="apologies">
+            <section class="feedback" id="feedback">
+              If you don't want to filter by type, you'll see all rooms available for all room types.
+            </section>
+            <section class="apologies" id="apologies">
 
-              </section>
+            </section>
             <section class="content__bookings" id="availableRooms">
 
             </section>
           </section>
         </section>
+
+
+<!--customer stuff-->
+
       </main>
 
   <!--    <footer class="hidden">-->
