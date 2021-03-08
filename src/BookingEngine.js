@@ -5,6 +5,7 @@ class BookingEngine {
   }
 
   createDateCode() {
+    // creates datecodes for all existing bookings
     return this.bookings.map(booking => {
       const dateCode = Number(booking.date.split('/').join(''))
       booking.dateCode = dateCode
@@ -12,7 +13,7 @@ class BookingEngine {
   }
 
   getCurrentAndFutureBookings(currentDate) {
-    const dateCode = Number(currentDate.split('/').join(''))
+    const dateCode = Number(currentDate.split('/').join('')) // creates datecode for just this date
     this.createDateCode()
     const filteredBookings = this.bookings.filter(booking => booking.dateCode >= dateCode)
 
@@ -61,14 +62,15 @@ class BookingEngine {
     // todo ==> need to find the available rooms. rooms without a booking.
     //  currently I am returning all bookings for todday, but that's not what I need
     const todaysBookings = this.bookings.filter(booking => booking.dateCode === dateCode)
+    console.log(todaysBookings)
 
     return todaysBookings.reduce((acc, booking) => {
-      const roomAndBookingInfo = {
+      const roomsNotBookedToday = {
         ...booking,
-        ...this.rooms.find(room => room.number === booking.roomNumber)
+        ...this.rooms.find(room => room.number !== booking.roomNumber)
       }
 
-      return [...acc, roomAndBookingInfo]
+      return [...acc, roomsNotBookedToday]
     }, [])
   }
 }
