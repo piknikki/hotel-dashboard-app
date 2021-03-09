@@ -129,16 +129,17 @@
             </button>
           </section>
 
-          <span class="dashboard-label">
+          <span class="gauge-box">
             <i class="fal fa-bed fa-2x dashboard-label__item"></i>
             <span class="dashboard-label__item">Today's Occupancy</span>
+            <section class="gauge">
+              <div class="gauge__body">
+                <div class="gauge__fill"></div>
+                <div class="gauge__cover"></div>
+              </div>
+            </section>
           </span>
-          <section class="gauge">
-            <div class="gauge__body">
-              <div class="gauge__fill"></div>
-              <div class="gauge__cover"></div>
-            </div>
-          </section>
+
         </article>
 
           <!--        customer menu-->
@@ -187,12 +188,12 @@
 
           <section class="content content__spending hidden">
             SPENDING
-            <h4 class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</h4>
+            <section class="content__spending--text">You have spent $<span id="customerTotalSpending"></span> so far this year.</section>
           </section>
 
           <section class="content content__revenue hidden">
             REVENUE
-            <h4 class="content__revenue--text">Total Revenue for this Year: $<span id="managerRevenue"></span></h4>
+            <section class="content__revenue--text">Total Revenue for this Year: $<span id="managerRevenue"></span></section>
           </section>
 
           <section class="content content__new-reservation hidden">
@@ -242,24 +243,7 @@
             </section>
           </section>
         </section>
-
-
-<!--customer stuff-->
-
       </main>
-
-  <!--    <footer class="hidden">-->
-  <!--      <figure class="footer__logo logo">-->
-  <!--        <img class="logo__img" src="/images/pouncecat_orange.png" alt="orange cat pouncing logo">-->
-  <!--        <span class="logo__name&#45;&#45;footer">pounce</span>-->
-  <!--      </figure>-->
-
-  <!--      <ul class="footer-list">-->
-  <!--        <li class="footer-list__links">about us</li>-->
-  <!--        <li class="footer-list__links">contact us</li>-->
-  <!--        <li class="footer-list__links">github</li>-->
-  <!--      </ul>-->
-  <!--    </footer>-->
     </section>
   </body>
 </html>

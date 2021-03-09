@@ -10,6 +10,7 @@ import BookingEngine from "./BookingEngine";
 // *** Global variables *** //
 let globalUserName;
 let globalUserId;
+let globalDate;
 let searchableData;
 let roomInfo;
 let getUserData;
@@ -77,6 +78,17 @@ const getRoomData =
       return response.json()
     })
 
+const updateUserData = () => {
+  getUserData =
+    fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json()
+      })
+}
+
 const updateBookingData = () => {
   getBookingData =
     fetch(`http://localhost:3001/api/v1/bookings`)
@@ -111,12 +123,13 @@ const sendBookingData = (inputBookingData) => {
     })
 
   updateBookingData()
-  createCurrentDataSet()
+  createCurrentDataSet(globalDate)
 }
 
 const createCurrentDataSet = (today) => {
   Promise.all([getUserData, getBookingData, getRoomData])
     .then((allData) => {
+
       const userData = allData[0];
       const bookingData = allData[1].bookings;
       const roomData = allData[2].rooms;
@@ -419,21 +432,14 @@ loginSubmitButton.addEventListener('click', (event) => {
   const date = new Date().toISOString();
   const dateStr = date.split('T');
   let today = dateStr[0].split('-').join('/')
-  document.getElementById('navDate').innerHTML = `${today}`
+
 
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
     globalUserName = inputUsername.value
-    globalUserId = globalUserName.slice(8);
+    globalUserId = globalUserName.slice(8)
+    globalDate = today
 
-    getUserData =
-      fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText);
-          }
-          return response.json()
-        })
-
+    updateUserData()
     createCurrentDataSet(today);
 
     hide(loginContainer)
