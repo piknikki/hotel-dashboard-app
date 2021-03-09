@@ -136,83 +136,46 @@ const createCurrentDataSet = () => {
       if (userData !== undefined) {
         // customer is logged in
         const currentUser = new User(userData)
-
         createCustomerInfo(currentUser, today, bookingData, roomData)
-        // document.getElementById('navDate').innerHTML = `${today}`
-        // userNameSelector.setAttribute('data-userId', currentUser.id)
-        // userNameSelector.innerHTML = `Hi, ${currentUser.name}`
-        //
-        // // create bookings repo -- filter if customer, don't filter if manager
-        // const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
-        // const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
-
-        // // put past reservations on page
-        // const pastBookings = userBookingsRepo.getPastBookings(today)
-        // pastBookings.sort((a,b) => b.dateCode - a.dateCode)
-        //
-        // let pastChunk = ''
-        // pastBookings.forEach(booking => {
-        //   const roomTypeSlug = booking.roomType.split(' ').join('-');
-        //
-        //   pastChunk += `
-        //   <article class="content__bookings--item item-container">
-        //     <p class="item-container__item--id">ID: ${booking.id}</p>
-        //     <p class="item-container__item--date">Date: ${booking.date}</p>
-        //     <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-        //     <p class="item-container__item--duration">Duration: 1 night</p>
-        //     <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-        //   </article>
-        // `
-        // })
-        // document.getElementById('pastBookings').innerHTML = pastChunk
-        //
-        // // put current and future reservations on page
-        // const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
-        // currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
-        //
-        // let futureChunk = ''
-        // currentAndFutureBookings.forEach(booking => {
-        //   const roomTypeSlug = booking.roomType.split(' ').join('-');
-        //
-        //   futureChunk += `
-        //   <article class="content__bookings--item item-container">
-        //     <p class="item-container__item--id">ID: ${booking.id}</p>
-        //     <p class="item-container__item--date">Date: ${booking.date}</p>
-        //     <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-        //     <p class="item-container__item--duration">Duration: 1 night</p>
-        //     <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-        //   </article>
-        // `
-        // })
-        //
-        // document.getElementById('futureBookings').innerHTML = futureChunk
-        //
-        // // put total spent on page
-        // const totalSpent = userBookingsRepo.getTotalSpent();
-        // document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
 
       } else if (userData === undefined) {
         // manager is logged in
 
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
-        const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
-        console.log(todaysRoomsNotBooked)
 
-        const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
-        document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
-
-        // todo --> after pulling info with api call, insert into this function call
-        const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
-        setGaugeValue(gaugeElement, percentageOccupiedToday);
-        console.log("percentage", percentageOccupiedToday)
-
-        displayAvailableRooms(todaysRoomsNotBooked, today)
+        createManagerInfo(allBookingsRepo, today)
+        // const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
+        //
+        // const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
+        // document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
+        //
+        // // todo --> after pulling info with api call, insert into this function call
+        // const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
+        // setGaugeValue(gaugeElement, percentageOccupiedToday);
+        // console.log("percentage", percentageOccupiedToday)
+        //
+        // displayAvailableRooms(todaysRoomsNotBooked, today)
       }
     })
     .catch(error => console.log(error.message))
 }
 
 // *** General Functions *** //
+
+const createManagerInfo = (allBookingsRepo, today) => {
+  const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
+
+  const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
+  // put revenue on page
+  document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
+
+  // put gauge on page
+  const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
+  setGaugeValue(gaugeElement, percentageOccupiedToday);
+
+  // show all available rooms
+  displayAvailableRooms(todaysRoomsNotBooked, today)
+}
 
 const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
   document.getElementById('navDate').innerHTML = `${today}`
