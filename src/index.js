@@ -140,21 +140,8 @@ const createCurrentDataSet = () => {
 
       } else if (userData === undefined) {
         // manager is logged in
-
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
-
         createManagerInfo(allBookingsRepo, today)
-        // const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
-        //
-        // const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
-        // document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
-        //
-        // // todo --> after pulling info with api call, insert into this function call
-        // const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
-        // setGaugeValue(gaugeElement, percentageOccupiedToday);
-        // console.log("percentage", percentageOccupiedToday)
-        //
-        // displayAvailableRooms(todaysRoomsNotBooked, today)
       }
     })
     .catch(error => console.log(error.message))
@@ -164,16 +151,11 @@ const createCurrentDataSet = () => {
 
 const createManagerInfo = (allBookingsRepo, today) => {
   const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
-
   const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
-  // put revenue on page
   document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
-
-  // put gauge on page
   const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
   setGaugeValue(gaugeElement, percentageOccupiedToday);
 
-  // show all available rooms
   displayAvailableRooms(todaysRoomsNotBooked, today)
 }
 
@@ -182,7 +164,6 @@ const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
   userNameSelector.setAttribute('data-userId', currentUser.id)
   userNameSelector.innerHTML = `Hi, ${currentUser.name}`
 
-  // create bookings repo -- filter if customer, don't filter if manager
   const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
   const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
@@ -190,7 +171,6 @@ const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
 }
 
 const updateCustomerView = (userBookingsRepository, today) => {
-  // put past reservations on page
   const pastBookings = userBookingsRepository.getPastBookings(today)
   pastBookings.sort((a,b) => b.dateCode - a.dateCode)
 
@@ -210,7 +190,6 @@ const updateCustomerView = (userBookingsRepository, today) => {
   })
   document.getElementById('pastBookings').innerHTML = pastChunk
 
-  // put current and future reservations on page
   const currentAndFutureBookings = userBookingsRepository.getCurrentAndFutureBookings(today);
   currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
 
@@ -231,7 +210,6 @@ const updateCustomerView = (userBookingsRepository, today) => {
 
   document.getElementById('futureBookings').innerHTML = futureChunk
 
-  // put total spent on page
   const totalSpent = userBookingsRepository.getTotalSpent();
   document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
 }
@@ -247,7 +225,6 @@ const showFutureSection = () => {
   hide(pastBookingsSection)
   hide(availableRoomsSection)
 }
-
 
 const showAvailabilitySection = (event) => {
   event.preventDefault()
