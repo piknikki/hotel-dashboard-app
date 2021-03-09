@@ -4,8 +4,7 @@
 body {
   line-height: 1;
   font-family: $main-font;
-  background: #f4f4f4;
-
+  background: $very-light-gray;
 }
 
 // *** General *** //
@@ -31,7 +30,6 @@ body {
 // *** Header *** //
 nav {
   display: flex;
-  flex: 2;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
@@ -51,7 +49,7 @@ nav {
       font-family: $fancy-font;
       font-weight: bold;
       font-size: 1.2em;
-      color: #cb770e;
+      color: $logo-orange;
     }
   }
 }
@@ -69,14 +67,14 @@ nav {
     &--login,
     &--logout {
       padding: 0 5px;
-      background: #F4F4F4;
+      background: $very-light-gray;
     }
   }
 }
 
 .submit-login,
 .submit-logout {
-  background: #F4F4F4;
+  background: $very-light-gray;
 }
 
 ul {
@@ -88,15 +86,13 @@ ul {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
 }
 
 // *** Landing View *** //
 .landing-view {
-  flex: 6;
   border-top: 1px solid gray;
   padding: 50px;
-  background: #F4F4F4;
+  background: $very-light-gray;
   margin: 0 auto;
 }
 
@@ -129,19 +125,15 @@ ul {
   width: 100%;
 }
 
-
 // *** Dashboard *** //
-//.manager-view,
-//.customer-view,
 .main {
   display: flex;
-  //flex: 6;
   border-top: 1px solid gray;
   height: 100%;
 }
 
 .dashboard-menu {
-  color: dimgray; //todo ==> make this accessible color palette
+  color: $middle-gray;
   width: 25%;
   background: white;
   padding: 30px;
@@ -161,7 +153,6 @@ ul {
   &__item {
     margin-right: 10px;
     margin-bottom: 10px;
-
   }
 }
 
@@ -171,7 +162,6 @@ button {
   align-items: center;
   font-size: 1.1em;
   border: none;
-  //background: #F4F4F4;
   background: white;
 }
 
@@ -195,7 +185,7 @@ button {
 // *** Dashboard Content Container *** //
 .dashboard-title {
   font-weight: bold;
-  color: dimgray;
+  color: $middle-gray;
   margin-bottom: 10px;
 }
 
@@ -262,7 +252,6 @@ button {
       border-radius: 15px;
       color: $dark-gray;
       border: none;
-
     }
   }
 }
@@ -281,7 +270,6 @@ button {
     &--bed-size,
     &--num-beds {
       color: $navy-blue;
-
     }
 
     &--cost-per-night {
@@ -305,7 +293,6 @@ button {
       border: none;
       background: coral;
     }
-
   }
 }
 
@@ -332,7 +319,8 @@ button {
     left: 0;
     width: inherit;
     height: 100%;
-    background: linear-gradient(90deg, rgb(103, 124, 217) 0%, rgb(161, 241, 119) 100%);    transform-origin: center top;
+    background: linear-gradient(90deg, rgb(103, 124, 217) 0%, rgb(161, 241, 119) 100%);
+    transform-origin: center top;
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
   }
@@ -346,7 +334,6 @@ button {
     left: 50%;
     transform: translateX(-50%);
     background: white;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -367,7 +354,6 @@ button {
   color: red;
 }
 
-// todo ==> make sure all room types are taken care of
 .single-room {
   background: #48d085;
 }
@@ -417,7 +403,6 @@ select {
 
   &__item {
     margin: 10px;
-
   }
 }
 
@@ -429,7 +414,7 @@ select {
 
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 765px) {
   nav {
     flex-flow: column nowrap;
   }
@@ -444,6 +429,7 @@ select {
 
   .dashboard-content {
     width: 100%;
+    padding: 10px;
   }
 
   .dashboard-menu {
@@ -488,7 +474,6 @@ select {
     width: 100%;
     padding: 5px;
   }
-
 }
 
 .hidden {
