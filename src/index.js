@@ -70,7 +70,7 @@ let getBookingData =
     })
 
 
-/// GET room info -- do this immediately
+/// GET room info -- do this immediately, only need once
 const getRoomData =
   fetch(`http://localhost:3001/api/v1/rooms`)
     .then(response => {
@@ -106,9 +106,9 @@ const sendBookingData = (inputBookingData) => {
       return response.json()
     })
     .catch(error => {
-      // if (error.message === "Unprocessable Entity") {
-      //   feedbackSelector.innerHTML = `You must fill in all the blanks`
-      // }
+      if (error.message === "Unprocessable Entity") {
+        feedbackSelector.innerHTML = `You must fill in all the blanks`
+      }
       console.log(error.number)
       console.log(error.message)
     })
@@ -127,7 +127,6 @@ const createCurrentDataSet = () => {
       searchableData = bookingData;
       roomInfo = roomData;
 
-      // const today = '2020/03/10'
       const date = new Date().toISOString();
       const dateStr = date.split('T');
       document.getElementById('inputDate').setAttribute('min', dateStr[0])
@@ -137,58 +136,60 @@ const createCurrentDataSet = () => {
       if (userData !== undefined) {
         // customer is logged in
         const currentUser = new User(userData)
-        document.getElementById('navDate').innerHTML = `${today}`
-        userNameSelector.setAttribute('data-userId', currentUser.id)
-        userNameSelector.innerHTML = `Hi, ${currentUser.name}`
 
-        // create bookings repo -- filter if customer, don't filter if manager
-        const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
-        const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
+        createCustomerInfo(currentUser, today, bookingData, roomData)
+        // document.getElementById('navDate').innerHTML = `${today}`
+        // userNameSelector.setAttribute('data-userId', currentUser.id)
+        // userNameSelector.innerHTML = `Hi, ${currentUser.name}`
+        //
+        // // create bookings repo -- filter if customer, don't filter if manager
+        // const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
+        // const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
 
-        // put past reservations on page
-        const pastBookings = userBookingsRepo.getPastBookings(today)
-        pastBookings.sort((a,b) => b.dateCode - a.dateCode)
-
-        let pastChunk = ''
-        pastBookings.forEach(booking => {
-          const roomTypeSlug = booking.roomType.split(' ').join('-');
-
-          pastChunk += `
-          <article class="content__bookings--item item-container">
-            <p class="item-container__item--id">ID: ${booking.id}</p>
-            <p class="item-container__item--date">Date: ${booking.date}</p>
-            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-            <p class="item-container__item--duration">Duration: 1 night</p>
-            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-          </article>
-        `
-        })
-        document.getElementById('pastBookings').innerHTML = pastChunk
-
-        // put current and future reservations on page
-        const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
-        currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
-
-        let futureChunk = ''
-        currentAndFutureBookings.forEach(booking => {
-          const roomTypeSlug = booking.roomType.split(' ').join('-');
-
-          futureChunk += `
-          <article class="content__bookings--item item-container">
-            <p class="item-container__item--id">ID: ${booking.id}</p>
-            <p class="item-container__item--date">Date: ${booking.date}</p>
-            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-            <p class="item-container__item--duration">Duration: 1 night</p>
-            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-          </article>
-        `
-        })
-
-        document.getElementById('futureBookings').innerHTML = futureChunk
-
-        // put total spent on page
-        const totalSpent = userBookingsRepo.getTotalSpent();
-        document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+        // // put past reservations on page
+        // const pastBookings = userBookingsRepo.getPastBookings(today)
+        // pastBookings.sort((a,b) => b.dateCode - a.dateCode)
+        //
+        // let pastChunk = ''
+        // pastBookings.forEach(booking => {
+        //   const roomTypeSlug = booking.roomType.split(' ').join('-');
+        //
+        //   pastChunk += `
+        //   <article class="content__bookings--item item-container">
+        //     <p class="item-container__item--id">ID: ${booking.id}</p>
+        //     <p class="item-container__item--date">Date: ${booking.date}</p>
+        //     <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+        //     <p class="item-container__item--duration">Duration: 1 night</p>
+        //     <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+        //   </article>
+        // `
+        // })
+        // document.getElementById('pastBookings').innerHTML = pastChunk
+        //
+        // // put current and future reservations on page
+        // const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
+        // currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
+        //
+        // let futureChunk = ''
+        // currentAndFutureBookings.forEach(booking => {
+        //   const roomTypeSlug = booking.roomType.split(' ').join('-');
+        //
+        //   futureChunk += `
+        //   <article class="content__bookings--item item-container">
+        //     <p class="item-container__item--id">ID: ${booking.id}</p>
+        //     <p class="item-container__item--date">Date: ${booking.date}</p>
+        //     <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+        //     <p class="item-container__item--duration">Duration: 1 night</p>
+        //     <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+        //   </article>
+        // `
+        // })
+        //
+        // document.getElementById('futureBookings').innerHTML = futureChunk
+        //
+        // // put total spent on page
+        // const totalSpent = userBookingsRepo.getTotalSpent();
+        // document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
 
       } else if (userData === undefined) {
         // manager is logged in
@@ -212,6 +213,65 @@ const createCurrentDataSet = () => {
 }
 
 // *** General Functions *** //
+
+const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
+  document.getElementById('navDate').innerHTML = `${today}`
+  userNameSelector.setAttribute('data-userId', currentUser.id)
+  userNameSelector.innerHTML = `Hi, ${currentUser.name}`
+
+  // create bookings repo -- filter if customer, don't filter if manager
+  const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
+  const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
+
+  updateCustomerView(userBookingsRepo, today)
+}
+
+const updateCustomerView = (userBookingsRepository, today) => {
+  // put past reservations on page
+  const pastBookings = userBookingsRepository.getPastBookings(today)
+  pastBookings.sort((a,b) => b.dateCode - a.dateCode)
+
+  let pastChunk = ''
+  pastBookings.forEach(booking => {
+    const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+    pastChunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
+  })
+  document.getElementById('pastBookings').innerHTML = pastChunk
+
+  // put current and future reservations on page
+  const currentAndFutureBookings = userBookingsRepository.getCurrentAndFutureBookings(today);
+  currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
+
+  let futureChunk = ''
+  currentAndFutureBookings.forEach(booking => {
+    const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+    futureChunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
+  })
+
+  document.getElementById('futureBookings').innerHTML = futureChunk
+
+  // put total spent on page
+  const totalSpent = userBookingsRepository.getTotalSpent();
+  document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+}
 
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
