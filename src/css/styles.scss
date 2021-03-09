@@ -30,7 +30,6 @@ body {
 // *** Header *** //
 nav {
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   color: $dark-gray;
@@ -56,7 +55,6 @@ nav {
 
 .nav-links {
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 
@@ -83,7 +81,6 @@ ul {
 
 .logo {
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -105,7 +102,6 @@ ul {
 .features {
   margin: 20px 0;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: center;
 
@@ -143,7 +139,6 @@ ul {
 .dashboard-label {
   color: $navy-blue;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
   font-size: 1.2em;
@@ -221,8 +216,29 @@ button {
 
   &__spending {
     margin: 5px 10px;
+    font-size: 1.2em;
+    font-weight: 700;
+
+    &--text {
+      padding: 20px;
+      font-size: 1em;
+      font-weight: 300;
+    }
+  }
+
+  &__revenue {
+    margin: 5px 10px;
+    font-size: 1.2em;
+    font-weight: 700;
+
+    &--text {
+      padding: 20px;
+      font-size: 1em;
+      font-weight: 300;
+    }
   }
 }
+
 
 .item-container {
   // todo ==> try taking out grid, so it looks like room container
@@ -300,8 +316,6 @@ button {
 .gauge {
   width: 100%;
   max-width: 250px;
-  padding: 10px;
-  border: 1px solid gray;
 
   &__body {
     position: relative;
@@ -341,6 +355,20 @@ button {
     padding-bottom: 25%;
     box-sizing: border-box;
   }
+}
+
+.gauge-box {
+  color: $navy-blue;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid gray;
+  margin-left: 10px;
+  margin-top: 20px;
 }
 
 .feedback {
@@ -479,4 +507,8 @@ select {
 
 .hidden {
   display: none;
+}
+
+.cf:after {
+  clear: both;
 }
