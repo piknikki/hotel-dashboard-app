@@ -117,7 +117,7 @@ const sendBookingData = (inputBookingData) => {
   createCurrentDataSet()
 }
 
-const createCurrentDataSet = () => {
+const createCurrentDataSet = (today) => {
   Promise.all([getUserData, getBookingData, getRoomData])
     .then((allData) => {
       const userData = allData[0];
@@ -126,12 +126,6 @@ const createCurrentDataSet = () => {
 
       searchableData = bookingData;
       roomInfo = roomData;
-
-      const date = new Date().toISOString();
-      const dateStr = date.split('T');
-      document.getElementById('inputDate').setAttribute('min', dateStr[0])
-      let today = dateStr[0].split('-').join('/')
-
 
       if (userData !== undefined) {
         // customer is logged in
@@ -415,19 +409,21 @@ availableRoomsSection.addEventListener('click', (event) => {
   sendBookingData(newBooking)
 })
 
-
 loginModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   // display modal
   display(loginContainer)
 })
 
-
 loginSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
   document.querySelector('.date').classList.remove('hidden')
   document.querySelector('.user').classList.remove('hidden')
+  const date = new Date().toISOString();
+  const dateStr = date.split('T');
+  let today = dateStr[0].split('-').join('/')
+  document.getElementById('navDate').innerHTML = `${today}`
 
   // todo ==>do some error handling
 
@@ -444,21 +440,14 @@ loginSubmitButton.addEventListener('click', (event) => {
           return response.json()
         })
 
-    createCurrentDataSet();
+    createCurrentDataSet(today);
 
     hide(loginContainer)
     showCustomerView()
   } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
-
-    const date = new Date().toISOString();
-    const dateStr = date.split('T');
-    let today = dateStr[0].split('-').join('/')
-
-    document.getElementById('navDate').innerHTML = `${today}`
-
     userNameSelector.innerHTML = `Hi, Manager`
 
-    createCurrentDataSet();
+    createCurrentDataSet(today);
 
     hide(loginContainer)
     showManagerView()
