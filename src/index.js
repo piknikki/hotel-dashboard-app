@@ -23,8 +23,6 @@ const customerViewSelector = document.getElementById('customerView')
 const managerViewSelector = document.getElementById('managerView')
 const dashboardContentSelector = document.getElementById('dashboardContent')
 
-const pastBookingsSelector = document.getElementById('pastBookings');
-const futureBookingsSelector = document.getElementById('futureBookings');
 const pastButton = document.getElementById('pastButton');
 const futureButton = document.getElementById('futureButton');
 const spendingButton = document.getElementById('spendingButton');
@@ -33,7 +31,6 @@ const newReservationButton = document.getElementById('newReservationButton');
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
-const inputDateSelector = document.getElementById('inputDate');
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
 const availableRoomsSection = document.getElementsByClassName('content__available-rooms')[0];
 const availableRoomsSelector = document.getElementById('availableRooms');
@@ -135,7 +132,7 @@ const createCurrentDataSet = () => {
       // const today = '2020/03/10'
       const date = new Date().toISOString();
       const dateStr = date.split('T');
-      inputDateSelector.setAttribute('min', dateStr[0])
+      document.getElementById('inputDate').setAttribute('min', dateStr[0])
       let today = dateStr[0].split('-').join('/')
 
 
@@ -168,7 +165,7 @@ const createCurrentDataSet = () => {
           </article>
         `
         })
-        pastBookingsSelector.innerHTML = pastChunk
+        document.getElementById('pastBookings').innerHTML = pastChunk
 
         // put current and future reservations on page
         const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);
@@ -189,7 +186,7 @@ const createCurrentDataSet = () => {
         `
         })
 
-        futureBookingsSelector.innerHTML = futureChunk
+        document.getElementById('futureBookings').innerHTML = futureChunk
 
         // put total spent on page
         const totalSpent = userBookingsRepo.getTotalSpent();
