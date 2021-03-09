@@ -8,17 +8,21 @@ import User from "./User";
 import BookingEngine from "./BookingEngine";
 
 // *** Global variables *** //
-let globalUserName;
-let globalUserId;
+
+
+const globalUserName = 'customer49'
+// todo => this will come from the login input not sure where it will live yet
+const globalUserId = '49';
+
 let searchableData;
 let roomInfo;
 let getUserData;
 
 const loginModalSelector = document.getElementById('loginModal');
 const loginContainer = document.getElementById('login');
-const loginSubmitButton = document.getElementById('submitLogin');
-const inputUsername = document.getElementById('loginUsername')
-const inputPassword = document.getElementById('loginPassword')
+// const loginSubmitButton = document.getElementById('submitLogin');
+// const inputUsername = document.getElementById('loginUsername')
+// const inputPassword = document.getElementById('loginPassword')
 const logoutModalSelector = document.getElementById('logoutModal');
 const logoutContainer = document.getElementById('logout');
 const logoutSubmitButton = document.getElementById('submitLogout');
@@ -411,8 +415,8 @@ loginModalSelector.addEventListener('click', (event) => {
   display(loginContainer)
 })
 
-loginSubmitButton.addEventListener('click', (event) => {
-  event.preventDefault()
+// loginSubmitButton.addEventListener('click', (event) => {
+//   event.preventDefault()
 
   document.querySelector('.date').classList.remove('hidden')
   document.querySelector('.user').classList.remove('hidden')
@@ -421,9 +425,9 @@ loginSubmitButton.addEventListener('click', (event) => {
   let today = dateStr[0].split('-').join('/')
   document.getElementById('navDate').innerHTML = `${today}`
 
-  if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
-    globalUserName = inputUsername.value
-    globalUserId = globalUserName.slice(8);
+  // if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
+  //   globalUserName = inputUsername.value
+  //   globalUserId = globalUserName.slice(8);
 
     getUserData =
       fetch(`http://localhost:3001/api/v1/customers/${globalUserId}`)
@@ -436,22 +440,22 @@ loginSubmitButton.addEventListener('click', (event) => {
 
     createCurrentDataSet(today);
 
-    hide(loginContainer)
-    showCustomerView()
-  } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
-    userNameSelector.innerHTML = `Hi, Manager`
-
-    createCurrentDataSet(today);
-
-    hide(loginContainer)
-    showManagerView()
-  } else {
-    // todo ==>do some error handling
-    console.log("SOMETHING IS VERY WRONG")
-    // show a message somewhere and reset the login form
-    // either username or password were wrong, try again
-  }
-})
+    // hide(loginContainer)
+    // showCustomerView()
+//   } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
+//     userNameSelector.innerHTML = `Hi, Manager`
+//
+//     createCurrentDataSet(today);
+//
+//     hide(loginContainer)
+//     showManagerView()
+//   } else {
+//     // todo ==>do some error handling
+//     console.log("SOMETHING IS VERY WRONG")
+//     // show a message somewhere and reset the login form
+//     // either username or password were wrong, try again
+//   }
+// })
 
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
