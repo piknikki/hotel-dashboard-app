@@ -15,9 +15,8 @@ describe('BookingEngine', function() {
     expect(bookingsRepo1).to.exist;
   });
 
-  xit('should be able to calculate total cost of bookings', () => {
-    console.log("TEST FILE", bookingsRepo1.rooms)
-    expect(bookingsRepo1.getTotalSpent()).to.equal(5555.00)
+  it('should be able to calculate total cost of bookings', () => {
+    expect(bookingsRepo1.getTotalSpent()).to.equal(4881.47)
   })
 
   it('should find bookings if future bookings exist', () => {

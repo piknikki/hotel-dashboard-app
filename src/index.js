@@ -162,7 +162,7 @@ const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
 
 const updateCustomerView = (userBookingsRepository, today) => {
   const pastBookings = userBookingsRepository.getPastBookings(today)
-  pastBookings.sort((a,b) => b.dateCode - a.dateCode)
+  pastBookings.sort((a, b) => b.dateCode - a.dateCode)
 
   let pastChunk = ''
   pastBookings.forEach(booking => {
@@ -181,7 +181,7 @@ const updateCustomerView = (userBookingsRepository, today) => {
   document.getElementById('pastBookings').innerHTML = pastChunk
 
   const currentAndFutureBookings = userBookingsRepository.getCurrentAndFutureBookings(today);
-  currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
+  currentAndFutureBookings.sort((a, b) => a.dateCode - b.dateCode)
 
   let futureChunk = ''
   currentAndFutureBookings.forEach(booking => {
@@ -349,10 +349,9 @@ function setGaugeValue(gauge, value) {
   gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
 }
 
-const displayNewBookingInfo = () => {
-  // todo ==> do this, to display after the booking has been successful
-}
-
+// const displayNewBookingInfo = () => {
+//   // todo ==> do this, to display after the booking has been successful
+// }
 
 // *** Event listeners *** //
 
@@ -405,6 +404,7 @@ availableRoomsSection.addEventListener('click', (event) => {
   sendBookingData(newBooking)
 })
 
+// todo ==> finish modals
 loginModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   // display modal
