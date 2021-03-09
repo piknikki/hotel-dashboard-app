@@ -15,7 +15,7 @@ describe('BookingFactory', function() {
     expect(booking1).to.exist;
   });
 
-  it('should create a new objec with the given booking and room info', () => {
+  it('should create a new object with the given booking and room info', () => {
 
     expect(booking1.booking).to.deep.equal({
       "id": "5fwrgu4i7k55hl747",
@@ -31,10 +31,6 @@ describe('BookingFactory', function() {
       "numBeds": 2,
       "costPerNight": 423.92
     })
-  })
-
-
-  xit('should ', () => {
   })
 
 });

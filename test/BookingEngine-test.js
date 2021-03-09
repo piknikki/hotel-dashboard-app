@@ -6,6 +6,7 @@ import roomsTestData from "./room-testdata";
 
 describe('BookingEngine', function() {
   let bookingsRepo1;
+  let bookingsRepo2;
 
   beforeEach(() => {
     bookingsRepo1 = new BookingEngine(bookingsTestData, roomsTestData)
@@ -230,7 +231,68 @@ describe('BookingEngine', function() {
     ]);
   });
 
-  it('should find available rooms for only today', () => {
+  it('should find no past bookings if no past bookings exist', () => {
+    expect(bookingsRepo1.getPastBookings('2018/06/02')).to.deep.equal([]);
+  });
+
+
+  it('should find no available rooms for today if everything is full', () => {
+    const bookingsTestData2 = [
+      {
+        "id": "5fwrgu4i7k55hl747",
+        "userID": 40,
+        "date": "2020/01/31",
+        "roomNumber": 13,
+        "roomServiceCharges": []
+      },
+      {
+        "id": "5fwrgu4i7k55hl748",
+        "userID": 40,
+        "date": "2020/01/09",
+        "roomNumber": 15,
+        "roomServiceCharges": []
+      },
+      {
+        "id": "5fwrgu4i7k55hl74g",
+        "userID": 40,
+        "date": "2020/01/12",
+        "roomNumber": 11,
+        "roomServiceCharges": []
+      }
+    ]
+
+    const roomsTestData2 = [
+      {
+        "number": 11,
+        "roomType": "single room",
+        "bidet": true,
+        "bedSize": "twin",
+        "numBeds": 2,
+        "costPerNight": 207.24
+      },
+      {
+        "number": 13,
+        "roomType": "single room",
+        "bidet": false,
+        "bedSize": "queen",
+        "numBeds": 2,
+        "costPerNight": 423.92
+      },
+      {
+        "number": 15,
+        "roomType": "residential suite",
+        "bidet": false,
+        "bedSize": "full",
+        "numBeds": 1,
+        "costPerNight": 294.56
+      }
+    ]
+    bookingsRepo2 = new BookingEngine(bookingsTestData2, roomsTestData2)
+
+    expect(bookingsRepo2.getRoomsNotBooked('2020/02/08')).to.deep.equal([]);
+  });
+
+  it('should find available rooms for today', () => {
     expect(bookingsRepo1.getRoomsNotBooked('2020/02/08')).to.deep.equal([
       {
         "bedSize": "queen",
