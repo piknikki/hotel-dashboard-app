@@ -124,6 +124,7 @@ const sendBookingData = (inputBookingData) => {
 
   updateBookingData()
   createCurrentDataSet(globalDate)
+  console.log(globalDate)
 }
 
 const createCurrentDataSet = (today) => {
