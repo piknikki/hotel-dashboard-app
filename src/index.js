@@ -341,7 +341,7 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
             <p class="room-container__item--bidet">Has Bidet? ${room.bidet}</p>
             <p class="room-container__item--cost-per-night">Cost per Night: $ ${room.costPerNight}</p>
             
-            <button class="room-container__item--submit" 
+            <button class="room-container__item--submit cf" 
               id="selectRoom" 
               data-id="${room.number}" 
               data-date="${searchDate}">
