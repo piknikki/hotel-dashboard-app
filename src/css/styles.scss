@@ -1,32 +1,14 @@
 @import '_base';
-
-// *** Reset *** //
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-ol, ul {
-  list-style: none;
-}
+@import '_reset';
 
 body {
   line-height: 1;
-  font-family: 'Mulish', sans-serif;
-  background: #f4f4f4;
-
+  font-family: $main-font;
+  background: $very-light-gray;
 }
 
 // *** General *** //
 .wrapper {
-
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -40,14 +22,18 @@ body {
   margin: 5px;
 }
 
+.date,
+.user {
+  color: $dark-gray;
+}
+
 // *** Header *** //
 nav {
   display: flex;
-  flex: 2;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  color: gray;
+  color: $dark-gray;
   font-size: 2em;
   letter-spacing: 2px;
   margin: 10px 20px;
@@ -57,6 +43,13 @@ nav {
   &__item {
     &--logo {
       width: 100px;
+    }
+
+    &--text {
+      font-family: $fancy-font;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: $logo-orange;
     }
   }
 }
@@ -74,14 +67,14 @@ nav {
     &--login,
     &--logout {
       padding: 0 5px;
-      background: #F4F4F4;
+      background: $very-light-gray;
     }
   }
 }
 
 .submit-login,
 .submit-logout {
-  background: #F4F4F4;
+  background: $very-light-gray;
 }
 
 ul {
@@ -93,15 +86,13 @@ ul {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
 }
 
 // *** Landing View *** //
 .landing-view {
-  flex: 6;
   border-top: 1px solid gray;
   padding: 50px;
-  background: #F4F4F4;
+  background: $very-light-gray;
   margin: 0 auto;
 }
 
@@ -120,7 +111,7 @@ ul {
 
   &__item {
     margin: 0 10px;
-    color: #05518c;
+    color: $navy-blue;
     display: flex;
     align-items: center;
 
@@ -134,19 +125,15 @@ ul {
   width: 100%;
 }
 
-
 // *** Dashboard *** //
-.manager-view,
-.customer-view,
 .main {
   display: flex;
-  flex: 6;
   border-top: 1px solid gray;
   height: 100%;
 }
 
 .dashboard-menu {
-  color: dimgray; //todo ==> make this accessible color palette
+  color: $middle-gray;
   width: 25%;
   background: white;
   padding: 30px;
@@ -154,7 +141,7 @@ ul {
 }
 
 .dashboard-label {
-  color: #05518c;
+  color: $navy-blue;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -166,7 +153,6 @@ ul {
   &__item {
     margin-right: 10px;
     margin-bottom: 10px;
-
   }
 }
 
@@ -176,7 +162,6 @@ button {
   align-items: center;
   font-size: 1.1em;
   border: none;
-  //background: #F4F4F4;
   background: white;
 }
 
@@ -200,7 +185,7 @@ button {
 // *** Dashboard Content Container *** //
 .dashboard-title {
   font-weight: bold;
-  color: dimgray;
+  color: $middle-gray;
   margin-bottom: 10px;
 }
 
@@ -214,7 +199,7 @@ button {
 
 .content {
   flex-flow: column nowrap;
-  color: gray;
+  color: $dark-gray;
   background: white;
   border-radius: 10px;
   padding: 20px;
@@ -249,12 +234,13 @@ button {
 
   &__item {
     &--id {
-      color: #50BDFB;
+      color: $navy-blue;
     }
 
     &--date,
     &--beds {
       font-weight: bold;
+      color: $dark-gray;
     }
 
     &--duration {
@@ -264,9 +250,8 @@ button {
     &--room-type {
       padding: 5px;
       border-radius: 15px;
-      color: white;
+      color: $dark-gray;
       border: none;
-
     }
   }
 }
@@ -279,12 +264,12 @@ button {
 
     &--number {
       font-weight: bold;
+      color: $dark-gray;
     }
 
     &--bed-size,
     &--num-beds {
-      color: #50BDFB;
-
+      color: $navy-blue;
     }
 
     &--cost-per-night {
@@ -295,7 +280,7 @@ button {
       margin-bottom: 10px;
       padding: 5px 10px;
       border-radius: 15px;
-      color: white;
+      color: $dark-gray;
       border: none;
     }
 
@@ -308,7 +293,6 @@ button {
       border: none;
       background: coral;
     }
-
   }
 }
 
@@ -316,7 +300,8 @@ button {
 .gauge {
   width: 100%;
   max-width: 250px;
-  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid gray;
 
   &__body {
     position: relative;
@@ -335,7 +320,8 @@ button {
     left: 0;
     width: inherit;
     height: 100%;
-    background: linear-gradient(90deg, rgb(103, 124, 217) 0%, rgb(161, 241, 119) 100%);    transform-origin: center top;
+    background: linear-gradient(90deg, rgb(103, 124, 217) 0%, rgb(161, 241, 119) 100%);
+    transform-origin: center top;
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
   }
@@ -349,7 +335,6 @@ button {
     left: 50%;
     transform: translateX(-50%);
     background: white;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -370,7 +355,6 @@ button {
   color: red;
 }
 
-// todo ==> make sure all room types are taken care of
 .single-room {
   background: #48d085;
 }
@@ -380,7 +364,7 @@ button {
 }
 
 .residential-suite {
-  background: #818FD1;
+  background: #9ba7e3;
 }
 
 .suite {
@@ -420,7 +404,6 @@ select {
 
   &__item {
     margin: 10px;
-
   }
 }
 
@@ -432,9 +415,26 @@ select {
 
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 765px) {
+  nav {
+    flex-flow: column nowrap;
+  }
+
   .landing-view {
     padding: 0;
+  }
+
+  main {
+    flex-flow: column wrap;
+  }
+
+  .dashboard-content {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dashboard-menu {
+    width: 100%;
   }
 
   .features {
@@ -443,7 +443,7 @@ select {
 
     &__item {
       margin: 5px 10px;
-      color: #05518c;
+      color: $navy-blue;
       display: flex;
       align-items: center;
 
@@ -453,6 +453,28 @@ select {
     }
   }
 
+  .date,
+  .user {
+    display: none;
+  }
+
+  .content {
+    padding: 10px;
+
+    &__bookings {
+      display: flex;
+      flex-flow: row wrap;
+    }
+  }
+
+  .item-container {
+    padding: 5px;
+  }
+
+  .form-wrapper {
+    width: 100%;
+    padding: 5px;
+  }
 }
 
 .hidden {

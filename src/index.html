@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/48ff017e8b.js" crossorigin="anonymous"></script>
     <!--    google fonts  -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
     <title>pounce</title>
   </head>
 
@@ -17,15 +17,15 @@
       <nav class="nav">
         <figure class="nav__item logo">
           <img class="nav__item--logo" src="./images/pouncecat_orange.png" alt="pounce logo">
-          <span class="navr__item--text">pounce</span>
+          <span class="nav__item--text">pounce</span>
         </figure>
 
         <ul class="nav__item nav-links">
-          <li class="nav-links__item">
+          <li class="nav-links__item date hidden">
             <i class="fal fa-calendar-alt fa-lg"></i>
             <span class="date" id="navDate"></span>
           </li>
-          <li class="nav-links__item">
+          <li class="nav-links__item user hidden">
             <i class="fal fa-user fa-lg"></i>
             <span class="user-name" id="userName"></span>
           </li>
@@ -76,7 +76,7 @@
 
   <!--      Landing view   -->
 
-      <main class="landing-view hidden" id="landingView">
+      <main class="landing-view " id="landingView">
         <p class="landing-welcome">Travel with Peace of Mind -- knowing that you and your cat are both comfortable.</p>
         <section >
           <ul class="features">
@@ -100,13 +100,13 @@
         </section>
       </main>
 
-      <figure class="landing-view hidden" id="landingViewImg">
+      <figure class="landing-view " id="landingViewImg">
         <img class="cat-bed" src="/images/eyes.png" alt="cute kitten on a hotel bed">
       </figure>
 
       <main class="main ">
         <!--        manager menu-->
-        <article class="dashboard-menu" id="managerView">
+        <article class="dashboard-menu hidden" id="managerView">
           <span class="dashboard-label">
             <i class="fal fa-hotel fa-2x dashboard-label__item"></i>
             <span class="dashboard-label__item">Manager Dashboard</span>
@@ -131,7 +131,7 @@
 
           <span class="dashboard-label">
             <i class="fal fa-bed fa-2x dashboard-label__item"></i>
-            <span class="dashboard-label__item">Rooms Booked</span>
+            <span class="dashboard-label__item">Today's Occupancy</span>
           </span>
           <section class="gauge">
             <div class="gauge__body">
@@ -172,9 +172,9 @@
         </section>
 
         <!-- content section -->
-        <section class="dashboard-content">
+        <section class="dashboard-content hidden" id="dashboardContent">
           <h2 class="dashboard-title">Dashboard</h2>
-          <section class="content content__future " id="contentFuture">
+          <section class="content content__future hidden" id="contentFuture">
             FUTURE BOOKINGS
             <section class="content__bookings" id="futureBookings"></section>
           </section>
@@ -196,7 +196,7 @@
           </section>
 
           <section class="content content__new-reservation hidden">
-            MAKE A NEW RESERVATION -- show calendar, then available rooms for selected dates, filter by roomType property
+            MAKE A NEW RESERVATION
             <form id="form">
               <fieldset>
                 <legend>Choose a date and room type</legend>
@@ -206,7 +206,7 @@
                   <input type="date" id="inputDate" name="date" placeholder="YYYY/MM/DD">
 
                   <label>Filter by Type of Room</label>
-                  <select name="types" id="typesSelector" class="dropdown" >
+                  <select name="types" id="typesSelector" class="dropdown" aria-label="Dropdown selector" >
                     <option value="none" class="dropdown__item"></option>
                     <option value="single-room" class="dropdown__item">Single Room</option>
                     <option value="junior-suite" class="dropdown__item">Junior Suite</option>

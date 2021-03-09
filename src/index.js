@@ -10,9 +10,18 @@ import BookingEngine from "./BookingEngine";
 // *** Global variables *** //
 let globalUserName;
 let globalUserId;
-
 let searchableData;
 let roomInfo;
+let getUserData;
+
+const loginModalSelector = document.getElementById('loginModal');
+const loginContainer = document.getElementById('login');
+const loginSubmitButton = document.getElementById('submitLogin');
+const inputUsername = document.getElementById('loginUsername')
+const inputPassword = document.getElementById('loginPassword')
+const logoutModalSelector = document.getElementById('logoutModal');
+const logoutContainer = document.getElementById('logout');
+const logoutSubmitButton = document.getElementById('submitLogout');
 
 const navDateSelector = document.getElementById('navDate')
 const userNameSelector = document.getElementById('userName');
@@ -21,18 +30,15 @@ const landingViewSelector = document.getElementById('landingView');
 const landingViewImgSelector = document.getElementById('landingViewImg')
 const customerViewSelector = document.getElementById('customerView')
 const managerViewSelector = document.getElementById('managerView')
+const dashboardContentSelector = document.getElementById('dashboardContent')
 
-const pastBookingsSelector = document.getElementById('pastBookings');
-const futureBookingsSelector = document.getElementById('futureBookings');
 const pastButton = document.getElementById('pastButton');
 const futureButton = document.getElementById('futureButton');
 const spendingButton = document.getElementById('spendingButton');
 const newReservationButton = document.getElementById('newReservationButton');
-
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
-const inputDateSelector = document.getElementById('inputDate');
 const newReservationSection = document.getElementsByClassName('content__new-reservation')[0];
 const availableRoomsSection = document.getElementsByClassName('content__available-rooms')[0];
 const availableRoomsSelector = document.getElementById('availableRooms');
@@ -41,32 +47,14 @@ const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
 const apologiesSelector = document.getElementById('apologies');
-
 const availabilityContentButton = document.getElementById('availabilityContentButton')
 const revenueButton = document.getElementById('revenueButton')
 const newReservationButtonManager = document.getElementById('newReservationButtonManager')
-
-const availabilitySection = document.getElementsByClassName('content__mgr-availability')[0];
 const revenueSection = document.getElementsByClassName('content__revenue')[0];
-const mgrNewResSection = document.getElementsByClassName('new-reservation')[0]
 const contentFutureSection = document.getElementById('contentFuture')
-
-const loginModalSelector = document.getElementById('loginModal');
-const loginContainer = document.getElementById('login');
-const loginSubmitButton = document.getElementById('submitLogin');
-const inputUsername = document.getElementById('loginUsername')
-const inputPassword = document.getElementById('loginPassword')
-
-const logoutModalSelector = document.getElementById('logoutModal');
-const logoutContainer = document.getElementById('logout');
-const logoutSubmitButton = document.getElementById('submitLogout');
-
 const gaugeElement = document.querySelector('.gauge');
 
 // *** Build page *** //
-
-/// GET user info -- declare variable for this to be filled after fetch
-let getUserData;
 
 /// GET booking info -- do this immediately
 let getBookingData =
@@ -79,7 +67,7 @@ let getBookingData =
     })
 
 
-/// GET room info -- do this immediately
+/// GET room info -- do this immediately, only need once
 const getRoomData =
   fetch(`http://localhost:3001/api/v1/rooms`)
     .then(response => {
@@ -121,9 +109,12 @@ const sendBookingData = (inputBookingData) => {
       console.log(error.number)
       console.log(error.message)
     })
+
+  updateBookingData()
+  createCurrentDataSet()
 }
 
-const createCurrentDataSet = () => {
+const createCurrentDataSet = (today) => {
   Promise.all([getUserData, getBookingData, getRoomData])
     .then((allData) => {
       const userData = allData[0];
@@ -133,89 +124,85 @@ const createCurrentDataSet = () => {
       searchableData = bookingData;
       roomInfo = roomData;
 
-      // const today = '2020/02/02'
-      const date = new Date().toISOString();
-      const dateStr = date.split('T');
-      inputDateSelector.setAttribute('min', dateStr[0])
-      let today = dateStr[0].split('-').join('/')
-
-
       if (userData !== undefined) {
-        // customer is logged in
         const currentUser = new User(userData)
-        document.getElementById('navDate').innerHTML = `${today}`
-        userNameSelector.setAttribute('data-userId', currentUser.id)
-        userNameSelector.innerHTML = `Hi, ${currentUser.name}`
-
-        // create bookings repo -- filter if customer, don't filter if manager
-        const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
-        const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
-
-        // put past reservations on page
-        const pastBookings = userBookingsRepo.getPastBookings(today) // todo ==> sort these
-
-        let pastChunk = ''
-        pastBookings.forEach(booking => {
-          const roomTypeSlug = booking.roomType.split(' ').join('-');
-
-          pastChunk += `
-          <article class="content__bookings--item item-container">
-            <p class="item-container__item--id">ID: ${booking.id}</p>
-            <p class="item-container__item--date">Date: ${booking.date}</p>
-            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-            <p class="item-container__item--duration">Duration: 1 night</p>
-            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-          </article>
-        `
-        })
-        pastBookingsSelector.innerHTML = pastChunk
-
-        // put current and future reservations on page
-        const currentAndFutureBookings = userBookingsRepo.getCurrentAndFutureBookings(today);  // todo ==> sort these
-
-        let futureChunk = ''
-        currentAndFutureBookings.forEach(booking => {
-          const roomTypeSlug = booking.roomType.split(' ').join('-');
-
-          futureChunk += `
-          <article class="content__bookings--item item-container">
-            <p class="item-container__item--id">ID: ${booking.id}</p>
-            <p class="item-container__item--date">Date: ${booking.date}</p>
-            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
-            <p class="item-container__item--duration">Duration: 1 night</p>
-            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
-          </article>
-        `
-        })
-
-        futureBookingsSelector.innerHTML = futureChunk
-
-        // put total spent on page
-        const totalSpent = userBookingsRepo.getTotalSpent();
-        document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+        createCustomerInfo(currentUser, today, bookingData, roomData)
 
       } else if (userData === undefined) {
-        // manager is logged in
-
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
-        const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
-        console.log(todaysRoomsNotBooked)
+        createManagerInfo(allBookingsRepo, today)
 
-        const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
-        document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
-
-        // todo --> after pulling info with api call, insert into this function call
-        const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
-        setGaugeValue(gaugeElement, percentageOccupiedToday);
-        console.log("percentage", percentageOccupiedToday)
-
-        displayAvailableRooms(todaysRoomsNotBooked, today)
       }
     })
     .catch(error => console.log(error.message))
 }
 
 // *** General Functions *** //
+
+const createManagerInfo = (allBookingsRepo, today) => {
+  const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
+  const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
+  document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
+  const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
+  setGaugeValue(gaugeElement, percentageOccupiedToday);
+
+  displayAvailableRooms(todaysRoomsNotBooked, today)
+}
+
+const createCustomerInfo = (currentUser, today, bookingData, roomData) => {
+  document.getElementById('navDate').innerHTML = `${today}`
+  userNameSelector.setAttribute('data-userId', currentUser.id)
+  userNameSelector.innerHTML = `Hi, ${currentUser.name}`
+
+  const currentUserBookings = bookingData.filter(booking => booking.userID === currentUser.id)
+  const userBookingsRepo  = new BookingEngine(currentUserBookings, roomData)
+
+  updateCustomerView(userBookingsRepo, today)
+}
+
+const updateCustomerView = (userBookingsRepository, today) => {
+  const pastBookings = userBookingsRepository.getPastBookings(today)
+  pastBookings.sort((a,b) => b.dateCode - a.dateCode)
+
+  let pastChunk = ''
+  pastBookings.forEach(booking => {
+    const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+    pastChunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
+  })
+  document.getElementById('pastBookings').innerHTML = pastChunk
+
+  const currentAndFutureBookings = userBookingsRepository.getCurrentAndFutureBookings(today);
+  currentAndFutureBookings.sort((a,b) => a.dateCode - b.dateCode)
+
+  let futureChunk = ''
+  currentAndFutureBookings.forEach(booking => {
+    const roomTypeSlug = booking.roomType.split(' ').join('-');
+
+    futureChunk += `
+          <article class="content__bookings--item item-container">
+            <p class="item-container__item--id">ID: ${booking.id}</p>
+            <p class="item-container__item--date">Date: ${booking.date}</p>
+            <p class="item-container__item--room-number">Room Number: ${booking.roomNumber}</p>
+            <p class="item-container__item--duration">Duration: 1 night</p>
+            <button class="item-container__item--room-type ${roomTypeSlug}" type="button">${booking.roomType}</button>
+          </article>
+        `
+  })
+
+  document.getElementById('futureBookings').innerHTML = futureChunk
+
+  const totalSpent = userBookingsRepository.getTotalSpent();
+  document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+}
 
 const hide = (element) => element.classList.add('hidden');
 const display = (element) => element.classList.remove('hidden');
@@ -228,7 +215,6 @@ const showFutureSection = () => {
   hide(pastBookingsSection)
   hide(availableRoomsSection)
 }
-
 
 const showAvailabilitySection = (event) => {
   event.preventDefault()
@@ -272,15 +258,6 @@ const showNewResSection = () => {
   display(availableRoomsSection)
 }
 
-// const showMGRNewResSection = (event) => {
-//   event.preventDefault()
-//   console.log(event.target)
-//
-//   hide(revenueSection)
-//   display(availableRoomsSection)
-//   display(newReservationSection)
-// }
-
 const showLandingView = () => {
   if (globalUserName === null) {
     navDateSelector.innerText = ''
@@ -300,6 +277,8 @@ const showCustomerView = () => {
   hide(managerViewSelector)
   hide(loginModalSelector)
   display(logoutModalSelector)
+  display(dashboardContentSelector)
+  display(contentFutureSection)
 }
 
 const showManagerView = () => {
@@ -310,7 +289,7 @@ const showManagerView = () => {
   display(managerViewSelector)
   hide(loginModalSelector)
   display(logoutModalSelector)
-
+  display(dashboardContentSelector)
 }
 
 const resetForm = () => {
@@ -323,7 +302,6 @@ const displaySuccess = () => {
   // todo => also show the details of the booking
   feedbackSelector.innerHTML = `<h3>Your booking has been made successfully. </h3>
     `
-
 }
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
@@ -360,6 +338,15 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
         `
   })
   availableRoomsSelector.innerHTML = availChunk
+}
+
+function setGaugeValue(gauge, value) {
+  if (value < 0 || value > 1) {
+    return;
+  }
+
+  gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
+  gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
 }
 
 const displayNewBookingInfo = () => {
@@ -399,7 +386,6 @@ newBookingSubmitButton.addEventListener('click', (event) => {
   }
 
   displayAvailableRooms(roomsAvailable, searchDate)
-  // formSelector.reset()
 })
 
 
@@ -417,23 +403,23 @@ availableRoomsSection.addEventListener('click', (event) => {
   }
 
   sendBookingData(newBooking)
-  updateBookingData()
-  createCurrentDataSet()
 })
-
 
 loginModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   // display modal
   display(loginContainer)
-
 })
-
 
 loginSubmitButton.addEventListener('click', (event) => {
   event.preventDefault()
 
-  // todo ==>do some error handling
+  document.querySelector('.date').classList.remove('hidden')
+  document.querySelector('.user').classList.remove('hidden')
+  const date = new Date().toISOString();
+  const dateStr = date.split('T');
+  let today = dateStr[0].split('-').join('/')
+  document.getElementById('navDate').innerHTML = `${today}`
 
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
     globalUserName = inputUsername.value
@@ -448,33 +434,24 @@ loginSubmitButton.addEventListener('click', (event) => {
           return response.json()
         })
 
-    createCurrentDataSet();
+    createCurrentDataSet(today);
 
     hide(loginContainer)
     showCustomerView()
   } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
-
-    const date = new Date().toISOString();
-    const dateStr = date.split('T');
-    let today = dateStr[0].split('-').join('/')
-
-    document.getElementById('navDate').innerHTML = `${today}`
-
     userNameSelector.innerHTML = `Hi, Manager`
 
-    createCurrentDataSet();
+    createCurrentDataSet(today);
 
     hide(loginContainer)
     showManagerView()
   } else {
-    globalUserName = 'Manager'
-    globalUserId = 0
+    // todo ==>do some error handling
     console.log("SOMETHING IS VERY WRONG")
     // show a message somewhere and reset the login form
     // either username or password were wrong, try again
   }
 })
-
 
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
@@ -493,17 +470,11 @@ logoutSubmitButton.addEventListener('click', (event) => {
   showLandingView();
   navDateSelector.innerHTML = ''
   userNameSelector.innerHTML = ''
+  document.querySelector('.date').classList.add('hidden')
+  document.querySelector('.user').classList.add('hidden')
 })
 
 
-function setGaugeValue(gauge, value) {
-  if (value < 0 || value > 1) {
-    return;
-  }
 
-  gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
-
-  gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
-}
 
 
