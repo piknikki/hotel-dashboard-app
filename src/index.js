@@ -10,9 +10,9 @@ import BookingEngine from "./BookingEngine";
 // *** Global variables *** //
 let globalUserName;
 let globalUserId;
-
 let searchableData;
 let roomInfo;
+let getUserData;
 
 const loginModalSelector = document.getElementById('loginModal');
 const loginContainer = document.getElementById('login');
@@ -55,9 +55,6 @@ const contentFutureSection = document.getElementById('contentFuture')
 const gaugeElement = document.querySelector('.gauge');
 
 // *** Build page *** //
-
-/// GET user info -- declare variable for this to be filled after fetch
-let getUserData;
 
 /// GET booking info -- do this immediately
 let getBookingData =
@@ -128,14 +125,13 @@ const createCurrentDataSet = (today) => {
       roomInfo = roomData;
 
       if (userData !== undefined) {
-        // customer is logged in
         const currentUser = new User(userData)
         createCustomerInfo(currentUser, today, bookingData, roomData)
 
       } else if (userData === undefined) {
-        // manager is logged in
         const allBookingsRepo  = new BookingEngine(bookingData, roomData)
         createManagerInfo(allBookingsRepo, today)
+
       }
     })
     .catch(error => console.log(error.message))
@@ -425,8 +421,6 @@ loginSubmitButton.addEventListener('click', (event) => {
   let today = dateStr[0].split('-').join('/')
   document.getElementById('navDate').innerHTML = `${today}`
 
-  // todo ==>do some error handling
-
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
     globalUserName = inputUsername.value
     globalUserId = globalUserName.slice(8);
@@ -452,6 +446,7 @@ loginSubmitButton.addEventListener('click', (event) => {
     hide(loginContainer)
     showManagerView()
   } else {
+    // todo ==>do some error handling
     console.log("SOMETHING IS VERY WRONG")
     // show a message somewhere and reset the login form
     // either username or password were wrong, try again
