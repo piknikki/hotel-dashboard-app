@@ -14,6 +14,15 @@ let globalUserId;
 let searchableData;
 let roomInfo;
 
+const loginModalSelector = document.getElementById('loginModal');
+const loginContainer = document.getElementById('login');
+const loginSubmitButton = document.getElementById('submitLogin');
+const inputUsername = document.getElementById('loginUsername')
+const inputPassword = document.getElementById('loginPassword')
+const logoutModalSelector = document.getElementById('logoutModal');
+const logoutContainer = document.getElementById('logout');
+const logoutSubmitButton = document.getElementById('submitLogout');
+
 const navDateSelector = document.getElementById('navDate')
 const userNameSelector = document.getElementById('userName');
 
@@ -27,7 +36,6 @@ const pastButton = document.getElementById('pastButton');
 const futureButton = document.getElementById('futureButton');
 const spendingButton = document.getElementById('spendingButton');
 const newReservationButton = document.getElementById('newReservationButton');
-
 const futureBookingsSection = document.getElementsByClassName('content__future')[0];
 const pastBookingsSection = document.getElementsByClassName('content__past')[0];
 const spendingSection = document.getElementsByClassName('content__spending')[0];
@@ -39,24 +47,11 @@ const newBookingCancelButton = document.getElementById('newBookingCancel');
 const newBookingSubmitButton = document.getElementById('newBookingSubmit');
 const feedbackSelector = document.getElementById('feedback');
 const apologiesSelector = document.getElementById('apologies');
-
 const availabilityContentButton = document.getElementById('availabilityContentButton')
 const revenueButton = document.getElementById('revenueButton')
 const newReservationButtonManager = document.getElementById('newReservationButtonManager')
-
 const revenueSection = document.getElementsByClassName('content__revenue')[0];
 const contentFutureSection = document.getElementById('contentFuture')
-
-const loginModalSelector = document.getElementById('loginModal');
-const loginContainer = document.getElementById('login');
-const loginSubmitButton = document.getElementById('submitLogin');
-const inputUsername = document.getElementById('loginUsername')
-const inputPassword = document.getElementById('loginPassword')
-
-const logoutModalSelector = document.getElementById('logoutModal');
-const logoutContainer = document.getElementById('logout');
-const logoutSubmitButton = document.getElementById('submitLogout');
-
 const gaugeElement = document.querySelector('.gauge');
 
 // *** Build page *** //
@@ -111,12 +106,15 @@ const sendBookingData = (inputBookingData) => {
       return response.json()
     })
     .catch(error => {
-      if (error.message === "Unprocessable Entity") {
-        feedbackSelector.innerHTML = `You must fill in all the blanks`
-      }
+      // if (error.message === "Unprocessable Entity") {
+      //   feedbackSelector.innerHTML = `You must fill in all the blanks`
+      // }
       console.log(error.number)
       console.log(error.message)
     })
+
+  updateBookingData()
+  createCurrentDataSet()
 }
 
 const createCurrentDataSet = () => {
@@ -270,15 +268,6 @@ const showNewResSection = () => {
   display(availableRoomsSection)
 }
 
-// const showMGRNewResSection = (event) => {
-//   event.preventDefault()
-//   console.log(event.target)
-//
-//   hide(revenueSection)
-//   display(availableRoomsSection)
-//   display(newReservationSection)
-// }
-
 const showLandingView = () => {
   if (globalUserName === null) {
     navDateSelector.innerText = ''
@@ -323,7 +312,6 @@ const displaySuccess = () => {
   // todo => also show the details of the booking
   feedbackSelector.innerHTML = `<h3>Your booking has been made successfully. </h3>
     `
-
 }
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
@@ -360,6 +348,15 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
         `
   })
   availableRoomsSelector.innerHTML = availChunk
+}
+
+function setGaugeValue(gauge, value) {
+  if (value < 0 || value > 1) {
+    return;
+  }
+
+  gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
+  gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
 }
 
 const displayNewBookingInfo = () => {
@@ -399,7 +396,6 @@ newBookingSubmitButton.addEventListener('click', (event) => {
   }
 
   displayAvailableRooms(roomsAvailable, searchDate)
-  // formSelector.reset()
 })
 
 
@@ -417,8 +413,6 @@ availableRoomsSection.addEventListener('click', (event) => {
   }
 
   sendBookingData(newBooking)
-  updateBookingData()
-  createCurrentDataSet()
 })
 
 
@@ -426,7 +420,6 @@ loginModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
   // display modal
   display(loginContainer)
-
 })
 
 
@@ -470,14 +463,11 @@ loginSubmitButton.addEventListener('click', (event) => {
     hide(loginContainer)
     showManagerView()
   } else {
-    globalUserName = 'Manager'
-    globalUserId = 0
     console.log("SOMETHING IS VERY WRONG")
     // show a message somewhere and reset the login form
     // either username or password were wrong, try again
   }
 })
-
 
 logoutModalSelector.addEventListener('click', (event) => {
   event.preventDefault()
@@ -501,14 +491,6 @@ logoutSubmitButton.addEventListener('click', (event) => {
 })
 
 
-function setGaugeValue(gauge, value) {
-  if (value < 0 || value > 1) {
-    return;
-  }
 
-  gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
-
-  gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
-}
 
 
