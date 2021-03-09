@@ -435,6 +435,15 @@ select {
   }
 }
 
+.success-box {
+  border: 1px solid $navy-blue;
+  padding: 5px;
+  background: #9ba7e3;
+  width: 50%;
+  margin: 0 auto;
+  outline: 7px solid #9ba7e3;
+}
+
 
 // *** Media Queries *** //
 @media screen and (max-width: 900px) {

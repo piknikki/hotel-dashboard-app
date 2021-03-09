@@ -128,8 +128,6 @@ const sendBookingData = (inputBookingData) => {
       console.log(error.number)
       console.log(error.message)
     })
-
-
 }
 
 const createCurrentDataSet = (today) => {
@@ -319,8 +317,7 @@ const displaySuccess = () => {
   resetForm()
   availableRoomsSelector.innerHTML = ''
   // todo => also show the details of the booking
-  feedbackSelector.innerHTML = `<h3>Your booking has been made successfully. </h3>
-    `
+  feedbackSelector.innerHTML = `<div class="success-box">Your booking has been made successfully. </div>`
 }
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
