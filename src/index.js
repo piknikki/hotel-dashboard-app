@@ -434,7 +434,6 @@ loginSubmitButton.addEventListener('click', (event) => {
   const dateStr = date.split('T');
   let today = dateStr[0].split('-').join('/')
 
-
   if (inputUsername.value[0] === 'c' && inputPassword.value === 'overlook2021') {
     globalUserName = inputUsername.value
     globalUserId = globalUserName.slice(8)
@@ -446,6 +445,7 @@ loginSubmitButton.addEventListener('click', (event) => {
     hide(loginContainer)
     showCustomerView()
   } else if (inputUsername.value[0] === 'm' && inputPassword.value === 'overlook2021') {
+    navDateSelector.innerHTML = `${today}`
     userNameSelector.innerHTML = `Hi, Manager`
 
     createCurrentDataSet(today);
