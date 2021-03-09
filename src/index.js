@@ -111,8 +111,15 @@ const sendBookingData = (inputBookingData) => {
       if (!response.ok) {
         throw new Error(response.statusText)
       }
+      console.log(response.json)
       displaySuccess()
+
       return response.json()
+    })
+    .then(() => {
+      updateBookingData()
+      createCurrentDataSet(globalDate)
+      updateCustomerView()
     })
     .catch(error => {
       if (error.message === "Unprocessable Entity") {
@@ -122,9 +129,7 @@ const sendBookingData = (inputBookingData) => {
       console.log(error.message)
     })
 
-  updateBookingData()
-  createCurrentDataSet(globalDate)
-  console.log(globalDate)
+
 }
 
 const createCurrentDataSet = (today) => {
