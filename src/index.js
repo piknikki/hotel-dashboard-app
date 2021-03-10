@@ -128,8 +128,6 @@ const sendBookingData = (inputBookingData) => {
       console.log(error.number)
       console.log(error.message)
     })
-
-
 }
 
 const createCurrentDataSet = (today) => {
@@ -157,11 +155,17 @@ const createCurrentDataSet = (today) => {
 }
 
 // *** General Functions *** //
+const hide = (element) => element.classList.add('hidden');
+const display = (element) => element.classList.remove('hidden');
 
 const createManagerInfo = (allBookingsRepo, today) => {
   const todaysRoomsNotBooked = allBookingsRepo.getRoomsNotBooked(today)
   const totalRevenue = allBookingsRepo.getTotalRevenueForYear(today)
-  document.getElementById('managerRevenue').innerText = `${totalRevenue.toFixed(2)}`
+
+  const options2 = { style: 'currency', currency: 'USD' };
+  const numberFormat2 = new Intl.NumberFormat('en-US', options2);
+
+  document.getElementById('managerRevenue').innerText = `${numberFormat2.format(totalRevenue)}`
   const percentageOccupiedToday = (25 - todaysRoomsNotBooked.length) / 25
   setGaugeValue(gaugeElement, percentageOccupiedToday);
 
@@ -220,12 +224,12 @@ const updateCustomerView = (userBookingsRepository, today) => {
   document.getElementById('futureBookings').innerHTML = futureChunk
 
   const totalSpent = userBookingsRepository.getTotalSpent();
-  document.getElementById('customerTotalSpending').innerHTML = `${totalSpent.toFixed(2)}`
+
+  const options2 = { style: 'currency', currency: 'USD' };
+  const numberFormat2 = new Intl.NumberFormat('en-US', options2);
+
+  document.getElementById('customerTotalSpending').innerHTML = `${numberFormat2.format(totalSpent)}`
 }
-
-const hide = (element) => element.classList.add('hidden');
-const display = (element) => element.classList.remove('hidden');
-
 
 const showFutureSection = () => {
   display(futureBookingsSection)
@@ -260,7 +264,7 @@ const showSpendingSection = () => {
   hide(availableRoomsSection)
 }
 
-const showMGRRevenueSection = (event) => { // todo ==> put the value into managerRevenue span
+const showMGRRevenueSection = (event) => {
   event.preventDefault()
   display(revenueSection)
   hide(newReservationSection)
@@ -318,9 +322,7 @@ const resetForm = () => {
 const displaySuccess = () => {
   resetForm()
   availableRoomsSelector.innerHTML = ''
-  // todo => also show the details of the booking
-  feedbackSelector.innerHTML = `<h3>Your booking has been made successfully. </h3>
-    `
+  feedbackSelector.innerHTML = `<div class="success-box">Your booking has been made successfully. </div>`
 }
 
 const displayAvailableRooms = (roomsAvailable, searchDate) => {
@@ -329,8 +331,10 @@ const displayAvailableRooms = (roomsAvailable, searchDate) => {
   if (roomsAvailable.length === 0) {
     feedbackSelector.innerText = ''
     apologiesSelector.innerHTML = `
+    <div class="apologies-box">
       We are so sorry, but there are no rooms available for 
       your search criteria. Please try different dates or room types.
+    </div>
       `
   }
 
@@ -367,12 +371,6 @@ function setGaugeValue(gauge, value) {
   gauge.querySelector('.gauge__fill').style.transform = `rotate(${value / 2}turn)`
   gauge.querySelector('.gauge__cover').textContent = `${Math.round(value * 100)}%`
 }
-
-// const displayNewBookingInfo = () => {
-//   // todo ==> do this, to display after the booking has been successful
-// }
-
-// *** Event listeners *** //
 
 pastButton.addEventListener('click', showPastSection)
 futureButton.addEventListener('click', showFutureSection)

@@ -376,13 +376,6 @@ button {
   text-align: center;
 }
 
-.apologies {
-  width: 60%;
-  margin: 0 auto;
-  font-size: 1.2em;
-  color: red;
-}
-
 .single-room {
   background: #48d085;
 }
@@ -433,6 +426,26 @@ select {
   &__item {
     margin: 10px;
   }
+}
+
+.success-box {
+  border: 1px solid $navy-blue;
+  padding: 10px;
+  background: $success-background;
+  width: 80%;
+  margin: 0 auto;
+  outline: 7px solid $success-background;
+  color: black;
+}
+
+.apologies-box {
+  border: 1px solid $error-red;
+  padding: 5px;
+  background: $error-background;
+  width: 80%;
+  margin: 0 auto;
+  outline: 7px solid $error-background;
+  color: black;
 }
 
 
